@@ -3,7 +3,7 @@
 */
 var gulp = require('gulp'),
 	    fs = require('fs'),
-		ts = require('gulp-typescript'),
+	    ts = require('gulp-typescript'),
 	rename = require('gulp-rename'),
 	insert = require('gulp-insert'),
 	uglify = require('gulp-uglify');
