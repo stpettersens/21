@@ -69,10 +69,10 @@ window.onload = function(): void {
 		var ps: number = player.showCards();
 		
 		if(ps === 21 && player_index === 2 && ds !== 21) {
-			screentip.emit("PLAYER BLACKJACK!", "Player has 21. That\"s a Blackjack!");
+			screentip.emit("PLAYER BLACKJACK!", "Player has 21. That's a Blackjack!");
 		}
 		else if(ds === 21 && dealer_index === 2 && ps !== 21) {
-			screentip.emit("DEALER BLACKJACK!", "Dealer has 21. That\"s a Blackjack!");
+			screentip.emit("DEALER BLACKJACK!", "Dealer has 21. That's a Blackjack!");
 		}
 		else if((ps == ds) || (ps > 21 && ds > 21)) {
 			screentip.emit("PUSH", "Neither dealer nor player won.");
