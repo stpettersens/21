@@ -1,0 +1,24 @@
+{
+    "name": "html5-blackjack",
+    "version": "1.0.0",
+    "description": "Blackjack implemented in HTML5 canvas and JavaScript.",
+    "author": "Sam Saint-Pettersen <s.stpettersen+github@gmail.com>",
+    "license": "MIT",
+    "homepage": "http://stpettersens.github.io/21",
+    "repository": {
+	"type": "git",
+	"url": "https://github.com/stpettersens/21"
+    },
+    "scripts": {
+      "dist": "gulp",
+      "clean": "gulp clean"
+    },
+    "preferGlobal": false,
+    "dependencies": {
+	"gulp": "~3.9.0",
+   	"gulp-concat": "~2.5.2",
+	"gulp-rename": "~1.2.2",
+	"gulp-insert": "~0.4.0",
+	"gulp-uglify": "~1.2.0"	
+    }
+}

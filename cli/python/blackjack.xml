@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="utf-8"?>
+<blackjack>
+	<terminal>
+		<use-color>true</use-color>
+		<code-page default="850" use="65001"/>
+		<!-- Default is MS-DOS Latin 1; use UTF-8 to support displaying 
+		♥ ♦ ♣ ♠ in terminal -->
+	</terminal>
+</blackjack>

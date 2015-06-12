@@ -1,0 +1,118 @@
+/*
+	Blackjack
+	Copyright 2015 Sam Saint-Pettersen
+	Released under the MIT/X11 License.
+	
+	HTML5 implementation
+*/
+
+var imageSrcs = [
+'gfx/c.png',
+'gfx/c10.png',
+'gfx/c2.png',
+'gfx/c3.png',
+'gfx/c4.png',
+'gfx/c5.png',
+'gfx/c6.png',
+'gfx/c7.png',
+'gfx/c8.png',
+'gfx/c9.png',
+'gfx/cA.png',
+'gfx/cJ.png',
+'gfx/cK.png',
+'gfx/cQ.png',
+'gfx/d.png',
+'gfx/d10.png',
+'gfx/d2.png',
+'gfx/d3.png',
+'gfx/d4.png',
+'gfx/d5.png',
+'gfx/d6.png',
+'gfx/d7.png',
+'gfx/d8.png',
+'gfx/d9.png',
+'gfx/dA.png',
+'gfx/dJ.png',
+'gfx/dK.png',
+'gfx/dQ.png',
+'gfx/dummy.png',
+'gfx/h10.png',
+'gfx/h2.png',
+'gfx/h3.png',
+'gfx/h4.png',
+'gfx/h5.png',
+'gfx/h6.png',
+'gfx/h7.png',
+'gfx/h8.png',
+'gfx/h9.png',
+'gfx/hA.png',
+'gfx/hJ.png',
+'gfx/hK.png',
+'gfx/hQ.png',
+'gfx/s10.png',
+'gfx/s2.png',
+'gfx/s3.png',
+'gfx/s4.png',
+'gfx/s5.png',
+'gfx/s6.png',
+'gfx/s7.png',
+'gfx/s8.png',
+'gfx/s9.png',
+'gfx/sA.png',
+'gfx/sJ.png',
+'gfx/sK.png',
+'gfx/sQ.png'];
+
+//@staticmethod
+function Card_getImage(card) {
+	if(card == 'c' || card == 'd') {
+		return 'gfx/' + card + '.png';
+	}
+	var suit = '';
+	if(new RegExp('(h)').test(card)) {
+		suit = 'h';
+	}
+	else if(new RegExp('(d)').test(card)) {
+		suit = 'd';
+	}
+	else if(new RegExp('(c)').test(card)) {
+		suit = 'c';
+	}
+	else if(new RegExp('(s)').test(card)) {
+		suit = 's';
+	}
+	var rank = card.match(/\[*([0-9A-Z]*)\]*/)[1];
+	return 'gfx/' + suit + rank + '.png';
+}
+
+//@staticmethod
+function Card_getImageData(card) {
+	return graphics(imageSrcs.indexOf(Card_getImage(card)));
+}
+
+function Card(card, pos_x, pos_y) {
+
+	this.image = new Image();
+	this.image.src = card;
+	this.pos_x = pos_x;
+	this.pos_y = pos_y;
+}
+
+Card.prototype.getImage = function() {
+	return this.image.src;
+}
+
+Card.prototype.setXY = function(pos_x, pos_y) {
+	this.pos_x = pos_x;
+	this.pos_y = pos_y;
+}
+
+Card.prototype.getXY = function() {
+	return [this.pos_x, this.pos_y];
+}
+
+Card.prototype.draw = function() {
+	var canvas = document.getElementById('blackjack-table');
+	var context = canvas.getContext('2d');	
+	context.drawImage(this.image, this.pos_x, this.pos_y, this.image.width, this.image.height);
+}
