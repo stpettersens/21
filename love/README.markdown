@@ -6,6 +6,8 @@ To build from source, please install [7-Zip](http://www.7-zip.org) (or [P7ZIP](h
 
 to generate the LOVE game file.
 
-Alternatively, you can run (if you do not have `make`):
+Alternatively, you can run (if you do not have [make](http://www.gnu.org/software/make)):
 
-* `7z i blackjack.love *.lua gfx`
+* `7z u blackjack.love *.lua gfx`
+
+Zipping is also sufficient if you do not have 7-Zip.
