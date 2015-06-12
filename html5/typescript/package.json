@@ -4,7 +4,7 @@
     "description": "Blackjack implemented in HTML5 canvas and TypeScript.",
     "author": "Sam Saint-Pettersen <s.stpettersen+github@gmail.com>",
     "license": "MIT",
-    "homepage": "http://stpettersens.github.io/21",
+    "homepage": "http://stpettersens.github.io/21/typescript",
     "repository": {
 	"type": "git",
 	"url": "https://github.com/stpettersens/21"
