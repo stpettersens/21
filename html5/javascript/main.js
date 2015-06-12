@@ -203,7 +203,7 @@ window.onload = function() {
 	}
 
 	function exitToGitHub() {
-		window.location = 'https://github.com/stpettersens/Blackjack';
+		window.location = 'https://github.com/stpettersens/21';
 	}
 
 	// Touch controls.

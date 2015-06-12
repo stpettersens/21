@@ -204,7 +204,7 @@ window.onload = function(): void {
 	}
 
 	function exitToGitHub(): void {
-		window.location.href = "https://github.com/stpettersens/Blackjack";
+		window.location.href = "https://github.com/stpettersens/21";
 	}
 
 	// Touch controls.

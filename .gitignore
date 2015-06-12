@@ -1,6 +1,6 @@
 *.pyc
 *.love
-/html5/javscript/dist
+/html5/javascript/dist
 /html5/javascript/index.html
 /html5/typescript/dist
 /html5/typescript/index.html
