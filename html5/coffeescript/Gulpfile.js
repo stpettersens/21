@@ -1,5 +1,5 @@
 /*
-	Combine Blackjack (CoffeeScript) scripts into one minified JavaScript file. 
+	Combine Blackjack (CoffeeScript) scripts into two minified JavaScript file (logic and graphics).
 */
 var gulp = require('gulp'),
 	    fs = require('fs'),
