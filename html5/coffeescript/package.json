@@ -1,0 +1,26 @@
+{
+    "name": "html5-blackjack-coffeescript",
+    "version": "1.0.0",
+    "description": "Blackjack implemented in HTML5 canvas and CoffeeScript.",
+    "author": "Sam Saint-Pettersen <s.stpettersen+github@gmail.com>",
+    "license": "MIT",
+    "homepage": "http://stpettersens.github.io/21/coffeescript",
+    "repository": {
+	"type": "git",
+	"url": "https://github.com/stpettersens/21"
+    },
+    "scripts": {
+      "dist": "gulp",
+      "clean": "gulp clean"
+    },
+    "preferGlobal": false,
+    "dependencies": {
+    "gutil": "~1.6.4",
+	"gulp": "~3.9.0",
+    "gulp-add-src": "~0.2.0",
+   	"gulp-coffee": "~2.3.1",
+	"gulp-rename": "~1.2.2",
+	"gulp-insert": "~0.4.0",
+	"gulp-uglify": "~1.2.0"	
+    }
+}
