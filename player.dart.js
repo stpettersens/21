@@ -6,9 +6,9 @@
 	HTML5/Dart implementation
 */
 
-import 'cards.dart';
-import 'card.dart';
-import 'debug.dart';
+import 'cards.dart.js';
+import 'card.dart.js';
+import 'debug.dar.js';
 
 class Player {
 	bool debug;
