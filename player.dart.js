@@ -8,7 +8,7 @@
 
 import 'cards.dart.js';
 import 'card.dart.js';
-import 'debug.dar.js';
+import 'debug.dart.js';
 
 class Player {
 	bool debug;
