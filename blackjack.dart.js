@@ -15,8 +15,6 @@ import 'screentip.dart.js';
 import 'score.dart.js';
 import 'debug.dart.js';
 
-print('Pretend to be JS!');
-
 bool debug = true;
 bool use_ai = false;
 bool playing = true;
