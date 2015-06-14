@@ -7,7 +7,7 @@
 */
 
 import 'dart:html';
-import 'debug.dart';
+import 'debug.dart.js';
 
 class Score {
 	bool debug;
