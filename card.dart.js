@@ -7,7 +7,7 @@
 */
 
 import 'dart:html';
-import 'graphics.dart';
+import 'graphics.dart.js';
 
 class Card {
 	var image;
