@@ -7,9 +7,9 @@
 */
 
 import 'dart:math';
-import 'cards.dart';
-import 'card.dart';
-import 'debug.dart';
+import 'cards.dart.js';
+import 'card.dart.js';
+import 'debug.dart.js';
 
 class Dealer {
 	bool debug;
