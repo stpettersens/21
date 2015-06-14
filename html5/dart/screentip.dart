@@ -11,12 +11,12 @@ import 'debug.dart';
 
 class Screentip {
 	bool debug;
-	int x;
-	int y;
+	num x;
+	num y;
 	String title;
 	String msg;
 
-	Screentip(bool debug, int x, int y) {
+	Screentip(bool debug, num x, num y) {
 		this.debug = debug;
 		this.x = x;
 		this.y = y;

@@ -33,8 +33,8 @@ Dealer dealer = null;
 num timer = 0;
 var canvas = null;
 
-int SCREEN_WIDTH = 780;
-int SCREEN_HEIGHT = 500;
+num SCREEN_WIDTH = 780;
+num SCREEN_HEIGHT = 500;
 
 void main() {
 	Debug.emit(debug, "Initialized HTML5 Blackjack (Dart build).");

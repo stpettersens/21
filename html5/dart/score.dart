@@ -11,11 +11,11 @@ import 'debug.dart';
 
 class Score {
 	bool debug;
-	int x;
-	int y;
+	num x;
+	num y;
 	String score;
 
-	Score(bool debug, int x, int y) {
+	Score(bool debug, num x, num y) {
 		this.debug = debug;
 		this.x = x;
 		this.y = y;
