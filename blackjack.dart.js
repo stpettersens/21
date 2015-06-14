@@ -7,13 +7,15 @@
 */
 
 import 'dart:html';
-import 'cards.dart';
-import 'card.dart';
-import 'player.dart';
-import 'dealer.dart';
-import 'screentip.dart';
-import 'score.dart';
-import 'debug.dart';
+import 'cards.dart.js';
+import 'card.dart.js';
+import 'player.dart.js';
+import 'dealer.dart.js';
+import 'screentip.dart.js';
+import 'score.dart.js';
+import 'debug.dart.js';
+
+print('Pretend to be JS!');
 
 bool debug = true;
 bool use_ai = false;
