@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<head>
+<title>HTML5 Blackjack (Dart)</title>
+<style type="text/css">
+  body{
+    -webkit-touch-callout: none;
+    -webkit-user-select: none;
+    -khtml-user-select: none;
+    -moz-user-select: none;
+    -ms-user-select: none;
+    user-select: none;
+}
+</style>
+<!-- This page uses Dart source directly, so will only run in a browser
+supporting Dart VM such as Dartium. -->
+<script type="application/dart" src="blackjack.dart.js"></script>
+<script type="application/dart">
+void main() {
+    print("Hello from Dart!");
+}
+</script>
+<script type="text/javascript">
+ if(navigator.userAgent.indexOf('Dart') === -1) {
+   alert('No Dart support. Will not run here.');
+ }
+</script>
+</head>
+<body>
+<h3 style="text-align: center;">HTML5 Blackjack (<a href="https://www.dartlang.org/">Dart</a> build)</h3>
+<canvas id="blackjack-table"></canvas>
+<p style="font-size: 11pt; text-align: center;">
+  Press Escape key to <a href="https://github.com/stpettersens/21">visit project</a> on Github.<br/><br/>
+  Cards courtesy of <a href="http://www.jfitz.com/cards">Jfitz.com</a>.
+</p>
+</body>
+</html>
