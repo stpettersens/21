@@ -147,6 +147,7 @@ window.onload = function(): void {
 
 	function draw(): void {
 		clear();
+		dealer_pile.draw();
 		screentip.draw();
 		instruction.draw();
 		p_score.draw();

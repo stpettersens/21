@@ -224,11 +224,11 @@ void update() {
 
 void draw() {
 	clear();
+	dealer_pile.draw();
 	screentip.draw();
 	instruction.draw();
 	p_score.draw();
 	d_score.draw();
-	dealer_pile.draw();
 	for(int i = 0; i < player_cards.length; i++) {
 		player_cards[i].draw();
 	}

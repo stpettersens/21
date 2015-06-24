@@ -138,6 +138,7 @@ SCREEN_HEIGHT = 500
 
 @draw = () ->
 	clear()
+	dealer_pile.draw()
 	screentip.draw()
 	instruction.draw()
 	p_score.draw()
