@@ -1,0 +1,155 @@
+/*
+  Blackjack
+  Copyright 2015 Sam Saint-Pettersen
+  Released under the MIT/X11 License.
+
+  C#/XNA implementation
+*/
+
+class Dealer {
+  private bool debug;
+  private int index;
+  private int pos;
+  private List<string> cards;
+  private List<int> values;
+
+  public Dealer(bool debug) {
+    this.debug = debug;
+    this.index = 0;
+    this.pos = 225;
+    this.cards = new List<string>();
+    this.values = new List<int>();
+  }
+
+  public int CalcTotal() {
+    this.values = this.values.OrderByDescending().toList();
+    int total = 0;
+    for(int i = 0; i < this.values.Count; i++) {
+      int v = this.values[i];
+      if(v == 1) {
+        if((total + 11) <= 21) v = 11;
+        else if((total + 11) > 21) v = 1;
+      }
+      total += v;
+    }
+    return total;
+  }
+
+  private Card Hit(Cards cards) {
+    this.index++;
+    this.pos = 90;
+    string card = cards.Draw();
+    this.cards.Add(card);
+    this.values.Add(cards.GetValue());
+    Debug.Print(this.debug, "Dealer hits.");
+    Debug.Print(this.debug, "Dealer gets " + card);
+    return new Card(Card.GetImage(card), this.pos, 10);
+  }
+
+  private void Stand() {
+    Debug.Print(this.debug, "Dealer stands.");
+  }
+
+  public void Shuffle(Cards cards) {
+    if(cards.GetPlayed() == 0 || cards.GetPlayed() >= 45) {
+      Debug.Print(this.debug, "----------------------------------------------------");
+      Debug.Print(this.debug, "Dealer is shuffling cards....");
+      Debug.Print(this.debug, "----------------------------------------------------");
+      cards.Shuffle();
+    }
+  }
+
+  public string[] Deal(Cards cards) {
+    List<string> dealt = new List<string>();
+    int i = 1;
+    Debug.Print(this.debug, "----------------------------------------------------");
+    Debug.Print(this.debug, "Dealer is dealing cards for a new game...");
+    Debug.Print(this.debug, "----------------------------------------------------");
+    while(i <= (2 * 2)) {
+      dealt.Add(cards.Draw() + ":" + cards.GetValue());
+      i++;
+    }
+    i = 0;
+    while(i < 2) {
+      string[] cv = dealt[i].split(":");
+      this.cards.Add(cv[0]);
+      this.values.Add(int.Parse(cv[1]));
+      i++;
+    }
+    Debug.Print(this.debug, "\nDealer has:");
+    Debug.Print(this.debug, "[**]" + this.cards[1]);
+    return new Array<string> {dealt[2], dealt[3]};
+  }
+
+  public bool HasBlackjack() {
+    bool blackjack = false;
+    if(this.CalcTotal() == 21) {
+      Debug.Print(this.debug, "Dealer has Blackjack!");
+      blackjack = true;
+    }
+    return blackjack;
+  }
+
+  public bool IsBust() {
+    bool bust = false;
+    if(this.CalcTotal() > 21) {
+      Debug.Print(this.debug, "Dealer is bust!");
+      bust = true;
+    }
+    return bust;
+  }
+
+  public List<Card> Respond(Cards cards) {
+    this.ShowCards();
+    bool responding = true;
+    List<Card> response_cards = new List<Card>();
+    while(responding) {
+      int total = 0;
+      while(total <= 18) {
+        total = this.CalcTotal();
+        if(total == 16) {
+          Random rand = new Random();
+          if(Math.Floor(rand.Next() * 6) >= 3) {
+            response_cards.Add(this.Hit(cards)); // Take risk.
+          }
+          else {
+            this.Stand(); // Play it safe.
+          }
+        }
+        else if(total >= 17) {
+          this.Stand();
+          responding = false;
+          break;
+        }
+        else {
+          response_cards.Add(this.Hit(cards));
+        }
+      }
+    }
+    return response_cards;
+  }
+
+  public int ShowCards() {
+    this.index = 0;
+    this.pos = 225;
+    string cards = "";
+    for(int i = 0; i < this.cards.Count; i++) {
+      cards += this.cards[i];
+    }
+    Debug.Print(this.debug, "\nDealer has:");
+    Debug.Print(this.debug, "%s --> %d", cards, this.CalcTotal());
+    return this.CalcTotal();
+  }
+
+  public Card[] ReceiveCards() {
+    Card cardA = new Card(Card.getImage("c"), this.pos, 10);
+    this.pos += 90;
+    Card cardB = new Card(Card.getImage(this.cards[1]), this.pos, 10);
+    this.index += 2;
+    return new Array<Card> { cardA, cardB };
+  }
+
+  public Card RevealFirstCard() {
+    return new Card(Card.getImage(this.cards[0]), 225, 10);
+  }
+}

@@ -1,0 +1,6 @@
+C:\Users\Sam\Desktop\BlackjackXNA\BlackjackXNA\BlackjackXNA\bin\x86\Debug\BlackjackXNA.exe
+C:\Users\Sam\Desktop\BlackjackXNA\BlackjackXNA\BlackjackXNA\bin\x86\Debug\BlackjackXNA.pdb
+C:\Users\Sam\Desktop\BlackjackXNA\BlackjackXNA\BlackjackXNA\obj\x86\Debug\BlackjackXNA.csprojResolveAssemblyReference.cache
+C:\Users\Sam\Desktop\BlackjackXNA\BlackjackXNA\BlackjackXNA\obj\x86\Debug\Microsoft.Xna.Framework.RuntimeProfile.txt
+C:\Users\Sam\Desktop\BlackjackXNA\BlackjackXNA\BlackjackXNA\obj\x86\Debug\BlackjackXNA.exe
+C:\Users\Sam\Desktop\BlackjackXNA\BlackjackXNA\BlackjackXNA\obj\x86\Debug\BlackjackXNA.pdb

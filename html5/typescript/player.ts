@@ -2,7 +2,7 @@
 	Blackjack
 	Copyright 2015 Sam Saint-Pettersen
 	Released under the MIT/X11 License.
-	
+
 	HTML5/TypeScript implementation
 */
 
@@ -43,7 +43,7 @@ class Player {
 	public hasBlackjack(): boolean {
 		var blackjack: boolean = false;
 		if(this.calcTotal() == 21) {
-			Debug.print(debug, "Dealer has Blackjack!");
+			Debug.print(debug, "Player has Blackjack!");
 			blackjack = true;
 		}
 		return blackjack;
@@ -52,7 +52,7 @@ class Player {
 	public isBust(): boolean {
 		var bust: boolean = false;
 		if(this.calcTotal() > 21) {
-			Debug.print(debug, "Dealer is bust!");
+			Debug.print(debug, "Player is bust!");
 			bust = true;
 		}
 		return bust;
