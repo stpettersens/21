@@ -73,15 +73,9 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="card.cs" />
-    <Compile Include="cards.cs" />
-    <Compile Include="dealer.cs" />
-    <Compile Include="debug.cs" />
-    <Compile Include="player.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="Blackjack.cs" />
-    <Compile Include="score.cs" />
-    <Compile Include="screentip.cs" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="Game.ico" />

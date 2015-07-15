@@ -1,1 +1,2 @@
 C:\Users\Sam\Desktop\BlackjackXNA\BlackjackXNA\BlackjackXNAContent\obj\x86\Debug\BlackjackXNAContent.contentprojResolveAssemblyReference.cache
+C:\Users\Sam\Projects\21\xna\BlackjackXNA\BlackjackXNAContent\obj\x86\Debug\BlackjackXNAContent.contentprojResolveAssemblyReference.cache
