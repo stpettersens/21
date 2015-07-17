@@ -6,34 +6,7 @@
 	HTML5/TypeScript implementation
 */
 
-/// <reference path="graphics.ts"/>
-
-//@staticmethod
-function Card_getImage(card: string): string {
-	if(card == "c" || card == "d") {
-		return "gfx/" + card + ".png";
-	}
-	var suit: string = "";
-	if(/(h)/.test(card)) {
-		suit = "h";
-	}
-	else if(/(d)/.test(card)) {
-		suit = "d";
-	}
-	else if(/(c)/.test(card)) {
-		suit = "c";
-	}
-	else if(/(s)/.test(card)) {
-		suit = "s";
-	}
-	var rank: string = card.match(/\[*([0-9A-Z]*)\]*/)[1];
-	return "gfx/" + suit + rank + ".png";
-}
-
-//@staticmethod
-function Card_getImageData(card: string): string {
-	return graphics[gfx_fns.indexOf(Card_getImage(card))];
-}
+/// <reference path="graphics.ts" />
 
 class Card {
 	private image: any;
@@ -46,10 +19,37 @@ class Card {
 		this.pos_x = pos_x;
 		this.pos_y = pos_y;
 	}
+	
+	public static getImage(card: string): string {
+		if(card == "c" || card == "d") {
+			return "gfx/" + card + ".png";
+		}
+		var suit: string = "";
+		if(/(h)/.test(card)) {
+			suit = "h";
+		}
+		else if(/(d)/.test(card)) {
+			suit = "d";
+		}
+		else if(/(c)/.test(card)) {
+			suit = "c";
+		}
+		else if(/(s)/.test(card)) {
+			suit = "s";
+		}
+		var rank: string = card.match(/\[*([0-9A-Z]*)\]*/)[1];
+		return "gfx/${suit}${rank}.png";
+	}
+	
+	public static getImageData(card: string): string {
+		return graphics[gfx_fns.indexOf(Card.getImage(card))];
+	}
 
+	/*
 	public getImage(): string {
 		return this.image.src;
 	}
+	*/
 
 	public setXY(pos_x: number, pos_y: number): void {
 		this.pos_x = pos_x;
