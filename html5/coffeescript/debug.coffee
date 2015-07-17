@@ -1,5 +1,4 @@
 class Debug 
-
-	@print: (debug, message) ->
+	@emit: (debug, message) ->
 		if debug
 			console.log(message)
