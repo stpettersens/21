@@ -140,7 +140,7 @@ class Dealer {
 			cards += this.cards[i];
 		}
 		Debug.emit(this.debug, "\nDealer has:");
-		Debug.emit(this.debug, "${cards} --> ${this.calcTotal()}";
+		Debug.emit(this.debug, "${cards} --> ${this.calcTotal()}");
 		return this.calcTotal();
 	}
 

@@ -69,10 +69,10 @@ class Player {
 		Debug.emit(this.debug, pc + " --> " + this.calcTotal().toString())
 
 		this.index++;
-		var cardA = new Card(Card_getImageData(this.cards[this.index]), this.pos, 310);
+		var cardA = new Card(Card.getImageData(this.cards[this.index]), this.pos, 310);
 		this.pos += 90;
 		this.index ++;
-		var cardB = new Card(Card_getImageData(this.cards[this.index]), this.pos, 310);
+		var cardB = new Card(Card.getImageData(this.cards[this.index]), this.pos, 310);
 		return [cardA, cardB];
 	}
 
@@ -85,7 +85,7 @@ class Player {
 		Debug.emit(this.debug, "Player hits.");
 		Debug.emit(this.debug, "Player gets " + card);
 		Debug.emit(this.debug, "Player has " + this.calcTotal().toString());
-		return new Card(Card_getImageData(card.match(/\[*([A-Za-z0-9]+)\]*/)[0]), this.pos, 310);
+		return new Card(Card.getImageData(card.match(/\[*([A-Za-z0-9]+)\]*/)[0]), this.pos, 310);
 	}
 
 	public stand(): void {
