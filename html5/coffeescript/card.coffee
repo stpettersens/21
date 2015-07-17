@@ -4,28 +4,6 @@
 #	
 #	HTML5/CoffeeScript implementation
 
-#@staticmethod
-Card_getImage = (card) ->
-	if card == "c" or card == "d"
-		return "gfx/#{card}.png"
-
-	suit = ""
-	if /(h)/.test(card)
-		suit = "h"
-	else if /(d)/.test(card)
-		suit = "d"
-	else if /(c)/.test(card)
-		suit = "c"
-	else if /(s)/.test(card)
-		suit = "s"
-
-	rank = card.match(/\[*([0-9A-Z]*)\]*/)[1];
-	return "gfx/" + suit + rank + ".png";
-
-#@staticmethod
-Card_getImageData = (card) ->
-	return graphics[gfx_fns.indexOf(Card_getImage(card))]
-
 class Card 
 
 	constructor: (card, pos_x, pos_y) ->
@@ -33,9 +11,29 @@ class Card
 		@image.src = card
 		@pos_x = pos_x
 		@pos_y = pos_y
+		
+	@getImage: (card) ->
+		if card == "c" or card == "d"
+			return "gfx/#{card}.png"
+	
+		suit = ""
+		if /(h)/.test(card)
+			suit = "h"
+		else if /(d)/.test(card)
+			suit = "d"
+		else if /(c)/.test(card)
+			suit = "c"
+		else if /(s)/.test(card)
+			suit = "s"
+	
+		rank = card.match(/\[*([0-9A-Z]*)\]*/)[1]
+		return "gfx/" + suit + rank + ".png"
+		
+	@getImageData: (card) ->
+		return graphics[gfx_fns.indexOf(Card.getImage(card))]
 
-	getImage: () ->
-		return @image.src
+	#getImage: () ->
+		#return @image.src
 
 	setXY: (pos_x, pos_y) ->
 		@pos_x = pos_x
