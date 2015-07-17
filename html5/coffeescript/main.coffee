@@ -37,7 +37,7 @@ SCREEN_WIDTH = 780
 SCREEN_HEIGHT = 500
 
 @init = () ->
-	Debug.print(debug, "Initialized HTML5 Blackjack (CoffeeScript build).");
+	Debug.emit(debug, "Initialized HTML5 Blackjack (CoffeeScript build).");
 	canvas = document.getElementById("blackjack-table")
 	canvas.width = "#{SCREEN_WIDTH}"
 	canvas.height = "#{SCREEN_HEIGHT}"
@@ -91,7 +91,7 @@ SCREEN_HEIGHT = 500
 	if cards.getPlayed() == 52
 		dealer_pile = new Card(Card_getImage("d"), 10, 10)
 
-	Debug.print(debug, "Cards played #{cards.getPlayed()}")
+	Debug.emit(debug, "Cards played #{cards.getPlayed()}")
 	d_score.emit(dealer.calcTotal())
 	if not isTouchScreenDevice() 
 		instruction.emit("Play again? Yes [Y key or LMB] or No [N key or Escape key].")
@@ -180,8 +180,8 @@ SCREEN_HEIGHT = 500
 		xy = dealer_cards[dealer_index].getXY()
 		dealer_cards[dealer_index] = received[i]
 		dealer_cards[dealer_index].setXY(xy[0], xy[1])
-		Debug.print(debug, "Added image at #{xy[0]},#{xy[1]}")
-		Debug.print(debug, dealer_index)
+		Debug.emit(debug, "Added image at #{xy[0]},#{xy[1]}")
+		Debug.emit(debug, dealer_index)
 		dealer_index++
 		i++
 
