@@ -8,19 +8,18 @@
 
 /// <reference path="debug.ts"/>
 
-var debug: boolean = false;
-
 class Score {
+	private debug: boolean;
 	private x: number;
 	private y: number;
 	private score: string;
 
 	constructor(debug: boolean, x: number, y: number) {
-		debug = debug;
+		this.debug = debug;
 		this.x = x;
 		this.y = y;
 		this.score = "";
-		Debug.print(debug, "Created score counter at " + this.x + "," + this.y); // !
+		Debug.emit(this.debug, "Created score counter at ${this.x},${this.y}"); // !
 	}
 
 	public emit(score: any): void {
