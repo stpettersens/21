@@ -36,13 +36,13 @@ namespace BlackjackXNA
         /// Get card image from string designation.
         /// E.g. Qh => hQ.png
         /// </summary>
-        /// <param name="card">Card string designation</param>
-        /// <returns>Path to card image to draw</returns>
+        /// <param name="card">Card string designation.</param>
+        /// <returns>Path to card image to draw.</returns>
         public static string GetImage(string card)
         {
             if (card == "c" || card == "d")
             {
-                return String.Format("gfx/%s.png", card);
+                return card;
             }
             string suit = "";
             return suit;
@@ -51,8 +51,8 @@ namespace BlackjackXNA
         /// <summary>
         /// Set X, Y position for card.
         /// </summary>
-        /// <param name="posX">X position for card</param>
-        /// <param name="posY">Y position for card</param>
+        /// <param name="posX">X position for card.</param>
+        /// <param name="posY">Y position for card.</param>
         public void SetXY(int posX, int posY)
         {
             this.posX = posX;
@@ -62,15 +62,15 @@ namespace BlackjackXNA
         /// <summary>
         /// Get X, Y position of card.
         /// </summary>
-        /// <returns>X, Y co-ordinates of card</returns>
+        /// <returns>X, Y co-ordinates of card.</returns>
         public Vector2 GetXY() {
-            return new Vector2(posX, posY);
+            return new Vector2(this.posX, this.posY);
         }
 
         /// <summary>
         /// Draw the card.
         /// </summary>
-        /// <param name="spriteBatch">Sprite batch to draw with</param>
+        /// <param name="spriteBatch">Sprite batch to draw with.</param>
         public void Draw(SpriteBatch spriteBatch)
         {
             spriteBatch.Draw(this.image, this.GetXY(), Color.White);
