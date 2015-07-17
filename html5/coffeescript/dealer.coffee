@@ -4,12 +4,10 @@
 #	
 #	HTML5/CoffeeScript implementation
 
-debug = false
-
 class Dealer 
 
 	constructor: (debug) ->
-		debug = debug
+		@debug = debug
 		@index = 0
 		@pos = 225
 		@cards = []
@@ -38,26 +36,26 @@ class Dealer
 		card = cards.draw()
 		@cards.push(card)
 		@values.push(cards.getValue())
-		Debug.print(debug, "Dealer hits.")
-		Debug.print(debug, "Dealer gets #{card}")
+		Debug.emit(@debug, "Dealer hits.")
+		Debug.emit(@debug, "Dealer gets #{card}")
 		return new Card(Card_getImageData(card), @pos, 10)
 
 	_stand: () ->
-		Debug.print(debug, "Dealer stands.")
+		Debug.emit(@debug, "Dealer stands.")
 
 	shuffle: (cards) ->
 		if cards.getPlayed() == 0 or cards.getPlayed() >= 45
-			Debug.print(debug, "-------------------------------------------------------");
-			Debug.print(debug, "Dealer is shuffling cards...");
-			Debug.print(debug, "-------------------------------------------------------");
+			Debug.emit(@debug, "-------------------------------------------------------");
+			Debug.emit(@debug, "Dealer is shuffling cards...");
+			Debug.emit(@debug, "-------------------------------------------------------");
 			cards.shuffle()
 
 	deal: (cards) ->
 		dealt = []
 		i = 1
-		Debug.print(debug, "-------------------------------------------------------");
-		Debug.print(debug, "Dealer is dealing cards for a new game...");
-		Debug.print(debug, "-------------------------------------------------------");
+		Debug.emit(@debug, "-------------------------------------------------------");
+		Debug.emit(@debug, "Dealer is dealing cards for a new game...");
+		Debug.emit(@debug, "-------------------------------------------------------");
 		while i <= (2 * 2)
 			dealt.push("#{cards.draw()}:#{cards.getValue()}")
 			i++
@@ -69,21 +67,21 @@ class Dealer
 			@values.push(parseInt(cv[1]))
 			i++
 
-		Debug.print(debug, "\nDealer has:")
-		Debug.print(debug, "[**]#{@cards[1]}")
+		Debug.emit(@debug, "\nDealer has:")
+		Debug.emit(@debug, "[**]#{@cards[1]}")
 		return [dealt[2], dealt[3]]
 
 	hasBlackjack: () ->
 		blackjack = false
 		if @.calcTotal() == 21
-			Debug.print(debug, "Dealer has Blackjack!")
+			Debug.emit(@debug, "Dealer has Blackjack!")
 			blackjack = true
 		return blackjack
 
 	isBust: () ->
 		bust = false
 		if @.calcTotal() > 21
-			Debug.print(debug, "Dealer is bust!")
+			Debug.emit(@debug, "Dealer is bust!")
 			bust = true
 		return bust
 
@@ -119,8 +117,8 @@ class Dealer
 			cards += @cards[i]
 			i++
 
-		Debug.print(debug, "\nDealer has:")
-		Debug.print(debug, "#{cards} --> #{@.calcTotal()}")
+		Debug.emit(@debug, "\nDealer has:")
+		Debug.emit(@debug, "#{cards} --> #{@.calcTotal()}")
 		return @.calcTotal()
 
 	receiveCards: () ->
