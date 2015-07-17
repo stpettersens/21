@@ -48,7 +48,7 @@ class Dealer {
 		this.values.push(cards.getValue());
 		Debug.print(debug, "Dealer hits.");
 		Debug.print(debug, "Dealer gets " + card);
-		return new Card(Card_getImageData(card), this.pos, 10);
+		return new Card(Card.getImageData(card), this.pos, 10);
 	}
 
 	private stand(): void {
@@ -146,14 +146,14 @@ class Dealer {
 	}
 
 	public receiveCards(): Card[] {
-		var cardA = new Card(Card_getImageData("c"), this.pos, 10);
+		var cardA = new Card(Card.getImageData("c"), this.pos, 10);
 		this.pos += 90;
-		var cardB = new Card(Card_getImageData(this.cards[1]), this.pos, 10);
+		var cardB = new Card(Card.getImageData(this.cards[1]), this.pos, 10);
 		this.index += 2;
 		return [cardA, cardB];
 	}
 
 	public revealFirstCard(): Card {
-		return new Card(Card_getImageData(this.cards[0]), 225, 10);
+		return new Card(Card.getImageData(this.cards[0]), 225, 10);
 	}
 }
