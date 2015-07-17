@@ -8,21 +8,20 @@
 
 /// <reference path="debug.ts"/>
 
-var debug: boolean = false;
-
 class Screentip {
+	private debug: boolean;
 	private x: number;
 	private y: number;
 	private title: string;
 	private msg: string;
 
 	constructor(debug: boolean, x: number, y: number) {
-		debug = debug;
+		this.debug = debug;
 		this.x = x;
 		this.y = y;
 		this.title = "";
 		this.msg = "";
-		Debug.print(debug, "Created screentip at " + this.x + "," + this.y); // !
+		Debug.emit(this.debug, "Created screentip at ${this.x},${this.y}"); // !
 	}
 
 	public emit(title: string, message: string): void {
