@@ -6,7 +6,7 @@
 	HTML5/TypeScript implementation
 */
 
-/// <reference path="graphics.ts" />
+/// <reference path="graphics.ts"/>
 
 class Card {
 	private image: any;
