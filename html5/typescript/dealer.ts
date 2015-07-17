@@ -10,16 +10,15 @@
 /// <reference path="card.ts"/>
 /// <reference path="debug.ts"/>
 
-var debug: boolean = false;
-
 class Dealer {
+	private debug: boolean;
 	private index: number;
 	private pos: number;
 	private cards: string[];
 	private values: number[];
 
 	constructor(debug: boolean) {
-		debug = debug;
+		this.debug = debug;
 		this.index = 0;
 		this.pos = 225;
 		this.cards = new Array<string>();
@@ -46,20 +45,20 @@ class Dealer {
 		var card: string = cards.draw();
 		this.cards.push(card);
 		this.values.push(cards.getValue());
-		Debug.print(debug, "Dealer hits.");
-		Debug.print(debug, "Dealer gets " + card);
+		Debug.emit(this.debug, "Dealer hits.");
+		Debug.emit(this.debug, "Dealer gets ${card}");
 		return new Card(Card.getImageData(card), this.pos, 10);
 	}
 
 	private stand(): void {
-		Debug.print(debug, "Dealer stands.");
+		Debug.emit(this.debug, "Dealer stands.");
 	}
 
 	public shuffle(cards: Cards): void {
 		if(cards.getPlayed() == 0 || cards.getPlayed() >= 45) {
-			Debug.print(debug, "-------------------------------------------------------");
-			Debug.print(debug, "Dealer is shuffling cards...");
-			Debug.print(debug, "-------------------------------------------------------");
+			Debug.emit(this.debug, "-------------------------------------------------------");
+			Debug.emit(this.debug, "Dealer is shuffling cards...");
+			Debug.emit(this.debug, "-------------------------------------------------------");
 			cards.shuffle();
 		}
 	}
@@ -67,9 +66,9 @@ class Dealer {
 	public deal(cards: Cards): string[] {
 		var dealt: string[] = new Array<string>();
 		var i: number = 1;
-		Debug.print(debug, "-------------------------------------------------------");
-		Debug.print(debug, "Dealer is dealing cards for a new game...");
-		Debug.print(debug, "-------------------------------------------------------");
+		Debug.emit(this.debug, "-------------------------------------------------------");
+		Debug.emit(this.debug, "Dealer is dealing cards for a new game...");
+		Debug.emit(this.debug, "-------------------------------------------------------");
 		while(i <= (2 * 2)) {
 			dealt.push(cards.draw() + ":" + cards.getValue());
 			i++;
@@ -81,15 +80,15 @@ class Dealer {
 			this.values.push(parseInt(cv[1]));
 			i++;
 		}
-		Debug.print(debug, "\nDealer has:");
-		Debug.print(debug, "[**]" + this.cards[1]);
+		Debug.emit(this.debug, "\nDealer has:");
+		Debug.emit(this.debug, "[**]${this.cards[1]}");
 		return [dealt[2], dealt[3]]
 	}
 
 	public hasBlackjack(): boolean {
 		var blackjack: boolean = false;
 		if(this.calcTotal() == 21) {
-			Debug.print(debug, "Dealer has Blackjack!");
+			Debug.emit(this.debug, "Dealer has Blackjack!");
 			blackjack = true;
 		}
 		return blackjack;
@@ -98,7 +97,7 @@ class Dealer {
 	public isBust(): boolean {
 		var bust: boolean = false;
 		if(this.calcTotal() > 21) {
-			Debug.print(debug, "Dealer is bust!");
+			Debug.emit(this.debug, "Dealer is bust!");
 			bust = true;
 		}
 		return bust;
@@ -140,8 +139,8 @@ class Dealer {
 		for(var i: number = 0; i < this.cards.length; i++) {
 			cards += this.cards[i];
 		}
-		Debug.print(debug, "\nDealer has:");
-		Debug.print(debug, cards + " --> " + this.calcTotal().toString());
+		Debug.emit(this.debug, "\nDealer has:");
+		Debug.emit(this.debug, "${cards} --> ${this.calcTotal()}";
 		return this.calcTotal();
 	}
 
