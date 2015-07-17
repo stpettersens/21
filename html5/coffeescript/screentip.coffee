@@ -4,17 +4,15 @@
 #	
 #	HTML5/CoffeeScript implementation
 
-debug = false
-
 class Screentip
 
 	constructor: (debug, x, y) ->
-		debug = debug
+		@debug = debug
 		@x = x
 		@y = y
 		@title = ""
 		@msg = ""
-		Debug.print(debug, "Created screentip at #{x},#{y}") # !
+		Debug.emit(@debug, "Created screentip at #{@x},#{@y}") # !
 
 	emit: (title, message) ->
 		@.clear()
