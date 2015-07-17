@@ -91,7 +91,7 @@ window.onload = function(): void {
 		}
 
 		if(cards.getPlayed() == 52) {
-			dealer_pile = new Card(Card_getImage("d"), 10, 10);
+			dealer_pile = new Card(Card.getImage("d"), 10, 10);
 		}
 		Debug.print(debug, "Cards played " + cards.getPlayed().toString());
 		d_score.emit(dealer.calcTotal());
@@ -111,19 +111,19 @@ window.onload = function(): void {
 		player_cards = new Array<Card>();
 		dealer_index = 2;
 		dealer_cards = new Array<Card>();
-		dealer_pile = new Card(Card_getImageData("c"), 10, 10);
+		dealer_pile = new Card(Card.getImageData("c"), 10, 10);
 		screentip.clear();
 		player = new Player(debug);
 		dealer = new Dealer(debug);
 		dealer.shuffle(cards);
 		player_cards = player.receiveCards(dealer.deal(cards));
 		dealer_cards = dealer.receiveCards();
-		player_cards[2] = new Card(Card_getImageData("d"), 405, 310);
-		player_cards[3] = new Card(Card_getImageData("d"), 495, 310);
-		player_cards[4] = new Card(Card_getImageData("d"), 585, 310);
-		dealer_cards[2] = new Card(Card_getImageData("d"), 405, 10);
-		dealer_cards[3] = new Card(Card_getImageData("d"), 495, 10);
-		dealer_cards[4] = new Card(Card_getImageData("d"), 585, 10);
+		player_cards[2] = new Card(Card.getImageData("d"), 405, 310);
+		player_cards[3] = new Card(Card.getImageData("d"), 495, 310);
+		player_cards[4] = new Card(Card.getImageData("d"), 585, 310);
+		dealer_cards[2] = new Card(Card.getImageData("d"), 405, 10);
+		dealer_cards[3] = new Card(Card.getImageData("d"), 495, 10);
+		dealer_cards[4] = new Card(Card.getImageData("d"), 585, 10);
 		update();
 		draw();
 	}
