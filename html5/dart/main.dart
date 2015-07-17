@@ -131,12 +131,12 @@ void eventKeyDown(dynamic event) {
 }
 
 bool isTouchScreenDevice() {
-	bool isTouch = false;
+	bool touch = false;
 	String ua = window.navigator.userAgent;
 	if(ua.indexOf("Mobile") != -1 || ua.indexOf("Tablet") != -1) {
-		isTouch = true;
+		touch = true;
 	}
-	return isTouch;
+	return touch;
 }
 
 void showCards() {
