@@ -45,12 +45,10 @@ class Card {
 		return graphics[gfx_fns.indexOf(Card.getImage(card))];
 	}
 
-	/*
-	public getImage(): string {
+	public getImageSrc(): string {
 		return this.image.src;
 	}
-	*/
-
+	
 	public setXY(pos_x: number, pos_y: number): void {
 		this.pos_x = pos_x;
 		this.pos_y = pos_y;
