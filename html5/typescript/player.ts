@@ -10,16 +10,15 @@
 /// <reference path="card.ts"/>
 /// <reference path="debug.ts"/>
 
-var debug: boolean = false;
-
 class Player {
+	private debug: boolean;
 	private index: number;
 	private pos: number;
 	private cards: string[];
 	private values: number[];
 
 	constructor(debug: boolean) {
-		debug = debug;
+		this.debug = debug;
 		this.index = -1;
 		this.pos = 225;
 		this.cards = new Array<string>();
@@ -43,7 +42,7 @@ class Player {
 	public hasBlackjack(): boolean {
 		var blackjack: boolean = false;
 		if(this.calcTotal() == 21) {
-			Debug.print(debug, "Player has Blackjack!");
+			Debug.emit(this.debug, "Player has Blackjack!");
 			blackjack = true;
 		}
 		return blackjack;
@@ -52,7 +51,7 @@ class Player {
 	public isBust(): boolean {
 		var bust: boolean = false;
 		if(this.calcTotal() > 21) {
-			Debug.print(debug, "Player is bust!");
+			Debug.emit(this.debug, "Player is bust!");
 			bust = true;
 		}
 		return bust;
@@ -66,8 +65,8 @@ class Player {
 			this.values.push(parseInt(cv[1]));
 		}
 		pc = this.cards[0] + this.cards[1];
-		Debug.print(debug, "\nPlayer receives their cards:");
-		Debug.print(debug, pc + " --> " + this.calcTotal().toString())
+		Debug.emit(this.debug, "\nPlayer receives their cards:");
+		Debug.emit(this.debug, pc + " --> " + this.calcTotal().toString())
 
 		this.index++;
 		var cardA = new Card(Card_getImageData(this.cards[this.index]), this.pos, 310);
@@ -83,15 +82,15 @@ class Player {
 		this.values.push(cards.getValue());
 		this.index++;
 		this.pos += 90;
-		Debug.print(debug, "Player hits.");
-		Debug.print(debug, "Player gets " + card);
-		Debug.print(debug, "Player has " + this.calcTotal().toString());
+		Debug.emit(this.debug, "Player hits.");
+		Debug.emit(this.debug, "Player gets " + card);
+		Debug.emit(this.debug, "Player has " + this.calcTotal().toString());
 		return new Card(Card_getImageData(card.match(/\[*([A-Za-z0-9]+)\]*/)[0]), this.pos, 310);
 	}
 
 	public stand(): void {
-		Debug.print(debug, "Player stands.");
-		Debug.print(debug, "Player has " + this.calcTotal().toString());
+		Debug.emit(this.debug, "Player stands.");
+		Debug.emit(this.debug, "Player has " + this.calcTotal().toString());
 	}
 
 	public showCards(): number {
@@ -101,8 +100,8 @@ class Player {
 		for(var i: number = 0; i < this.cards.length; i++) {
 			cards += this.cards[i];
 		}
-		Debug.print(debug, "\nPlayer has:");
-		Debug.print(debug, cards + " --> " + this.calcTotal().toString());
+		Debug.emit(this.debug, "\nPlayer has:");
+		Debug.emit(this.debug, cards + " --> " + this.calcTotal().toString());
 		return this.calcTotal();
 	}
 }
