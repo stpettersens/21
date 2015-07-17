@@ -1,8 +1,8 @@
-#	Blackjack
-#	Copyright 2015 Sam Saint-Pettersen
-#	Released under the MIT/X11 License.
+# Blackjack
+# Copyright 2015 Sam Saint-Pettersen
+# Released under the MIT/X11 License.
 #	
-#	HTML5/CoffeeScript implementation
+# HTML5/CoffeeScript implementation
 
 # Coffee-stir includes; 
 # invoke "coffee-stir main.coffee -o blackjack.coffee"
