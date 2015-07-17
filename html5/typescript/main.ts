@@ -36,7 +36,7 @@ var SCREEN_HEIGHT: number = 500;
 
 window.onload = function(): void {
 
-	Debug.print(debug, "Initialized HTML5 Blackjack (TypeScript build).");
+	Debug.emit(debug, "Initialized HTML5 Blackjack (TypeScript build).");
 	var canvas: any = document.getElementById("blackjack-table");
 	canvas.width = SCREEN_WIDTH.toString();
 	canvas.height = SCREEN_HEIGHT.toString();
@@ -54,12 +54,12 @@ window.onload = function(): void {
 	newGame();
 
 	function isTouchScreenDevice(): boolean {
-		var isTouch: boolean = false;
+		var touch: boolean = false;
 		var ua: string = navigator.userAgent;
 		if(ua.indexOf("Mobile") !== -1 || ua.indexOf("Tablet") !== -1) {
-			isTouch = true;
+			touch = true;
 		}
-		return isTouch;
+		return touch;
 	}
 
 	function showCards(): void {
@@ -93,7 +93,7 @@ window.onload = function(): void {
 		if(cards.getPlayed() == 52) {
 			dealer_pile = new Card(Card.getImage("d"), 10, 10);
 		}
-		Debug.print(debug, "Cards played " + cards.getPlayed().toString());
+		Debug.emit(debug, "Cards played ${cards.getPlayed()}");
 		d_score.emit(dealer.calcTotal());
 		if(!isTouchScreenDevice()) {
 			instruction.emit("Play again? Yes [Y key or LMB] or No [N key or Escape key].");
@@ -192,8 +192,8 @@ window.onload = function(): void {
 			var xy: number[] = dealer_cards[dealer_index].getXY();
 			dealer_cards[dealer_index] = received[i];
 			dealer_cards[dealer_index].setXY(xy[0], xy[1]);
-			Debug.print(debug, "Added image at " + xy[0] + "," + xy[1]);
-			Debug.print(debug, dealer_index);
+			Debug.emit(debug, "Added image at ${xy[0]},${xy[1]}");
+			Debug.emit(debug, dealer_index);
 			dealer_index++;
 		}
 		showCards();
