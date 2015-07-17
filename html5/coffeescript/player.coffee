@@ -4,12 +4,10 @@
 #	
 #	HTML5/CoffeeScript implementation
 
-debug = false
-
 class Player
 
 	constructor: (debug) ->
-		debug = debug
+		@debug = debug
 		@index = -1
 		@pos = 225
 		@cards = []
@@ -34,14 +32,14 @@ class Player
 	hasBlackjack: () ->
 		blackjack = false
 		if @.calcTotal() == 21
-			Debug.print(debug, "Dealer has Blackjack!")
+			Debug.emit(@debug, "Dealer has Blackjack!")
 			blackjack = true
 		return blackjack
 
 	isBust: () ->
 		bust = false
 		if @.calcTotal() > 21
-			Debug.print(debug, "Dealer is bust!")
+			Debug.emit(@debug, "Dealer is bust!")
 			bust = true
 		return bust
 
@@ -55,8 +53,8 @@ class Player
 			i++
 
 		pc = @cards[0] + @cards[1]
-		Debug.print(debug, "\nPlayer receives their cards:")
-		Debug.print(debug, "#{pc} --> #{@.calcTotal()}")
+		Debug.emit(@debug, "\nPlayer receives their cards:")
+		Debug.emit(@debug, "#{pc} --> #{@.calcTotal()}")
 		@index++
 		cardA = new Card(Card_getImageData(@cards[@index]), @pos, 310)
 		@pos += 90
@@ -70,14 +68,14 @@ class Player
 		@values.push(cards.getValue())
 		@index++
 		@pos += 90
-		Debug.print(debug, "Player hits.");
-		Debug.print(debug, "Player gets #{card}");
-		Debug.print(debug, "Player has #{@.calcTotal()}");
+		Debug.emit(@debug, "Player hits.");
+		Debug.emit(@debug, "Player gets #{card}");
+		Debug.emit(@debug, "Player has #{@.calcTotal()}");
 		return new Card(Card_getImageData(card.match(/\[*([A-Za-z0-9]+)\]*/)[0]), @pos, 310);
 
 	stand: () ->
-		Debug.print(debug, "Player stands.")
-		Debug.print(debug, "Player has #{@.calcTotal()}")
+		Debug.emit(@debug, "Player stands.")
+		Debug.emit(@debug, "Player has #{@.calcTotal()}")
 
 	showCards: () ->
 		@index = 0
@@ -87,6 +85,6 @@ class Player
 			cards = @cards[i]
 			i++
 
-		Debug.print(debug, "\nPlayer has:")
-		Debug.print(debug, "#{cards} --> #{@.calcTotal()}")
+		Debug.emit(@debug, "\nPlayer has:")
+		Debug.emit(@debug, "#{cards} --> #{@.calcTotal()}")
 		return @.calcTotal()
