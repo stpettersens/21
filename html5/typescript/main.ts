@@ -1,9 +1,9 @@
 /*
- Blackjack
- Copyright 2015 Sam Saint-Pettersen
- Released under the MIT/X11 License.
+ 	Blackjack
+ 	Copyright 2015 Sam Saint-Pettersen
+ 	Released under the MIT/X11 License.
 
- HTML5/TypeScript implementation
+ 	HTML5/TypeScript implementation
 */
 
 /// <reference path="cards.ts"/>
