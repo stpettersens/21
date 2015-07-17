@@ -2,11 +2,11 @@
 	Combine Blackjack (TypeScript) scripts into one minified JavaScript file. 
 */
 var gulp = require('gulp'),
-	    fs = require('fs'),
-	    ts = require('gulp-typescript'),
-	rename = require('gulp-rename'),
-	insert = require('gulp-insert'),
-	uglify = require('gulp-uglify');
+      fs = require('fs'),
+      ts = require('gulp-typescript'),
+      rename = require('gulp-rename'),
+      insert = require('gulp-insert'),
+      uglify = require('gulp-uglify');
 
 gulp.task('js', function() {
 	return gulp.src('main.ts')
