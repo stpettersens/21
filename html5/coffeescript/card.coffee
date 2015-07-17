@@ -32,8 +32,8 @@ class Card
 	@getImageData: (card) ->
 		return graphics[gfx_fns.indexOf(Card.getImage(card))]
 
-	#getImage: () ->
-		#return @image.src
+	getImageSrc: () ->
+		return @image.src
 
 	setXY: (pos_x, pos_y) ->
 		@pos_x = pos_x
