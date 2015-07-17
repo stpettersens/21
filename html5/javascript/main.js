@@ -36,7 +36,7 @@ window.onload = function() {
 	canvas.style.marginLeft = 'auto';
 	canvas.style.marginRight = 'auto';
 	canvas.style.display = 'block';
-	canvas.style.border = '1px dotted #000000';
+	canvas.style.border = '1px dotted rgb(0, 0, 0)';
 
 	screentip = new Screentip(debug, ((SCREEN_WIDTH / 2) - 50), 190);
 	instruction = new Score(debug, ((SCREEN_WIDTH / 2) - 155), 450);
@@ -46,12 +46,12 @@ window.onload = function() {
 	newGame();
 
 	function isTouchScreenDevice() {
-		var isTouch = false;
+		var touch = false;
 		var ua = navigator.userAgent;
 		if(ua.indexOf("Mobile") !== -1 || ua.indexOf("Tablet") !== -1) {
-			isTouch = true;
+			touch = true;
 		}
-		return isTouch;
+		return touch;
 	}
 
 	function newGame() {
