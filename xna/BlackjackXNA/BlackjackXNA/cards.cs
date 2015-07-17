@@ -25,8 +25,8 @@ namespace BlackjackXNA
       this.deck_num = 52;
       this.deck = new List<string>();
       this.played = new List<string>();
-      this.ranks = [ "A", "2", "3", "4", "5", "6", "7", "8", "9", "10", "J", "Q", "K" ];
-      this.suits = [ "h", "d", "c", "s" ];
+      this.ranks = { "A", "2", "3", "4", "5", "6", "7", "8", "9", "10", "J", "Q", "K" };
+      this.suits = { "h", "d", "c", "s" };
     }
   
     private string GetRank() 
