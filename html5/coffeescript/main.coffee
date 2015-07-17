@@ -55,11 +55,11 @@ SCREEN_HEIGHT = 500
 	newGame()
 
 @isTouchScreenDevice = () ->
-	isTouch = false
+	touch = false
 	ua = navigator.userAgent;
 	if ua.indexOf("Mobile") != -1 or ua.indexOf("Tablet") != -1
-		isTouch = true
-	return isTouch
+		touch = true
+	return touch
 
 @showCards = () ->
 	playing = false
