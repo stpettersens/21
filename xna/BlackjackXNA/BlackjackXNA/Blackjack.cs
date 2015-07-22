@@ -8,7 +8,6 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Diagnostics;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Audio;
 using Microsoft.Xna.Framework.Content;
@@ -16,6 +15,7 @@ using Microsoft.Xna.Framework.GamerServices;
 using Microsoft.Xna.Framework.Graphics;
 using Microsoft.Xna.Framework.Input;
 using Microsoft.Xna.Framework.Media;
+using Helper;
 
 namespace BlackjackXNA
 {
@@ -24,65 +24,81 @@ namespace BlackjackXNA
     /// </summary>
     public class Blackjack : Microsoft.Xna.Framework.Game
     {
+        bool debug;
+        bool ai;
+        bool playing;
+        int player_index;
+        Card[] player_cards;
+        int dealer_index;
+        List<Card> dealer_cards;
+        Screentip screentip;
+        Score instruction;
+        Score p_score;
+        Score d_score;
+        Card dealer_pile;
+        Cards cards;
+        Player player;
+        Dealer dealer;
+        int timer;
+
+        const int SCREEN_WIDTH = 780;
+        const int SCREEN_HEIGHT = 500;
+
         GraphicsDeviceManager graphics;
         SpriteBatch spriteBatch;
-        Texture2D blankCard;
-        Texture2D dummyCard;
-        List<string> str_hearts;
-        List<string> str_clubs;
-        List<string> str_diamonds;
-        List<string> str_spades;
-        List<Texture2D> gfx_hearts;
-        List<Texture2D> gfx_clubs;
-        List<Texture2D> gfx_diamonds;
-        List<Texture2D> gfx_spades;
+        List<string> strCards;
+        List<Texture2D> gfxCards;
  
         public Blackjack()
         {
-            str_hearts = new List<string>();
-            str_clubs = new List<string>();
-            str_diamonds = new List<string>();
-            str_spades = new List<string>();
+            this.debug = true;
+            this.ai = false;
+            this.playing = false;
+
+            this.strCards = new List<string>();
 
             for (int i = 1; i <= 13; i++)
             {
                 if (i == 1)
                 {
-                    str_hearts.Add("hA");
-                    str_clubs.Add("cA");
-                    str_diamonds.Add("dA");
-                    str_spades.Add("sA");
+                    strCards.Add("hA");
+                    strCards.Add("cA");
+                    strCards.Add("dA");
+                    strCards.Add("sA");
                 }
                 else if (i == 11)
                 {
-                    str_hearts.Add("hJ");
-                    str_clubs.Add("cJ");
-                    str_diamonds.Add("dJ");
-                    str_spades.Add("sJ");
+                    strCards.Add("hJ");
+                    strCards.Add("cJ");
+                    strCards.Add("dJ");
+                    strCards.Add("sJ");
                 }
                 else if (i == 12)
                 {
-                    str_hearts.Add("hQ");
-                    str_clubs.Add("cQ");
-                    str_diamonds.Add("dQ");
-                    str_spades.Add("sQ");
+                    strCards.Add("hQ");
+                    strCards.Add("cQ");
+                    strCards.Add("dQ");
+                    strCards.Add("sQ");
                 }
                 else if (i == 13)
                 {
-                    str_hearts.Add("hK");
-                    str_clubs.Add("cK");
-                    str_diamonds.Add("dK");
-                    str_spades.Add("sK");
+                    strCards.Add("hK");
+                    strCards.Add("cK");
+                    strCards.Add("dK");
+                    strCards.Add("sK");
                 }
                 else
                 {
-                    str_hearts.Add("h" + i.ToString());
-                    str_clubs.Add("c" + i.ToString());
-                    str_diamonds.Add("d" + i.ToString());
-                    str_spades.Add("s" + i.ToString());
+                    strCards.Add("h" + i.ToString());
+                    strCards.Add("c" + i.ToString());
+                    strCards.Add("d" + i.ToString());
+                    strCards.Add("s" + i.ToString());
                 }
             }
             graphics = new GraphicsDeviceManager(this);
+            graphics.IsFullScreen = false;
+            graphics.PreferredBackBufferHeight = SCREEN_HEIGHT;
+            graphics.PreferredBackBufferWidth = SCREEN_WIDTH;
             Content.RootDirectory = "Content";
         }
 
@@ -94,8 +110,7 @@ namespace BlackjackXNA
         /// </summary>
         protected override void Initialize()
         {
-            // TODO: Add your initialization logic here
-
+            Debugger.Emit(this.debug, "Initialized Blackjack (C#/XNA).");
             base.Initialize();
         }
 
@@ -108,31 +123,26 @@ namespace BlackjackXNA
             // Create a new SpriteBatch, which can be used to draw textures.
             spriteBatch = new SpriteBatch(GraphicsDevice);
 
-            // TODO: use this.Content to load your game content here
-            blankCard = this.Content.Load<Texture2D>("c");
-            dummyCard = this.Content.Load<Texture2D>("d");
-
-            gfx_hearts = new List<Texture2D>();
-            gfx_clubs = new List<Texture2D>();
-            gfx_diamonds = new List<Texture2D>();
-            gfx_spades = new List<Texture2D>();
-            for (int i = 0; i < str_hearts.Count; i++)
+            gfxCards = new List<Texture2D>();
+            gfxCards.Add(this.Content.Load<Texture2D>("c"));
+            gfxCards.Add(this.Content.Load<Texture2D>("d"));
+            for (int i = 0; i < this.strCards.Count; i++)
             {
-                gfx_hearts.Add(this.Content.Load<Texture2D>(str_hearts[i]));
-                gfx_clubs.Add(this.Content.Load<Texture2D>(str_clubs[i]));
-                gfx_diamonds.Add(this.Content.Load<Texture2D>(str_diamonds[i]));
-                gfx_spades.Add(this.Content.Load<Texture2D>(str_spades[i]));
+                gfxCards.Add(this.Content.Load<Texture2D>(strCards[i]));
             }
+            this.screentip = new Screentip(this.debug, ((SCREEN_WIDTH / 2) - 50), 190);
+            this.instruction = new Score(this.debug, ((SCREEN_WIDTH / 2) - 155), 450);
+            this.p_score = new Score(debug, 153, 315);
+            this.d_score = new Score(debug, 153, 25);
+            this.cards = new Cards(this.strCards, this.gfxCards);
+            //this.NewGame();
         }
 
         /// <summary>
         /// UnloadContent will be called once per game and is the place to unload
         /// all content.
         /// </summary>
-        protected override void UnloadContent()
-        {
-            // TODO: Unload any non ContentManager content here
-        }
+        protected override void UnloadContent() {}
 
         /// <summary>
         /// Allows the game to run logic such as updating the world,
@@ -145,8 +155,6 @@ namespace BlackjackXNA
             if (GamePad.GetState(PlayerIndex.One).Buttons.Back == ButtonState.Pressed)
                 this.Exit();
 
-            // TODO: Add your update logic here
-
             base.Update(gameTime);
         }
 
@@ -158,10 +166,22 @@ namespace BlackjackXNA
         {
             GraphicsDevice.Clear(Color.Green);
             spriteBatch.Begin();
-            Card card = new Card(gfx_hearts[0], 10, 10);
-            card.Draw(spriteBatch);
+
             spriteBatch.End();
             base.Draw(gameTime);
+        }
+
+        private void NewGame()
+        {
+            this.playing = true;
+            this.player_index = 2;
+            this.dealer_index = 2;
+            this.dealer_pile = new Card(this.cards.GetCardImages(Card.GetImage("c")), 10, 10);
+            this.screentip.Clear();
+            this.player = new Player(this.debug);
+            this.dealer = new Dealer(this.debug);
+            this.dealer.Shuffle(this.cards);
+            this.player_cards = player.ReceiveCards(cards, this.dealer.Deal(this.cards));
         }
     }
 }

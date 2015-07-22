@@ -26,7 +26,7 @@ namespace BlackjackXNA
       this.posX = posX;
       this.posY = posY;
       this.score = "";
-      Debugger.Emit(this.debug, String.Format("Created score counter at %d,%d", this.posX, this.posY));
+      Debugger.Emit(this.debug, String.Format("Created score counter at {0},{1}", this.posX, this.posY));
     }
   
     public void Emit(dynamic score) 
@@ -42,7 +42,7 @@ namespace BlackjackXNA
   
     public void Draw(SpriteBatch spriteBatch) 
     {
-      Debugger.Emit(String.Format("Score is '%s'", this.score);
+      Debugger.Emit(this.debug, String.Format("Score is '%s'", this.score));
       // TODO Actual XNA draw
     }
   }

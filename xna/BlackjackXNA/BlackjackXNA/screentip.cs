@@ -24,7 +24,7 @@ namespace BlackjackXNA
       this.debug = debug;
       this.posX = posX;
       this.posY = posY;
-      Debugger.Emit(this.debug, String.Format("Created screentip at %d,%d", this.posX, this.posY));
+      Debugger.Emit(this.debug, String.Format("Created screentip at {0},{1}", this.posX, this.posY));
     }
   
     public void Emit(string title, string message) {
@@ -39,7 +39,7 @@ namespace BlackjackXNA
     }
   
     public void Draw() {
-      Debugger.Emit(this.debug, String.Format("Screentip is:\n%s\n%s", this.title, this.msg);
+      Debugger.Emit(this.debug, String.Format("Screentip is:\n%s\n%s", this.title, this.msg));
       // TODO Actual XNA draw
     }
   }

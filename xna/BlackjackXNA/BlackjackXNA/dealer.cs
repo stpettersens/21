@@ -30,7 +30,7 @@ namespace BlackjackXNA
   
     public int CalcTotal() 
     {
-      this.values = this.values.OrderByDescending().toList();
+      this.values.Sort(); //.OrderByDescending().toList();
       int total = 0;
       for(int i = 0; i < this.values.Count; i++) 
       {
@@ -54,7 +54,7 @@ namespace BlackjackXNA
       this.values.Add(cards.GetValue());
       Debugger.Emit(this.debug, "Dealer hits.");
       Debugger.Emit(this.debug, "Dealer gets " + card);
-      return new Card(Card.GetImage(card), this.pos, 10);
+      return new Card(cards.GetCardImages(Card.GetImage(card)), this.pos, 10);
     }
   
     private void Stand() 
@@ -88,7 +88,7 @@ namespace BlackjackXNA
       i = 0;
       while(i < 2) 
       {
-        string[] cv = dealt[i].split(":");
+        string[] cv = dealt[i].Split();
         this.cards.Add(cv[0]);
         this.values.Add(int.Parse(cv[1]));
         i++;
@@ -134,7 +134,7 @@ namespace BlackjackXNA
           if(total == 16)
           {
             Random rand = new Random();
-            if(Math.Floor(rand.Next() * 6) >= 3) 
+            if(Math.Floor((double)rand.Next() * 6) >= 3) 
             {
               response_cards.Add(this.Hit(cards)); // Take risk.
             }
@@ -168,22 +168,22 @@ namespace BlackjackXNA
         cards += this.cards[i];
       }
       Debugger.Emit(this.debug, "\nDealer has:");
-      Debugger.Emit(this.debug, "%s --> %d", cards, this.CalcTotal());
+      Debugger.Emit(this.debug, String.Format("%s --> %d", cards, this.CalcTotal()));
       return this.CalcTotal();
     }
   
-    public Card[] ReceiveCards() 
+    public Card[] ReceiveCards(Cards cards) 
     {
-      Card cardA = new Card(Card.getImage("c"), this.pos, 10);
+      Card cardA = new Card(cards.GetCardImages(Card.GetImage("c")), this.pos, 10);
       this.pos += 90;
-      Card cardB = new Card(Card.getImage(this.cards[1]), this.pos, 10);
+      Card cardB = new Card(cards.GetCardImages(Card.GetImage(this.cards[1])), this.pos, 10);
       this.index += 2;
       return new Card[] { cardA, cardB };
     }
   
     public Card RevealFirstCard() 
     {
-      return new Card(Card.getImage(this.cards[0]), 225, 10);
+        return null;
     }
   }
 }

@@ -30,7 +30,7 @@ namespace BlackjackXNA
   
     public int CalcTotal() 
     {
-      this.values = this.values.OrderByDescending().toList();
+      this.values.Sort();
       int total = 0;
       for(int i = 0; i < this.values.Count; i++) 
       {
@@ -67,24 +67,24 @@ namespace BlackjackXNA
       return bust;
     }
   
-    public Card[] ReceiveCards(List<string> player_cards) 
+    public Card[] ReceiveCards(Cards cards, string[] player_cards) 
     {
       string pc = "";
-      for(int i = 0; i < player_cards.Count; i++) 
+      for(int i = 0; i < player_cards.Length; i++) 
       {
-        string[] cv = player_cards[i].split(":");
+        string[] cv = player_cards[i].Split();
         this.cards.Add(cv[0]);
         this.values.Add(int.Parse(cv[1]));
       }
       pc = this.cards[0] + this.cards[1];
       Debugger.Emit(this.debug, "\nPlayer receives their cards:");
-      Debugger.Emit(this.debug, "%s --> %d", pc, this.CalcTotal());
+      Debugger.Emit(this.debug, String.Format("%s --> %d", pc, this.CalcTotal()));
   
       this.index++;
-      Card cardA = new Card(Card.getImage(this.cards[this.index]), this.pos, 310);
+      Card cardA = new Card(cards.GetCardImages(Card.GetImage(this.cards[this.index])), this.pos, 310);
       this.pos += 90;
-      ths.index++;
-      Card cardB = new Card(Card.getImage(this.cards[this.index]), this.pos, 310);
+      this.index++;
+      Card cardB = new Card(cards.GetCardImages(Card.GetImage(this.cards[this.index])), this.pos, 310);
       return new Card[] { cardA, cardB };
     }
   
@@ -98,7 +98,7 @@ namespace BlackjackXNA
       Debugger.Emit(this.debug, "Player hits.");
       Debugger.Emit(this.debug, "Players gets " + card);
       Debugger.Emit(this.debug, String.Format("Player has %d", this.CalcTotal()));
-      return new Card(); // TODO
+      return null; //new Card(); // TODO
     }
   
     public void Stand() 
@@ -111,10 +111,10 @@ namespace BlackjackXNA
     {
       this.index = 0;
       this.pos = 225;
-      string card = "";
+      string cards = "";
       for(int i = 0; i < this.cards.Count; i++) 
       {
-        cards += this.cards[i];
+          cards += this.cards[i];
       }
       Debugger.Emit(this.debug, "\nPlayer has:");
       Debugger.Emit(this.debug, String.Format("%s --> %d", this.CalcTotal()));
