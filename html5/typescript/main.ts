@@ -78,10 +78,10 @@ window.onload = function(): void {
 			screentip.emit("PUSH", "Neither dealer nor player won.");
 		}
 		else if(ps <= 21 && ps > ds) {
-			screentip.emit("PLAYER WINS", "Player wins with " + ps.toString() + ". Well done.");
+			screentip.emit("PLAYER WINS", "Player wins with ${ps}. Well done.");
 		}
 		else if(ds <= 21 && ds > ps) {
-			screentip.emit("DEALER WINS", "Dealer wins with " + ds.toString() + ". Too bad.");
+			screentip.emit("DEALER WINS", "Dealer wins with ${ds}. Too bad.");
 		}
 		else if(ps > 21 && ds <= 21) {
 			screentip.emit("DEALER WINS", "Dealer wins. Player bust.")
