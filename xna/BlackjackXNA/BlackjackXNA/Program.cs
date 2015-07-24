@@ -1,3 +1,10 @@
+/*
+  Blackjack
+  Copyright 2015 Sam Saint-Pettersen
+  Released under the MIT/X11 License.
+
+  C#/XNA implementation
+*/
 using System;
 
 namespace BlackjackXNA
@@ -18,4 +25,3 @@ namespace BlackjackXNA
     }
 #endif
 }
-

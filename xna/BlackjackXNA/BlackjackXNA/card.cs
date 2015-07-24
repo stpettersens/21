@@ -24,11 +24,11 @@ namespace BlackjackXNA
         private Vector2 posXY;
 
         /// <summary>
-        /// Constructor for Card.
+        /// Constructor for card.
         /// </summary>
-        /// <param name="card">Card texture</param>
-        /// <param name="posX">X position for card</param>
-        /// <param name="posY">Y position for card</param>
+        /// <param name="card">Card texture.</param>
+        /// <param name="posX">X position for card.</param>
+        /// <param name="posY">Y position for card.</param>
         public Card(Texture2D card, int posX, int posY)
         {
             this.image = card;
@@ -63,7 +63,7 @@ namespace BlackjackXNA
         /// <summary>
         /// Get X, Y position of card as int[].
         /// </summary>
-        /// <returns></returns>
+        /// <returns>X, Y co-ordinates of card.</returns>
         public int[] GetXandY()
         {
             return new int[] { this.posX, this.posY };

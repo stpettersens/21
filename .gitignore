@@ -1,5 +1,6 @@
 *.pyc
 *.love
+*.userprefs
 /html5/javascript/dist
 /html5/javascript/index.html
 /html5/typescript/dist
@@ -11,3 +12,8 @@
 /html5/coffeescript/dist
 /html5/coffeescript/index.html
 /xna/BlackjackXNA/BlackjackXNA/*.user
+/unity/BlackjackUnity/Library
+/unity/BlackjackUnity/ProjectSettings
+/unity/BlackjackUnity/blackjack_Data
+/unity/BlackjackUnity/obj
+*.7z

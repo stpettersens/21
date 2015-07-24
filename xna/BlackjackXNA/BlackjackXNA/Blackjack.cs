@@ -258,7 +258,7 @@ namespace BlackjackXNA
         private bool HasBlackjack()
         {
             bool blackjack = false;
-            if(player.HasBlackjack() || player.HasBlackjack())
+            if(player.HasBlackjack() || dealer.HasBlackjack())
             {
                 blackjack = true;
             }
@@ -266,7 +266,7 @@ namespace BlackjackXNA
         }
 
         /// <summary>
-        /// Determine if a bust has occurred
+        /// Determine if a bust has occurred.
         /// </summary>
         /// <returns>Has a bust occurred?</returns>
         private bool IsBust()
@@ -284,7 +284,7 @@ namespace BlackjackXNA
         /// </summary>
         private void Hit()
         {
-            if(player_index < 5)
+            if(player_index < 6)
             {
                 player_cards[player_index] = player.Hit(cards);
                 int[] xy = player_cards[player_index].GetXandY();
@@ -314,7 +314,7 @@ namespace BlackjackXNA
         }
 
         /// <summary>
-        /// Bring up project's repository on GitHub
+        /// Bring up project's repository on GitHub.
         /// </summary>
         private void ViewGitHubRepo()
         {
@@ -328,8 +328,8 @@ namespace BlackjackXNA
         {
             playing = false;
             dealer_cards[0] = dealer.RevealFirstCard(cards);
-            int ds = this.dealer.ShowCards();
-            int ps = this.player.ShowCards();
+            int ds = dealer.ShowCards();
+            int ps = player.ShowCards();
 
             if(ps == 21 && player_index == 2 && ds != 21)
             {
@@ -341,7 +341,7 @@ namespace BlackjackXNA
             }
             else if((ps == ds) || (ps > 21 && ds > 21))
             {
-                screentip.Emit("PUSH", "Neither dealer not player won.");
+                screentip.Emit("PUSH", "Neither dealer nor player won.");
             }
             else if(ps <= 21 && ps > ds)
             {
@@ -412,7 +412,7 @@ namespace BlackjackXNA
                 player_cards.Add(new Card(cards.GetImage("d"), 585, 310));
                 dealer_cards.Add(new Card(cards.GetImage("d"), 405, 10));
                 dealer_cards.Add(new Card(cards.GetImage("d"), 495, 10));
-                dealer_cards.Add(new Card(cards.GetImage("d"), 495, 10));
+                dealer_cards.Add(new Card(cards.GetImage("d"), 585, 10));
             }
         }
     }

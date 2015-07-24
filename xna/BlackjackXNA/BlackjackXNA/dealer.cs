@@ -27,6 +27,7 @@ namespace BlackjackXNA
     /// Constructor for dealer.
     /// </summary>
     /// <param name="debug">Enable debug messages?</param>
+    /// <param name="gameCards">Game cards.</param>
     public Dealer(bool debug, Cards gameCards) 
     {
       this.debug = debug;
@@ -157,8 +158,8 @@ namespace BlackjackXNA
     /// <summary>
     /// Dealer responds to player action (e.g. a hit or stand).
     /// </summary>
-    /// <param name="cards">Game cards</param>
-    /// <returns>Cards returned</returns>
+    /// <param name="cards">Game cards.</param>
+    /// <returns>Cards returned.</returns>
     public List<Card> Respond(Cards cards) 
     {
       this.ShowCards();
@@ -211,8 +212,8 @@ namespace BlackjackXNA
         cards += String.Format("[{0}]", this.cards[i]);
       }
       Debugger.Emit(this.debug, "\nDealer has:");
-      Debugger.Emit(this.debug, String.Format("{0} --> {1}", cards, this.CalcTotal()));
-      return this.CalcTotal();
+      Debugger.Emit(this.debug, String.Format("{0} --> {1}", cards, CalcTotal()));
+      return CalcTotal();
     }
   
     /// <summary>

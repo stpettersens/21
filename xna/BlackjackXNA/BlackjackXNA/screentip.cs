@@ -27,10 +27,10 @@ namespace BlackjackXNA
         /// <summary>
         /// Constructor for screentip.
         /// </summary>
-        /// <param name="debug"></param>
-        /// <param name="posX"></param>
-        /// <param name="posY"></param>
-        /// <param name="font"></param>
+        /// <param name="debug">Enable debug messages?</param>
+        /// <param name="posX">X position for screentip.</param>
+        /// <param name="posY">Y position for screentip.</param>
+        /// <param name="font">Font to use for screentip.</param>
         public Screentip(bool debug, int posX, int posY, SpriteFont font) {
             this.debug = debug;
             this.posX = posX;
@@ -42,8 +42,8 @@ namespace BlackjackXNA
         /// <summary>
         /// Emit a title and message.
         /// </summary>
-        /// <param name="title"></param>
-        /// <param name="message"></param>
+        /// <param name="title">Title to emit.</param>
+        /// <param name="message">Message to emit.</param>
         public void Emit(string title, string message) {
             this.Clear();
             this.title = title;

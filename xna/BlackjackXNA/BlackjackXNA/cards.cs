@@ -11,8 +11,6 @@ using System.Threading;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 
-using Helper;
-
 namespace BlackjackXNA
 {
     /// <summary>
@@ -68,6 +66,10 @@ namespace BlackjackXNA
             return this.gfxCards[this.strCards.IndexOf(new string(cardArray))];
         }
 
+        /// <summary>
+        /// Get a rank for a card.
+        /// </summary>
+        /// <returns>Card rank.</returns>
         private string GetRank()
         {
             Random rand = new Random();
@@ -75,6 +77,10 @@ namespace BlackjackXNA
             return this.ranks[i];
         }
 
+        /// <summary>
+        /// Get a suit for a card.
+        /// </summary>
+        /// <returns>Card suit.</returns>
         private string GetSuit()
         {
             Random rand = new Random();
@@ -82,11 +88,18 @@ namespace BlackjackXNA
             return this.suits[i];
         }
 
+        /// <summary>
+        /// Get a card.
+        /// </summary>
+        /// <returns>Card as string.</returns>
         private string GetCard()
         {
             return String.Format("{0} {1}", this.GetRank(), this.GetSuit());
         }
 
+        /// <summary>
+        /// Shuffle cards.
+        /// </summary>
         public void Shuffle()
         {
             this.index = -1;
@@ -101,9 +114,12 @@ namespace BlackjackXNA
                     if (this.deck.Count == (deck_num - 17)) break;
                 }
             }
-            Debugger.Emit(true, "Shuffling completed.");
         }
 
+        /// <summary>
+        /// Draw a card.
+        /// </summary>
+        /// <returns></returns>
         public string Draw()
         {
             if (this.played.Count == this.deck_num || this.index == -1)
@@ -115,6 +131,10 @@ namespace BlackjackXNA
             return card;
         }
 
+        /// <summary>
+        /// Get a card's value.
+        /// </summary>
+        /// <returns>Card's value.</returns>
         public int GetValue()
         {
             string[] rs = this.deck[this.index].Split();
@@ -126,11 +146,19 @@ namespace BlackjackXNA
             return val;
         }
 
+        /// <summary>
+        /// Get number of played cards.
+        /// </summary>
+        /// <returns>Number of cards played.</returns>
         public int GetPlayed()
         {
             return this.played.Count;
         }
 
+        /// <summary>
+        /// Draw all the cards from a deck.
+        /// </summary>
+        /// <returns></returns>
         public List<string> DrawAll()
         {
             this.index = 0;

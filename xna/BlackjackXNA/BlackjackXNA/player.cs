@@ -90,7 +90,7 @@ namespace BlackjackXNA
     /// Receive cards from dealer.
     /// </summary>
     /// <param name="cards">Game cards</param>
-    /// <param name="player_cards">String array of player's cards</param>
+    /// <param name="player_cards">String[] of player's cards</param>
     /// <returns></returns>
     public List<Card> ReceiveCards(Cards cards, string[] player_cards) 
     {
@@ -103,7 +103,7 @@ namespace BlackjackXNA
       }
       pc = String.Format("[{0}][{1}]", this.cards[0], this.cards[1]);
       Debugger.Emit(this.debug, "\nPlayer receives their cards:");
-      Debugger.Emit(this.debug, String.Format("{0} --> {1}", pc, this.CalcTotal()));
+      Debugger.Emit(this.debug, String.Format("{0} --> {1}", pc, CalcTotal()));
   
       this.index++;
       Card cardA = new Card(cards.GetImage(this.cards[this.index]), this.pos, 310);
@@ -127,7 +127,7 @@ namespace BlackjackXNA
       this.pos += 90;
       Debugger.Emit(this.debug, "Player hits.");
       Debugger.Emit(this.debug, "Players gets " + card);
-      Debugger.Emit(this.debug, String.Format("Player has {0}", this.CalcTotal()));
+      Debugger.Emit(this.debug, String.Format("Player has {0}", CalcTotal()));
       return new Card(cards.GetImage(card), this.pos, 310);
     }
   
@@ -137,7 +137,7 @@ namespace BlackjackXNA
     public void Stand() 
     {
       Debugger.Emit(this.debug, "Player stands.");
-      Debugger.Emit(this.debug, String.Format("Player has {0}", this.CalcTotal()));
+      Debugger.Emit(this.debug, String.Format("Player has {0}", CalcTotal()));
     }
   
     /// <summary>
@@ -154,8 +154,8 @@ namespace BlackjackXNA
           cards += String.Format("[{0}]", this.cards[i]);
       }
       Debugger.Emit(this.debug, "\nPlayer has:");
-      Debugger.Emit(this.debug, String.Format("{0} --> {1}",  cards, this.CalcTotal()));
-      return this.CalcTotal();
+      Debugger.Emit(this.debug, String.Format("{0} --> {1}", cards, CalcTotal()));
+      return CalcTotal();
     }
   }
 }
