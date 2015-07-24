@@ -13,37 +13,66 @@ using Helper;
 
 namespace BlackjackXNA 
 {
-  class Score 
-  {
-    private bool debug;
-    private int posX;
-    private int posY;
-    private string score;
-  
-    public Score(bool debug, int posX, int posY) 
+    /// <summary>
+    /// Score implements a score or information box.
+    /// </summary>
+    class Score 
     {
-      this.debug = debug;
-      this.posX = posX;
-      this.posY = posY;
-      this.score = "";
-      Debugger.Emit(this.debug, String.Format("Created score counter at {0},{1}", this.posX, this.posY));
-    }
+        private bool debug;
+        private Vector2 posXY;
+        private string score;
+        private SpriteFont font;
+        
+        /// <summary>
+        /// Constructor for score.
+        /// </summary>
+        /// <param name="debug">Enable debug messages?</param>
+        /// <param name="posX">X position for score box.</param>
+        /// <param name="posY">Y position for score box.</param>
+        /// <param name="font">Font to use.</param>
+        public Score(bool debug, int posX, int posY, SpriteFont font) 
+        {
+            this.debug = debug;
+            this.posXY = new Vector2(posX, posY);
+            this.score = "";
+            this.font = font;
+            Debugger.Emit(this.debug, String.Format("Created score counter at {0},{1}", posX, posY));
+        }
+
+        /// <summary>
+        /// Emit a score or similar message.
+        /// </summary>
+        /// <param name="score">Score or similar message to emit.</param>
+        public void Emit(string score)
+        {
+            this.Clear();
+            this.score = score;
+        }
   
-    public void Emit(dynamic score) 
-    {
-      this.Clear();
-      this.score = score.toString();
-    }
+        /// <summary>
+        /// Emit a score.
+        /// </summary>
+        /// <param name="score">Score to emit.</param>
+        public void Emit(int score) 
+        {
+            this.Emit(score.ToString());
+        }
   
-    public void Clear() 
-    {
-      this.score = "";
-    }
+        /// <summary>
+        /// Clear the score box.
+        /// </summary>
+        public void Clear() 
+        {
+            this.score = "";
+        }
   
-    public void Draw(SpriteBatch spriteBatch) 
-    {
-      Debugger.Emit(this.debug, String.Format("Score is '%s'", this.score));
-      // TODO Actual XNA draw
+        /// <summary>
+        /// Draw the score box.
+        /// </summary>
+        /// <param name="spriteBatch">Sprite batch to draw with.</param>
+        public void Draw(SpriteBatch spriteBatch) 
+        {
+            spriteBatch.DrawString(this.font, this.score, this.posXY, Color.White);
+        }
     }
-  }
 }

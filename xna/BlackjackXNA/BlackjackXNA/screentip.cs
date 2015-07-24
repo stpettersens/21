@@ -13,34 +13,60 @@ using Helper;
 
 namespace BlackjackXNA
 {
-  class Screentip {
-    private bool debug;
-    private int posX;
-    private int posY;
-    private string title;
-    private string msg;
+    /// <summary>
+    /// Screentip implements a title and message box.
+    /// </summary>
+    class Screentip {
+        private bool debug;
+        private int posX;
+        private int posY;
+        private string title;
+        private string msg;
+        private SpriteFont font;
   
-    public Screentip(bool debug, int posX, int posY) {
-      this.debug = debug;
-      this.posX = posX;
-      this.posY = posY;
-      Debugger.Emit(this.debug, String.Format("Created screentip at {0},{1}", this.posX, this.posY));
-    }
+        /// <summary>
+        /// Constructor for screentip.
+        /// </summary>
+        /// <param name="debug"></param>
+        /// <param name="posX"></param>
+        /// <param name="posY"></param>
+        /// <param name="font"></param>
+        public Screentip(bool debug, int posX, int posY, SpriteFont font) {
+            this.debug = debug;
+            this.posX = posX;
+            this.posY = posY;
+            this.font = font;
+            Debugger.Emit(this.debug, String.Format("Created screentip at {0},{1}", posX, posY));
+        }
   
-    public void Emit(string title, string message) {
-      this.Clear();
-      this.title = title;
-      this.msg = message;
-    }
+        /// <summary>
+        /// Emit a title and message.
+        /// </summary>
+        /// <param name="title"></param>
+        /// <param name="message"></param>
+        public void Emit(string title, string message) {
+            this.Clear();
+            this.title = title;
+            this.msg = message;
+        }
   
-    public void Clear() {
-      this.title = "";
-      this.msg = "";
-    }
+        /// <summary>
+        /// Clear the screentip.
+        /// </summary>
+        public void Clear() {
+            this.title = "";
+            this.msg = "";
+        }
   
-    public void Draw() {
-      Debugger.Emit(this.debug, String.Format("Screentip is:\n%s\n%s", this.title, this.msg));
-      // TODO Actual XNA draw
+        /// <summary>
+        /// Draw the screentip.
+        /// </summary>
+        /// <param name="spriteBatch">Sprite batch to draw with.</param>
+        public void Draw(SpriteBatch spriteBatch) {
+            spriteBatch.DrawString(this.font, this.title, 
+            new Vector2(this.posX, this.posY), Color.White);
+            spriteBatch.DrawString(this.font, this.msg, 
+            new Vector2(this.posX - 45, this.posY + 20), Color.White);
+        }
     }
-  }
 }

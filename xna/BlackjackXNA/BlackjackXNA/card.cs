@@ -13,11 +13,15 @@ using Microsoft.Xna.Framework.Graphics;
 
 namespace BlackjackXNA
 {
+    /// <summary>
+    /// Card implements a single playing card.
+    /// </summary>
     class Card
     {
         private Texture2D image;
         private int posX;
         private int posY;
+        private Vector2 posXY;
 
         /// <summary>
         /// Constructor for Card.
@@ -30,22 +34,7 @@ namespace BlackjackXNA
             this.image = card;
             this.posX = posX;
             this.posY = posY;
-        }
-
-        /// <summary>
-        /// Get card image from string designation.
-        /// E.g. Qh => hQ.png
-        /// </summary>
-        /// <param name="card">Card string designation.</param>
-        /// <returns>Path to card image to draw.</returns>
-        public static string GetImage(string card)
-        {
-            if (card == "c" || card == "d")
-            {
-                return card;
-            }
-            string suit = "";
-            return suit;
+            this.posXY = new Vector2(posX, posY);
         }
 
         /// <summary>
@@ -55,16 +44,29 @@ namespace BlackjackXNA
         /// <param name="posY">Y position for card.</param>
         public void SetXY(int posX, int posY)
         {
-            this.posX = posX;
-            this.posY = posY;
+            this.posXY = new Vector2(posX, posY);
+        }
+
+        public void SetXY(Vector2 posXY)
+        {
+            this.posXY = posXY;
         }
 
         /// <summary>
-        /// Get X, Y position of card.
+        /// Get X, Y position of card as a Vector2.
         /// </summary>
         /// <returns>X, Y co-ordinates of card.</returns>
         public Vector2 GetXY() {
-            return new Vector2(this.posX, this.posY);
+            return this.posXY;
+        }
+
+        /// <summary>
+        /// Get X, Y position of card as int[].
+        /// </summary>
+        /// <returns></returns>
+        public int[] GetXandY()
+        {
+            return new int[] { this.posX, this.posY };
         }
 
         /// <summary>

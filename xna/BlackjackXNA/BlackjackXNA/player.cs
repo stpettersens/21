@@ -11,6 +11,9 @@ using Helper;
 
 namespace BlackjackXNA 
 {
+  /// <summary>
+  /// Player implements the player for Blackjack.
+  /// </summary>
   class Player 
   {
     private bool debug;
@@ -18,7 +21,11 @@ namespace BlackjackXNA
     private int pos;
     private List<string> cards;
     private List<int> values;
-  
+
+    /// <summary>
+    /// Constructor for player.
+    /// </summary>
+    /// <param name="debug">Enable debug messages?</param>
     public Player(bool debug) 
     {
       this.debug = debug;
@@ -28,6 +35,10 @@ namespace BlackjackXNA
       this.values = new List<int>();
     }
   
+    /// <summary>
+    /// Calculate the total value of player's held cards.
+    /// </summary>
+    /// <returns>Total value for player's held cards.</returns>
     public int CalcTotal() 
     {
       this.values.Sort();
@@ -45,6 +56,10 @@ namespace BlackjackXNA
       return total;
     }
   
+    /// <summary>
+    /// Determine if player has Blackjack.
+    /// </summary>
+    /// <returns>Does player have Blackjack?</returns>
     public bool HasBlackjack() 
     {
       bool blackjack = false;
@@ -56,6 +71,10 @@ namespace BlackjackXNA
       return blackjack;
     }
   
+    /// <summary>
+    /// Determine if player is bust.
+    /// </summary>
+    /// <returns>Is player bust?</returns>
     public bool IsBust() 
     {
       bool bust = false;
@@ -67,7 +86,13 @@ namespace BlackjackXNA
       return bust;
     }
   
-    public Card[] ReceiveCards(Cards cards, string[] player_cards) 
+    /// <summary>
+    /// Receive cards from dealer.
+    /// </summary>
+    /// <param name="cards">Game cards</param>
+    /// <param name="player_cards">String array of player's cards</param>
+    /// <returns></returns>
+    public List<Card> ReceiveCards(Cards cards, string[] player_cards) 
     {
       string pc = "";
       for(int i = 0; i < player_cards.Length; i++) 
@@ -76,18 +101,23 @@ namespace BlackjackXNA
         this.cards.Add(cv[0]);
         this.values.Add(int.Parse(cv[1]));
       }
-      pc = this.cards[0] + this.cards[1];
+      pc = String.Format("[{0}][{1}]", this.cards[0], this.cards[1]);
       Debugger.Emit(this.debug, "\nPlayer receives their cards:");
-      Debugger.Emit(this.debug, String.Format("%s --> %d", pc, this.CalcTotal()));
+      Debugger.Emit(this.debug, String.Format("{0} --> {1}", pc, this.CalcTotal()));
   
       this.index++;
-      Card cardA = new Card(cards.GetCardImages(Card.GetImage(this.cards[this.index])), this.pos, 310);
+      Card cardA = new Card(cards.GetImage(this.cards[this.index]), this.pos, 310);
       this.pos += 90;
       this.index++;
-      Card cardB = new Card(cards.GetCardImages(Card.GetImage(this.cards[this.index])), this.pos, 310);
-      return new Card[] { cardA, cardB };
+      Card cardB = new Card(cards.GetImage(this.cards[this.index]), this.pos, 310);
+      return new List<Card> { cardA, cardB };
     }
   
+    /// <summary>
+    /// Player hits.
+    /// </summary>
+    /// <param name="cards">Game card</param>
+    /// <returns></returns>
     public Card Hit(Cards cards) 
     {
       string card = cards.Draw();
@@ -97,16 +127,23 @@ namespace BlackjackXNA
       this.pos += 90;
       Debugger.Emit(this.debug, "Player hits.");
       Debugger.Emit(this.debug, "Players gets " + card);
-      Debugger.Emit(this.debug, String.Format("Player has %d", this.CalcTotal()));
-      return null; //new Card(); // TODO
+      Debugger.Emit(this.debug, String.Format("Player has {0}", this.CalcTotal()));
+      return new Card(cards.GetImage(card), this.pos, 310);
     }
   
+    /// <summary>
+    /// Player stands.
+    /// </summary>
     public void Stand() 
     {
       Debugger.Emit(this.debug, "Player stands.");
-      Debugger.Emit(this.debug, String.Format("Player has %d", this.CalcTotal()));
+      Debugger.Emit(this.debug, String.Format("Player has {0}", this.CalcTotal()));
     }
   
+    /// <summary>
+    /// Show player cards.
+    /// </summary>
+    /// <returns>Total value of player's cards.</returns>
     public int ShowCards() 
     {
       this.index = 0;
@@ -114,10 +151,10 @@ namespace BlackjackXNA
       string cards = "";
       for(int i = 0; i < this.cards.Count; i++) 
       {
-          cards += this.cards[i];
+          cards += String.Format("[{0}]", this.cards[i]);
       }
       Debugger.Emit(this.debug, "\nPlayer has:");
-      Debugger.Emit(this.debug, String.Format("%s --> %d", this.CalcTotal()));
+      Debugger.Emit(this.debug, String.Format("{0} --> {1}",  cards, this.CalcTotal()));
       return this.CalcTotal();
     }
   }

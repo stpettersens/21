@@ -487,6 +487,24 @@
       <Output>C:\Users\Sam\Projects\21\xna\BlackjackXNA\BlackjackXNA\bin\x86\Debug\Content\sQ.xnb</Output>
       <Time>2015-07-15T17:50:50.2859425+01:00</Time>
     </Item>
+    <Item>
+      <Source>scoreFont.spritefont</Source>
+      <Name>scoreFont</Name>
+      <Importer>FontDescriptionImporter</Importer>
+      <Processor>FontDescriptionProcessor</Processor>
+      <Options>None</Options>
+      <Output>C:\Users\Sam\Projects\21\xna\BlackjackXNA\BlackjackXNA\bin\x86\Debug\Content\scoreFont.xnb</Output>
+      <Time>2015-07-23T20:30:28.0266406+01:00</Time>
+    </Item>
+    <Item>
+      <Source>screentipFont.spritefont</Source>
+      <Name>screentipFont</Name>
+      <Importer>FontDescriptionImporter</Importer>
+      <Processor>FontDescriptionProcessor</Processor>
+      <Options>None</Options>
+      <Output>C:\Users\Sam\Projects\21\xna\BlackjackXNA\BlackjackXNA\bin\x86\Debug\Content\screentipFont.xnb</Output>
+      <Time>2015-07-23T20:31:33.5853904+01:00</Time>
+    </Item>
     <BuildSuccessful>true</BuildSuccessful>
     <Settings>
       <ContentProjectGUID>{73ED08D9-E44D-462D-AED5-5484AAA3E12C}</ContentProjectGUID>

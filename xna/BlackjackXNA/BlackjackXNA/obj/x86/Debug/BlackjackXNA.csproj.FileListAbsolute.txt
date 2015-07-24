@@ -64,3 +64,5 @@ C:\Users\Sam\Projects\21\xna\BlackjackXNA\BlackjackXNA\bin\x86\Debug\Content\sK.
 C:\Users\Sam\Projects\21\xna\BlackjackXNA\BlackjackXNA\bin\x86\Debug\Content\sQ.xnb
 C:\Users\Sam\Projects\21\xna\BlackjackXNA\BlackjackXNA\bin\x86\Debug\BlackjackXNA.exe
 C:\Users\Sam\Projects\21\xna\BlackjackXNA\BlackjackXNA\bin\x86\Debug\BlackjackXNA.pdb
+C:\Users\Sam\Projects\21\xna\BlackjackXNA\BlackjackXNA\bin\x86\Debug\Content\scoreFont.xnb
+C:\Users\Sam\Projects\21\xna\BlackjackXNA\BlackjackXNA\bin\x86\Debug\Content\screentipFont.xnb

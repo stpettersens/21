@@ -7,11 +7,18 @@
 */
 using System;
 using System.Collections.Generic;
+using System.Threading;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 
+using Helper;
+
 namespace BlackjackXNA
 {
+    /// <summary>
+    /// Cards implements a collection of playing cards 
+    /// and methods to draw and shuffle.
+    /// </summary>
     class Cards
     {
         private int index;
@@ -22,7 +29,13 @@ namespace BlackjackXNA
         private string[] suits;
         private List<string> strCards;
         private List<Texture2D> gfxCards;
+        private Screentip shuffling;
 
+        /// <summary>
+        /// Constructor for cards.
+        /// </summary>
+        /// <param name="strCards">Cards as strings.</param>
+        /// <param name="gfxCards">Cards as textures.</param>
         public Cards(List<string> strCards, List<Texture2D> gfxCards)
         {
             this.index = -1;
@@ -35,9 +48,24 @@ namespace BlackjackXNA
             this.gfxCards = gfxCards;
         }
 
-        public Texture2D GetCardImages(string card)
+        /// <summary>
+        /// Get image for card from string pattern.
+        /// </summary>
+        /// <param name="card">Card string pattern.</param>
+        /// <returns>Relevant card image.</returns>
+        public Texture2D GetImage(string card)
         {
-            return this.gfxCards[this.strCards.IndexOf(card)];
+            char[] cardArray = card.ToCharArray();
+            Array.Reverse(cardArray);
+            if(cardArray.Length == 3)
+            {
+                if (cardArray[2] == '1')
+                {
+                    cardArray[2] = '0';
+                    cardArray[1] = '1';
+                }
+            }
+            return this.gfxCards[this.strCards.IndexOf(new string(cardArray))];
         }
 
         private string GetRank()
@@ -56,7 +84,7 @@ namespace BlackjackXNA
 
         private string GetCard()
         {
-            return String.Format("%s %s", this.GetRank(), this.GetSuit());
+            return String.Format("{0} {1}", this.GetRank(), this.GetSuit());
         }
 
         public void Shuffle()
@@ -70,9 +98,10 @@ namespace BlackjackXNA
                 if (!this.deck.Contains(card))
                 {
                     this.deck.Add(card);
-                    if (this.deck.Count == this.deck_num) break;
+                    if (this.deck.Count == (deck_num - 17)) break;
                 }
             }
+            Debugger.Emit(true, "Shuffling completed.");
         }
 
         public string Draw()
@@ -81,8 +110,9 @@ namespace BlackjackXNA
             {
                 this.index = 0;
             }
-            this.played.Add(this.deck[this.index]);
-            return this.deck[this.index].Replace(" ", "");
+            string card = this.deck[this.index].Replace(" ", "");
+            this.played.Add(card);
+            return card;
         }
 
         public int GetValue()
