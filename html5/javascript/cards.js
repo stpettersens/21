@@ -6,6 +6,18 @@
 	HTML5/JavaScript implementation
 */
 
+/**
+ * @file Cards class for Blackjack.
+ * @copyright 2015 Sam Saint-Pettersen
+*/
+
+
+/**
+ * Cards implements a collection of playing cards
+ * and methods to draw and shuffle.
+ * @public
+ * @constructor
+*/
 function Cards() {
 	this.index = -1;
 	this.deck_num = 52;
@@ -20,20 +32,39 @@ function Cards() {
 	this.suits = ['h', 'd', 'c', 's'];
 }
 
+/**
+ * Get a rank for a card.
+ * @private
+ * @returns {string} Card rank.
+*/
 Cards.prototype._getRank = function() {
 	var i = Math.floor(Math.random() * this.ranks.length);
 	return this.ranks[i];
 };
 
+/**
+ * Get a suit for a card.
+ * @private
+ * @returns {string} Card suit.
+*/
 Cards.prototype._getSuit = function() {
 	var i = Math.floor(Math.random() * this.suits.length);
 	return this.suits[i];
 };
 
+/** 
+ * Get a card.
+ * @private
+ * @returns {string} Card as string.
+*/
 Cards.prototype._getCard = function() {
 	return this._getRank() + ' ' + this._getSuit();
 };
 
+/**
+ * Shuffle cards.
+ * @public
+*/
 Cards.prototype.shuffle = function() {
 	this.index = -1;
 	this.deck = [];
@@ -130,6 +161,11 @@ Cards.prototype.shuffle = function() {
 	return 'Sorted cards:\nH ' + hearts + '\nD ' + diamonds + '\nC ' + clubs + '\nS ' + spades;
 };*/
 
+/**
+ * Draw a card.
+ * @public
+ * @returns {string} Drawn card as string.
+*/
 Cards.prototype.draw = function() {
 	if(this.played.length == this.deck_num || this.index == -1) {
 		this.index = 0;	
@@ -139,6 +175,11 @@ Cards.prototype.draw = function() {
 	return '[' + rs[0] + rs[1] + ']';
 };
 
+/**
+ * Get a card's value.
+ * @public
+ * @returns {number} Card's value.
+*/
 Cards.prototype.getValue = function() {
 	var rs = this.deck[this.index].split(' ');
 	this.index++;
@@ -149,10 +190,20 @@ Cards.prototype.getValue = function() {
 	return value;
 };
 
+/**
+ * Get number of played cards.
+ * @public
+ * @returns {number} Number of cards played.
+*/
 Cards.prototype.getPlayed = function() {
 	return this.played.length;
 };
 
+/**
+ * Draw all the cards from the deck.
+ * @public
+ * @returns {string[]} All cards from deck.
+*/
 Cards.prototype.drawAll = function() {
 	this.index = 0
 	var draws = [];

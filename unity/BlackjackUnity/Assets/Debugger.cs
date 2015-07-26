@@ -11,7 +11,7 @@ public static class Debugger {
     /// Emit a Debug message.
     /// </summary>
     /// <param name="debug">Enable debug?</param>
-    /// <param name="message">string to emit</param>
+    /// <param name="message">String to emit</param>
     public static void Emit(bool debug, string message) {
         if (debug) Debug.Log(message);
     }
@@ -20,7 +20,7 @@ public static class Debugger {
     /// Emit a Debug message.
     /// </summary>
     /// <param name="debug">Enable debug?</param>
-    /// <param name="message">integer to emit.</param>
+    /// <param name="integer">Integer to emit.</param>
     public static void Emit(bool debug, int integer) {
         Debugger.Emit(debug, integer.ToString());
     }
@@ -29,7 +29,7 @@ public static class Debugger {
     /// Emit a Debug message.
     /// </summary>
     /// <param name="debug"></param>
-    /// <param name="message">string[] to emit.</param>
+    /// <param name="strings">string[] to emit.</param>
     public static void Emit(bool debug, string[] strings) {
         string msg = "";
         for (int i = 0; i < strings.Length; i++)

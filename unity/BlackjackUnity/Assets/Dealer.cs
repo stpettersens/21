@@ -37,7 +37,7 @@ public class Dealer {
     /// <summary>
     /// Calculate the total value of dealer's held cards.
     /// </summary>
-    /// <returns></returns>
+    /// <returns>Total value of dealer's cards.</returns>
     public int CalcTotal() {
         this.values.Sort();
         int total = 0;
@@ -175,7 +175,7 @@ public class Dealer {
     /// <summary>
     /// Show dealer's cards.
     /// </summary>
-    /// <returns></returns>
+    /// <returns>Total value of dealer's cards.</returns>
     public int ShowCards() {
         this.index = 0;
         this.pos = 225;

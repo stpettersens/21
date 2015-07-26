@@ -11,6 +11,9 @@ using System.Collections.Generic;
 using System.Threading;
 using System.IO;
 
+/// <summary>
+/// Blackjack implements the overall game.
+/// </summary>
 public class Blackjack : MonoBehaviour {
     bool ai;
     bool playing;
@@ -213,6 +216,9 @@ public class Blackjack : MonoBehaviour {
         }
     }
 
+    /// <summary>
+    /// Take a stand.
+    /// </summary>
     void Stand() {
         player.Stand();
         List<Card> received = dealer.Respond(cards);

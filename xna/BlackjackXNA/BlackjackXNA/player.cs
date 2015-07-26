@@ -89,9 +89,9 @@ namespace BlackjackXNA
     /// <summary>
     /// Receive cards from dealer.
     /// </summary>
-    /// <param name="cards">Game cards</param>
-    /// <param name="player_cards">Player's cards as String[]</param>
-    /// <returns>Player's cards as Card[]</returns>
+    /// <param name="cards">Game cards.</param>
+    /// <param name="player_cards">Player's cards as String[].</param>
+    /// <returns>Player's cards as Card[].</returns>
     public List<Card> ReceiveCards(Cards cards, string[] player_cards) 
     {
       string pc = "";
@@ -116,8 +116,8 @@ namespace BlackjackXNA
     /// <summary>
     /// Player hits.
     /// </summary>
-    /// <param name="cards">Game card</param>
-    /// <returns></returns>
+    /// <param name="cards">Game cards.</param>
+    /// <returns>Player's drawn card.</returns>
     public Card Hit(Cards cards) 
     {
       string card = cards.Draw();

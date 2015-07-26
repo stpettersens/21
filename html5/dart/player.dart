@@ -17,6 +17,8 @@ class Player {
 	List<String> cards;
 	List<int> values;
 
+	/// Player implements the player for Blackjack.
+	/// [bool] debug Enable debug messages?
 	Player(bool debug) {
 		this.debug = debug;
 		this.index = -1;
@@ -25,6 +27,8 @@ class Player {
 		this.values = new List<int>();
 	}
 
+	/// Calculates the total value of player's held cards.
+	/// Returns [int] Total value for player's cards.
 	int calcTotal() {
 		this.values.sort((b, a) => a.compareTo(b));
 		int total = 0;
@@ -39,6 +43,8 @@ class Player {
 		return total;
 	}
 
+	/// Determine if player has Blackjack.
+	/// Returns [bool] Does player have Blackjack?
 	bool hasBlackjack() {
 		bool blackjack = false;
 		if(this.calcTotal() == 21) {
@@ -48,6 +54,8 @@ class Player {
 		return blackjack;
 	}
 
+	/// Determine if player is bust.
+	/// Returns [bool] Is player bust?
 	bool isBust() {
 		bool bust = false;
 		if(this.calcTotal() > 21) {
@@ -57,6 +65,9 @@ class Player {
 		return bust;
 	}
 
+	/// Receive cards from dealer.
+	/// [List<String>] player_cards Player's cards as List<String>.
+	/// Returns [List<Card>] Player's cards as List<Card>.
 	List<Card> receiveCards(List<String> player_cards) {
 		String pc = "";
 		for(int i = 0; i < player_cards.length; i++) {
@@ -76,6 +87,9 @@ class Player {
 		return [cardA, cardB];
 	}
 
+	/// Player hits.
+	/// [Cards] cards Game cards.
+	/// Returns [Card] Player's drawn card.
 	Card hit(Cards cards) {
 		String card = cards.draw();
 		this.cards.add(card);
@@ -88,11 +102,14 @@ class Player {
 		return new Card(Card.getImageData(new RegExp("([A-Za-z0-9]+)").stringMatch(card)), this.pos, 310);
 	}
 
+	/// Player stands.
 	void stand() {
 		Debug.emit(this.debug, "Player stands.");
 		Debug.emit(this.debug, "Player has ${this.calcTotal()}");
 	}
 
+	/// Show player's cards.
+	/// Returns [int] Total value of player's cards.
 	int showCards() {
 		this.index = 0;
 		this.pos = 225;

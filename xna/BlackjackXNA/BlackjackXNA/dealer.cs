@@ -41,7 +41,7 @@ namespace BlackjackXNA
     /// <summary>
     /// Calculate the total value of dealer's held cards.
     /// </summary>
-    /// <returns></returns>
+    /// <returns>Total value of dealer's cards.</returns>
     public int CalcTotal() 
     {
       this.values.Sort(); //.OrderByDescending().toList();

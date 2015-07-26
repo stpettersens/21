@@ -6,14 +6,18 @@
  	HTML5/TypeScript implementation
 */
 
-/// <reference path="cards.ts"/>
-/// <reference path="card.ts"/>
-/// <reference path="player.ts"/>
-/// <reference path="dealer.ts"/>
-/// <reference path="screentip.ts"/>
-/// <reference path="score.ts"/>
-/// <reference path="debug.ts"/>
+/// <reference path="cards.ts" />
+/// <reference path="card.ts" />
+/// <reference path="player.ts" />
+/// <reference path="dealer.ts" />
+/// <reference path="screentip.ts" />
+/// <reference path="score.ts" />
+/// <reference path="debug.ts" />
 
+/**
+ * @file Blackjack implementation in TypeScript.
+ * @copyright 2015 Sam Saint-Pettersen
+*/
 var debug: boolean = false;
 var use_ai: boolean = false;
 var playing: boolean = true;
@@ -34,6 +38,9 @@ var timer: number = 0;
 var SCREEN_WIDTH: number = 780;
 var SCREEN_HEIGHT: number = 500;
 
+/**
+ * @function Main function.
+*/
 window.onload = function(): void {
 
 	Debug.emit(debug, "Initialized HTML5 Blackjack (TypeScript build).");
@@ -53,6 +60,10 @@ window.onload = function(): void {
 	cards = new Cards();
 	newGame();
 
+	/**
+	 * Is the game running on a touch screen device?
+	 * @returns {boolean} Is touch screen device?
+	*/
 	function isTouchScreenDevice(): boolean {
 		var touch: boolean = false;
 		var ua: string = navigator.userAgent;
@@ -62,6 +73,9 @@ window.onload = function(): void {
 		return touch;
 	}
 
+	/**
+	  * Show cards at end of game.
+	*/
 	function showCards(): void {
 		playing = false;
 		dealer_cards[0] = dealer.revealFirstCard();
@@ -104,6 +118,9 @@ window.onload = function(): void {
 		draw();
 	}
 
+	/**
+	 * Start a new game.
+	*/
 	function newGame(): void {
 		clear();
 		playing = true;
@@ -128,6 +145,9 @@ window.onload = function(): void {
 		draw();
 	}
 
+	/**
+	 * Update logic.
+	*/
 	function update(): void {
 		if(hasBlackjack() || isBust()) {
 			showCards();
@@ -145,6 +165,9 @@ window.onload = function(): void {
 		}
 	}
 
+	/**
+	 * Draw logic.
+	*/
 	function draw(): void {
 		clear();
 		dealer_pile.draw();
@@ -160,6 +183,10 @@ window.onload = function(): void {
 		}
 	}
 
+	/**
+	 * Determine if a Blackjack has occurred.
+	 * @returns {boolean} Has a Blackjack occurred?
+	*/
 	function hasBlackjack(): boolean {
 		var blackjack: boolean = false;
 		if(player.hasBlackjack() || dealer.hasBlackjack()) {
@@ -168,6 +195,10 @@ window.onload = function(): void {
 		return blackjack;
 	}
 
+	/**
+	 * Determine if a bust has occurred.
+	 * @returns {boolean} Has a bust occurred?
+	*/
 	function isBust(): boolean {
 		var bust: boolean = false;
 		if(player.isBust() || dealer.isBust()) {
@@ -176,6 +207,9 @@ window.onload = function(): void {
 		return bust;
 	}
 
+	/**
+	 * Take a hit.
+	*/
 	function hit(): void {
 		if(player_index < 6) {
 			player_cards[player_index] = player.hit(cards);
@@ -185,6 +219,9 @@ window.onload = function(): void {
 		draw();
 	}
 
+	/**
+	 * Take a stand.
+	*/
 	function stand(): void {
 		player.stand();
 		var received: Card[] = dealer.respond(cards);
@@ -199,11 +236,17 @@ window.onload = function(): void {
 		showCards();
 	}
 
+	/**
+	 * Clear the table.
+	*/
 	function clear(): void {
 		var context: any = canvas.getContext("2d");
 		context.clearRect(0, 0, canvas.width, canvas.height);
 	}
 
+	/**
+	 * Exit to project's repository on GitHub.
+	*/
 	function exitToGitHub(): void {
 		window.location.href = "https://github.com/stpettersens/21";
 	}

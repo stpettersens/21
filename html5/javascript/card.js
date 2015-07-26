@@ -6,6 +6,10 @@
 	HTML5 implementation
 */
 
+/**
+ * @file Card class for Blackjack.
+ * @copyright 2015 Sam Saint-Pettersen
+*/
 var imageSrcs = [
 'gfx/c.png',
 'gfx/c10.png',
@@ -63,7 +67,13 @@ var imageSrcs = [
 'gfx/sK.png',
 'gfx/sQ.png'];
 
-//@staticmethod
+/**
+ * Get image path from card string pattern.
+ * @public
+ * @static
+ * @param {string} card - Card string pattern.
+ * @returns {string} Path for card image.
+*/
 function Card_getImage(card) {
 	if(card == 'c' || card == 'd') {
 		return 'gfx/' + card + '.png';
@@ -85,34 +95,68 @@ function Card_getImage(card) {
 	return 'gfx/' + suit + rank + '.png';
 }
 
-//@staticmethod
+/**
+ * Get image data URI from card string pattern.
+ * @public
+ * @static
+ * @param {string} card - String representation for card.
+ * @returns {string} data URI for card graphic.
+*/
 function Card_getImageData(card) {
 	return graphics(imageSrcs.indexOf(Card_getImage(card)));
 }
 
-function Card(card, pos_x, pos_y) {
+/**
+ * Card represents a single playing card.
+ * @public
+ * @constructor
+ * @param {string} card - Data URI for card graphic.
+ * @param {number} posX - X position for card.
+ * @param {number} posX - Y position for card.
+*/
+function Card(card, posX, posY) {
 
 	this.image = new Image();
 	this.image.src = card;
-	this.pos_x = pos_x;
-	this.pos_y = pos_y;
+	this.posX = posX;
+	this.posY = posY;
 }
 
-Card.prototype.getImage = function() {
+/**
+ * Get source for image.
+ * @public
+ * @returns {string} Image source.
+*/
+Card.prototype.getImageSrc = function() {
 	return this.image.src;
 }
 
-Card.prototype.setXY = function(pos_x, pos_y) {
-	this.pos_x = pos_x;
-	this.pos_y = pos_y;
+/** 
+ * Set X, Y position for card.
+ * @public
+ * @param {number} posX - X position for card.
+ * @param {number} poxY - Y position for card.
+*/
+Card.prototype.setXY = function(posX, posY) {
+	this.posX = posX;
+	this.posY = posY;
 }
 
+/**
+ * Get X, Y position of card.
+ * @public
+ * @returns {number[]} X, Y position of card.
+*/
 Card.prototype.getXY = function() {
-	return [this.pos_x, this.pos_y];
+	return [this.posX, this.posY];
 }
 
+/**
+ * Draw the card.
+ * @public
+*/
 Card.prototype.draw = function() {
 	var canvas = document.getElementById('blackjack-table');
 	var context = canvas.getContext('2d');	
-	context.drawImage(this.image, this.pos_x, this.pos_y, this.image.width, this.image.height);
+	context.drawImage(this.image, this.posX, this.posY, this.image.width, this.image.height);
 }

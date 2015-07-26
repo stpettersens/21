@@ -11,31 +11,40 @@ import 'debug.dart';
 
 class Screentip {
 	bool debug;
-	num x;
-	num y;
+	num posX;
+	num posY;
 	String title;
 	String msg;
 
-	Screentip(bool debug, num x, num y) {
+	/// Screentip implements a title and message box.
+	/// [bool] debug Enable debug message?
+	/// [num] posX X position for screentip.
+	/// [num] posY Y position for screentip.
+	Screentip(bool debug, num posX, num posY) {
 		this.debug = debug;
-		this.x = x;
-		this.y = y;
+		this.posX = posX;
+		this.posY = posY;
 		this.title = "";
 		this.msg = "";
-		Debug.emit(this.debug, "Created screentip at ${this.x},${this.y}"); // !
+		Debug.emit(this.debug, "Created screentip at ${posX},${posY}"); // !
 	}
 
+	/// Emit a title and message.
+	/// [String] title Title to emit.
+	/// [String] message Message to emit.
 	void emit(String title, String message) {
 		this.clear();
 		this.title = title;
 		this.msg = message;
 	}
 
+	/// Clear the screentip.
 	void clear() {
 		this.title = "";
 		this.msg = "";
 	}
 
+	/// Draw the screentip.
 	void draw() {
 		if(this.msg == null) this.msg = "";
 		if(this.title == null) this.title = "";
@@ -43,7 +52,7 @@ class Screentip {
 		var context = canvas.getContext("2d");
 		context.font = "10pt Verdana";
 		context.fillStyle = "white";
-		context.fillText(this.title, this.x, this.y);
-		context.fillText(this.msg, (this.x - 45), (this.y + 20));
+		context.fillText(this.title, this.posX, this.posY);
+		context.fillText(this.msg, (this.posX - 45), (this.posY + 20));
 	}
 }

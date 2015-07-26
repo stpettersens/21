@@ -6,6 +6,10 @@
 	HTML5/TypeScript implementation
 */
 
+/**
+ * @file Cards class for Blackjack.
+ * @copyright 2015 Sam Saint-Pettersen
+*/
 class Cards {
 	private index: number;
 	private deck_num: number;
@@ -14,6 +18,12 @@ class Cards {
 	private ranks: string[];
 	private suits: string[];
 
+	/**
+	 * Cards implements a collection of playing cards
+	 * and methods to draw and shuffle.
+	 * @public
+	 * @constructor
+	*/
 	constructor() {
 		this.index = -1;
 		this.deck_num = 52;
@@ -23,20 +33,39 @@ class Cards {
 		this.suits = [ "h", "d", "c", "s" ];
 	}
 
+	/**
+	 * Get a rank for a card.
+	 * @private
+	 * @returns {string} Card rank.
+	*/
 	private getRank(): string {
 		var i: number = Math.floor(Math.random() * this.ranks.length);
 		return this.ranks[i];
 	}
 
+	/**
+	 * Get a suit for a card.
+	 * @private
+	 * @returns {string} Card suit.
+	*/
 	private getSuit(): string {
 		var i: number = Math.floor(Math.random() * this.suits.length);
 		return this.suits[i];
 	}
 
+	/**
+	 * Get a card.
+	 * @private
+	 * @returns {string} Card as string.
+	*/
 	private getCard(): string {
-		return this.getRank() + ' ' + this.getSuit();
+		return "${this.getRank()} ${this.getSuit()}";
 	}
 
+	/**
+	 * Shuffle cards.
+	 * @public
+	*/
 	public shuffle(): void {
 		this.index = - 1;
 		this.deck = new Array<string>();
@@ -52,6 +81,11 @@ class Cards {
 		}
 	}
 
+	/**
+	 * Draw a card.
+	 * @public
+	 * @returns {string} Drawn card as string.
+	*/
 	public draw(): string {
 		if(this.played.length == this.deck_num || this.index == -1) {
 			this.index = 0;
@@ -61,6 +95,11 @@ class Cards {
 		return "[" + rs[0] + rs[1] + "]";	
 	}
 
+	/**
+	 * Get a card's value.
+	 * @public
+	 * @returns {number} Card's value.
+	*/
 	public getValue(): number {
 		var rs: string[] = this.deck[this.index].split(" ");
 		this.index++;
@@ -71,10 +110,20 @@ class Cards {
 		return value;
 	}
 
+	/**
+	 * Get number of played cards.
+	 * @public
+	 * @returns {number} Number of cards played.
+	*/
 	public getPlayed(): number {
 		return this.played.length;
 	}
 
+	/**
+	 * Draw all the cards from the deck.
+	 * @public
+	 * @returns {string[]} All cards from deck.
+	*/
 	public drawAll(): string[] {
 		this.index = 0;
 		var draws: string[] = new Array<string>();

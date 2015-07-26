@@ -6,16 +6,30 @@
 	HTML5 implementation
 */
 
-var debug = false;
+/**
+ * @file Dealer class for Blackjack.
+ * @copyright 2015 Sam Saint-Pettersen
+*/
 
+/**
+ * Dealer implements the dealer for Blackjack.
+ * @public
+ * @constructor
+ * @param {boolean} debug - Enable debug messages?
+*/
 function Dealer(debug) {
-	debug = debug;
+	this.debug = debug;
 	this.index = 0;
 	this.pos = 225;
 	this.cards = [];
 	this.values = [];
 }
 
+/**
+ * Calculate the total value of dealer's held cards.
+ * @public
+ * @returns {number} Total value of dealer's cards.
+*/
 Dealer.prototype.calcTotal = function() {
 	this.values.sort(function(a, b) { return b - a })
 	var total = 0
@@ -30,6 +44,12 @@ Dealer.prototype.calcTotal = function() {
 	return total;
 };
 
+/**
+ * Dealer hits.
+ * @private
+ * @param {Cards} cards - Game cards.
+ * @returns {Card} Dealer's drawn card.
+*/
 Dealer.prototype._hit = function(cards) {
 	this.index++;
 	this.pos += 90;
@@ -41,10 +61,19 @@ Dealer.prototype._hit = function(cards) {
 	return new Card(Card_getImageData(card), this.pos, 10);
 };
 
+/**
+ * Dealer stands.
+ * @private
+*/
 Dealer.prototype._stand = function() {
 	_print('Dealer stands.');
 };
 
+/**
+ * Dealer shuffles.
+ * @public
+ * @param {Cards} cards - Game cards to shuffle.
+*/
 Dealer.prototype.shuffle = function(cards) {
 	if(cards.getPlayed() == 0 || cards.getPlayed() >= 45) {
 		_print('-------------------------------------------------------');
@@ -54,6 +83,12 @@ Dealer.prototype.shuffle = function(cards) {
 	}
 };
 
+/**
+ * Dealer deals.
+ * @public
+ * @param {Cards} cards - Game cards.
+ * @returns {string[]} Player's cards.
+*/
 Dealer.prototype.deal = function(cards) {
 	var dealt = [];
 	var i = 1;
@@ -76,6 +111,11 @@ Dealer.prototype.deal = function(cards) {
 	return [dealt[2], dealt[3]];
 };
 
+/**
+ * Determine if dealer has Blackjack.
+ * @public
+ * @returns {boolean} Does dealer have Blackjack?
+*/
 Dealer.prototype.hasBlackjack = function() {
 	var blackjack = false;
 	if(this.calcTotal() == 21) {
@@ -85,6 +125,11 @@ Dealer.prototype.hasBlackjack = function() {
 	return blackjack;
 };
 
+/**
+ * Determine if dealer is bust.
+ * @public
+ * @returns {boolean} Is dealer bust?
+*/
 Dealer.prototype.isBust = function() {
 	var bust = false;
 	if(this.calcTotal() > 21) {
@@ -94,6 +139,12 @@ Dealer.prototype.isBust = function() {
 	return bust;
 };
 
+/**
+ * Dealer responds to player action (e.g. a hit or stand).
+ * @public
+ * @param {Cards} cards - Game cards.
+ * @returns {Card[]} Cards returned.
+*/
 Dealer.prototype.respond = function(cards) {
 	this.showCards();
 	var responding = true;
@@ -123,6 +174,11 @@ Dealer.prototype.respond = function(cards) {
 	return response_cards;
 };
 
+/**
+ * Show dealer's cards.
+ * @public
+ * @returns {number} Total value of dealer's cards.
+*/
 Dealer.prototype.showCards = function() {
 	this.index = 0;
 	this.pos = 225;
@@ -135,6 +191,11 @@ Dealer.prototype.showCards = function() {
 	return this.calcTotal();
 };
 
+/**
+ * Dealer receives cards.
+ * @public
+ * @returns {Card[]} Dealer's received cards.
+*/
 Dealer.prototype.receiveCards = function() {
 	this.index++;
 	var cardA = new Card(Card_getImageData('c'), this.pos, 10);
@@ -144,10 +205,20 @@ Dealer.prototype.receiveCards = function() {
 	return [cardA, cardB];
 };
 
+/**
+ * Dealer reveals first card.
+ * @public
+ * @returns {Card} Revealed first card.
+*/
 Dealer.prototype.revealFirstCard = function() {
 	return new Card(Card_getImageData(this.cards[0]), 225, 10);
 };
 
+/**
+ * Print a debug mesage.
+ * @private
+ * @param {any} message - Message to print.
+*/
 function _print(message) {
 	if(debug) console.log(message);
 }

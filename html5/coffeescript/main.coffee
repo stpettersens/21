@@ -36,6 +36,8 @@ timer = 0;
 SCREEN_WIDTH = 780
 SCREEN_HEIGHT = 500
 
+# Main function.
+#
 @init = () ->
 	Debug.emit(debug, "Initialized HTML5 Blackjack (CoffeeScript build).");
 	canvas = document.getElementById("blackjack-table")
@@ -54,6 +56,10 @@ SCREEN_HEIGHT = 500
 	cards = new Cards()
 	newGame()
 
+# Is the game running on a touch screen device?
+# 
+# @return [Boolean] Is touch screen device?
+#
 @isTouchScreenDevice = () ->
 	touch = false
 	ua = navigator.userAgent;
@@ -61,6 +67,8 @@ SCREEN_HEIGHT = 500
 		touch = true
 	return touch
 
+# Show cards at end of game.
+#
 @showCards = () ->
 	playing = false
 	dealer_cards[0] = dealer.revealFirstCard()
@@ -100,6 +108,8 @@ SCREEN_HEIGHT = 500
 
 	draw()
 
+# Start a new game.
+#
 @newGame = () ->
 	clear()
 	playing = true
@@ -123,6 +133,8 @@ SCREEN_HEIGHT = 500
 	update()
 	draw()
 
+# Update logic.
+#
 @update = () ->
 	if hasBlackjack() or isBust()
 		showCards()
@@ -136,6 +148,8 @@ SCREEN_HEIGHT = 500
 		else
 			instruction.emit("Hit [Short tap] or Stand [Long tap]?")
 
+# Draw logic.
+#
 @draw = () ->
 	clear()
 	dealer_pile.draw()
@@ -152,18 +166,28 @@ SCREEN_HEIGHT = 500
 		dealer_cards[i].draw()
 		i++
 
+# Determine if a Blackjack has occurred.
+#
+# @return [Boolean] Has a Blackjack occurred?
+#
 @hasBlackjack = () ->
 	blackjack = false
 	if player.hasBlackjack() or dealer.hasBlackjack()
 		blackjack = true
 	return blackjack
 
+# Determine if a bust has occurred.
+#
+# @return [Boolean] Has a bust occurred?
+#
 @isBust = () ->
 	bust = false
 	if player.isBust() or dealer.isBust()
 		bust = true
 	return bust
 
+# Take a hit.
+#
 @hit = () ->
 	if player_index < 6
 		player_cards[player_index] = player.hit(cards)
@@ -172,6 +196,8 @@ SCREEN_HEIGHT = 500
 
 	draw()
 
+# Take a stand
+#
 @stand = () ->
 	player.stand()
 	received = dealer.respond(cards)
@@ -187,10 +213,14 @@ SCREEN_HEIGHT = 500
 
 	showCards()
 
+# Clear the table.
+#
 @clear = () ->
 	context = canvas.getContext("2d")
 	context.clearRect(0, 0, canvas.width, canvas.height)
 
+# Exit to project's repository on GitHub.
+#
 @exitToGithub = () ->
 	window.location.href = "https:github.com/stpettersens/21"
 

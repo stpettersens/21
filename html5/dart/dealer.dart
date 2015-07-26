@@ -18,6 +18,8 @@ class Dealer {
 	List<String> cards;
 	List<int> values;
 
+	/// Dealer implements the dealer for Blackjack.
+	/// [bool] debug Enable debug messages?
 	Dealer(bool debug) {
 		this.debug = debug;
 		this.index = 0;
@@ -26,6 +28,8 @@ class Dealer {
 		this.values = new List<int>();
 	}
 
+	/// Calculate the total value of dealer's held cards.
+	/// Returns [int] Total value of dealer's cards.
 	int calcTotal() {
 		this.values.sort((b, a) => a.compareTo(b));
 		int total = 0;
@@ -40,6 +44,9 @@ class Dealer {
 		return total;
 	}
 
+	/// Dealer hits.
+	/// [Cards] cards Game cards.
+	/// Returns [Card] Dealer's drawn card.
 	Card hit(Cards cards) {
 		this.index++;
 		this.pos += 90;
@@ -51,10 +58,13 @@ class Dealer {
 		return new Card(Card.getImageData(new RegExp("([A-Za-z0-9]+)").stringMatch(card)), this.pos, 10);
 	}
 
+	/// Dealer stands.
 	void stand() {
 		Debug.emit(this.debug, "Dealer stands.");
 	}
 
+	/// Dealer shuffles
+	/// [Cards] cards Game cards to shuffle.
 	void shuffle(Cards cards) {
 		if(cards.getPlayed() == 0 || cards.getPlayed() >= 45) {
 			Debug.emit(this.debug, "----------------------------------------------------");
@@ -64,6 +74,9 @@ class Dealer {
 		}	
 	}
 
+	/// Dealer deals.
+	/// [Cards] cards Game cards.
+	/// Returns [List<String>] Player's cards.
 	List<String> deal(Cards cards) {
 		List<String> dealt = new List<String>();
 		Debug.emit(this.debug, "----------------------------------------------------");
@@ -82,6 +95,8 @@ class Dealer {
 		return [dealt[2], dealt[3]];
 	}
 
+	/// Determine if dealer has Blackjack.
+	/// Returns [bool] Does dealer have Blackjack?
 	bool hasBlackjack() {
 		bool blackjack = false;
 		if(this.calcTotal() == 21) {
@@ -91,6 +106,8 @@ class Dealer {
 		return blackjack;
 	}
 
+	/// Determine if dealer is bust.
+	/// Returns [bool] Is dealer bust?
 	bool isBust() {
 		bool bust = false;
 		if(this.calcTotal() > 21) {
@@ -98,6 +115,9 @@ class Dealer {
 		}
 	}
 
+	/// Dealer responds to player action (e.g. a hit or stand).
+	/// [Cards] cards Game cards.
+	/// Returns [List<Card>] Cards returned.
 	List<Card> respond(Cards cards) {
 		this.showCards();
 		bool responding = true;
@@ -128,6 +148,8 @@ class Dealer {
 		return response_cards;
 	}
 
+	/// Show dealer's cards.
+	/// Returns [int] Total value of dealer's cards.
 	int showCards() {
 		this.index = 0;
 		this.pos = 225;
@@ -140,6 +162,8 @@ class Dealer {
 		return this.calcTotal();
 	}
 
+	/// Dealer receives cards.
+	/// Returns [List<Card>] Dealer's received cards.
 	List<Card> receiveCards() {
 		Card cardA = new Card(Card.getImageData("c"), this.pos, 10);
 		this.pos += 90;
@@ -148,6 +172,8 @@ class Dealer {
 		return [cardA, cardB];
 	}
 
+	/// Dealer reveals first card.
+	/// Returns [Card] Revealed first card.
 	Card revealFirstCard() {
 		return new Card(Card.getImageData(this.cards[0]), 225, 10);
 	}

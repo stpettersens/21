@@ -6,16 +6,30 @@
 	HTML5 implementation
 */
 
-var debug = false;
+/**
+ * @file Player class for Blackjack.
+ * @copyright 2015 Sam Saint-Pettersen
+*/
 
+/**
+ * Player implements the player for Blackjack.
+ * @public
+ * @constructor
+ * @param {boolean} debug - Enable debug messages?
+*/
 function Player(debug) {
-	debug = debug;
+	this.debug = debug;
 	this.index = -1;
 	this.pos = 225;
 	this.cards = [];
 	this.values = [];
 }
 
+/**
+ * Calculate the total value of player's held cards.
+ * @public
+ * @returns {number} Total value of player's cards.
+*/
 Player.prototype.calcTotal = function() {
 	this.values.sort(function(a, b) { return b - a });
 	var total = 0
@@ -30,6 +44,11 @@ Player.prototype.calcTotal = function() {
 	return total;
 };
 
+/**
+ * Determine if player has Blackjack.
+ * @public
+ * @returns {boolean} Does player have Blackjack?
+*/
 Player.prototype.hasBlackjack = function() {
 	var blackjack = false;
 	if(this.calcTotal() == 21) {
@@ -39,6 +58,11 @@ Player.prototype.hasBlackjack = function() {
 	return blackjack;
 };
 
+/**
+ * Determine if player is bust.
+ * @public
+ * @returns {boolean} Is player bust?
+*/
 Player.prototype.isBust = function() {
 	var bust = false;
 	if(this.calcTotal() > 21) {
@@ -48,6 +72,12 @@ Player.prototype.isBust = function() {
 	return bust;
 };
 
+/**
+ * Receive cards from dealer.
+ * @public
+ * @param {string[]} Player's cards as string[].
+ * @returns {Card[]} Player's cards as Card[].
+*/
 Player.prototype.receiveCards = function(player_cards) {
 	var pc = '';
 	for(var i = 0; i < player_cards.length; i++) {
@@ -68,6 +98,12 @@ Player.prototype.receiveCards = function(player_cards) {
 	return [cardA, cardB];
 };
 
+/**
+ * Player hits.
+ * @public
+ * @param {Cards} cards - Game cards.
+ * @returns {Card} Player's drawn card.
+*/
 Player.prototype.hit = function(cards) {
 	var card = cards.draw();
 	this.cards.push(card);
@@ -80,11 +116,20 @@ Player.prototype.hit = function(cards) {
 	return new Card(Card_getImageData(card.match(/\[*([A-Za-z0-9]+)\]*/)[0]), this.pos, 310); 
 };
 
+/**
+ * Player stands.
+ * @public
+*/
 Player.prototype.stand = function() {
 	_print('Player stands.');
 	_print('Player has ' + this.calcTotal().toString());
 };
 
+/**
+ * Show player's cards.
+ * @public
+ * @returns {number} Total value of player's cards.
+*/
 Player.prototype.showCards = function() {
 	this.index = 0;
 	this.pos = 225;
@@ -97,6 +142,11 @@ Player.prototype.showCards = function() {
 	return this.calcTotal();
 };
 
+/**
+ * Print a debug message.
+ * @private
+ * @param {any} message - Message to print.
+*/
 function _print(message) {
 	if(debug) console.log(message);
 }

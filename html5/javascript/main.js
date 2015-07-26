@@ -6,6 +6,10 @@
 	HTML5 implementation
 */
 
+/**
+ * @file Blackjack implementation in JavaScript.
+ * @copyright 2015 Sam Saint-Pettersen
+*/
 var debug = false;
 var use_ai = false;
 var playing = true;
@@ -26,6 +30,9 @@ var timer = 0;
 var SCREEN_WIDTH  = 780;
 var SCREEN_HEIGHT = 500;
 
+/**
+ * @function Main function.
+*/
 window.onload = function() {
 
 	_print('Initialised HTML5 Blackjack.');
@@ -45,6 +52,10 @@ window.onload = function() {
 	cards = new Cards();
 	newGame();
 
+	/**
+	 * Is the game running on a touch screen device?
+	 * @returns {boolean} Is touch screen device?
+	*/
 	function isTouchScreenDevice() {
 		var touch = false;
 		var ua = navigator.userAgent;
@@ -54,6 +65,9 @@ window.onload = function() {
 		return touch;
 	}
 
+	/**
+	 * Start a new game.
+	*/
 	function newGame() {
 		clear();
 		playing = true;
@@ -78,6 +92,9 @@ window.onload = function() {
 		draw();
 	}
 
+	/**
+	 * Show cards at the end of game.
+	*/
 	function showCards() {
 		playing = false;
 		dealer_cards[0] = dealer.revealFirstCard();
@@ -120,6 +137,9 @@ window.onload = function() {
 		draw();
 	}
 
+	/**
+	 * Update logic.
+	*/
 	function update() {
 		if(hasBlackjack() || isBust()) {
 			showCards();
@@ -137,6 +157,9 @@ window.onload = function() {
 		}
 	}
 
+	/**
+	 * Draw logic.
+	*/
 	function draw() {
 		clear();
 		screentip.draw();
@@ -152,6 +175,10 @@ window.onload = function() {
 		}
 	}
 
+	/**
+	 * Determine if a Blackjack has occurred.
+	 * @returns {boolean} Has a Blackjack occurred?
+	*/
 	function hasBlackjack() {
 		var blackjack = false;
 		if(player.hasBlackjack() || dealer.hasBlackjack()) {
@@ -160,6 +187,10 @@ window.onload = function() {
 		return blackjack;
 	}
 
+	/**
+	 * Determine if a bust has occurred.
+	 * @returns {boolean} Has a bust occurred?
+	*/
 	function isBust() {
 		var bust = false;
 		if(player.isBust() || dealer.isBust()) {
@@ -168,6 +199,9 @@ window.onload = function() {
 		return bust;
 	}
 
+	/**
+	 * Take a hit.
+	*/
 	function hit() {
 		if(player_index < 6) {
 			player_cards[player_index] = player.hit(cards);
@@ -177,6 +211,9 @@ window.onload = function() {
 		draw();
 	}
 
+	/**
+	 * Take a stand.
+	*/
 	function stand() {
 		player.stand();
 		var received = dealer.respond(cards);
@@ -193,15 +230,25 @@ window.onload = function() {
 		showCards();
 	}
 
+	/**
+	 * Clear the table.
+	*/
 	function clear() {
 		var context = canvas.getContext('2d');
 		context.clearRect(0, 0, canvas.width, canvas.height);
 	}
 
+	/**
+	 * Print a debug message.
+	 * @param [Any] message Message to print.
+	*/
 	function _print(message) {
 		if(debug) console.log(message);
 	}
 
+	/**
+	 * Exit to project's repository on GitHub.
+	*/
 	function exitToGitHub() {
 		window.location = 'https://github.com/stpettersens/21';
 	}

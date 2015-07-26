@@ -12,7 +12,7 @@ namespace Helper
     /// Emit a Debug message.
     /// </summary>
     /// <param name="debug">Enable debug?</param>
-    /// <param name="message">string to emit.</param>
+    /// <param name="message">String to emit.</param>
     public static void Emit(bool debug, string message) {
         if(debug) Debug.WriteLine(message);
     }
@@ -21,18 +21,17 @@ namespace Helper
     /// Emit a Debug message.
     /// </summary>
     /// <param name="debug">Enable debug?</param>
-    /// <param name="message">integer to emit.</param>
+    /// <param name="integer">Integer to emit.</param>
     public static void Emit(bool debug, int integer)
     {
         Debugger.Emit(debug, integer.ToString());
     }
 
-
     /// <summary>
     /// Emit a Debug message.
     /// </summary>
     /// <param name="debug">Enable debug?</param>
-    /// <param name="message">string[] to emit.</param>
+    /// <param name="strings">string[] to emit.</param>
     public static void Emit(bool debug, string[] strings)
     {
         string msg = "";
@@ -47,7 +46,7 @@ namespace Helper
     /// Emit a Debug message.
     /// </summary>
     /// <param name="debug">Enable debug?</param>
-    /// <param name="message">Card[] to emit.</param>
+    /// <param name="cards">Card[] to emit.</param>
     public static void Emit(bool debug, BlackjackXNA.Card[] cards)
     {
         string msg = "";

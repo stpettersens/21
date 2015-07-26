@@ -6,23 +6,37 @@
 
 class Score
 
-	constructor: (debug, x, y) ->
+	# Score implements a score or information box.
+	#
+	# @param [Boolean] debug Enable debug messages?
+	# @param [Number] posX X position for score box
+	# @param [Number] posY Y position for score box
+	#
+	constructor: (debug, posX, posY) ->
 		@debug = debug
-		@x = x
-		@y = y
+		@posX = posX
+		@posY = posY
 		@score = ""
-		Debug.emit(@debug, "Created score counter at #{@x},#{@y}") # !
+		Debug.emit(@debug, "Created score counter at #{posX},#{posY}") # !
 
+	# Emit a score or similar message.
+	#
+	# @param [Any] score Score or similar message to emit
+	#
 	emit: (score) ->
 		@.clear()
 		@score = score
 
+	# Clear the score box.
+	#
 	clear: () ->
 		@score = ""
 
+	# Draw the score box.
+	#
 	draw: () ->
 		canvas = document.getElementById("blackjack-table")
 		context = canvas.getContext("2d")
 		context.font = "10pt Verdana"
 		context.fillStyle = "white"
-		context.fillText(@score, @x, @y)
+		context.fillText(@score, @posX, @posY)

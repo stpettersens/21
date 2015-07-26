@@ -16,6 +16,8 @@ class Cards {
 	List<String> ranks;
 	List<String> suits;
 
+	/// Card implements a collection of playing Cards
+	/// and methods to draw and shuffle.
 	Cards() {
 		this.index = -1;
 		this.deck_num = 52;
@@ -25,22 +27,29 @@ class Cards {
 		this.suits = [ "h", "d", "c", "s" ];
 	}
 
+	/// Get a rank for a card.
+	/// Returns [String] Card rank.
 	String _getRank() {
 		Random rand = new Random();
 		int i = rand.nextInt(this.ranks.length);
 		return this.ranks[i];
 	}
 
+	/// Get a suit for a card.
+	/// Returns [String] Card suit.
 	String _getSuit() {
 		Random rand = new Random();
 		int i = rand.nextInt(this.suits.length);
 		return this.suits[i];
 	}
 
+	/// Get a card.
+	/// Returns [String] Card as string.
 	String _getCard() {
 		return "${this._getRank()} ${this._getSuit()}";
 	}
 
+	/// Shuffle cards.
 	void shuffle() {
 		this.index = -1;
 		this.deck = new List<String>();
@@ -56,6 +65,8 @@ class Cards {
 		}
 	}
 
+	/// Draw a card.
+	/// Returns [String] Drawn card as string.
 	String draw() {
 		if(this.played.length == this.deck_num || this.index == -1) {
 			this.index = 0;
@@ -65,6 +76,8 @@ class Cards {
 		return "[${rs[0]}${rs[1]}]";
 	}
 
+	/// Get a card's value.
+	/// Returns [int] Card's value.
 	int getValue() {
 		List<String> rs = this.deck[this.index].split(" ");
 		this.index++;
@@ -75,10 +88,14 @@ class Cards {
 		return value;
 	}
 
+	/// Get number of played cards.
+	/// Returns [int] Number of cards played.
 	int getPlayed() {
 		return this.played.length;
 	}
 
+	/// Draw all cards from the deck.
+	/// Returns [List<String>] All cards from deck.
 	List<String> drawAll() {
 		this.index = 0;
 		List<String> draws = new List<String>();

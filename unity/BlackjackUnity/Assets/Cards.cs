@@ -26,8 +26,8 @@ public class Cards {
     /// <summary>
     /// Constructor for cards.
     /// </summary>
-    /// <param name="strCards"></param>
-    /// <param name="gfxCards"></param>
+    /// <param name="strCards">Cards as strings.</param>
+    /// <param name="gfxCards">Cards as textures.</param>
     public Cards(List<string> strCards, List<Texture2D> gfxCards) {
         this.index = -1;
         this.deck_num = 52;
@@ -103,7 +103,7 @@ public class Cards {
     /// <summary>
     /// Draw a card.
     /// </summary>
-    /// <returns></returns>
+    /// <returns>Drawn card as string.</returns>
     public string Draw() {
         if (this.played.Count == this.deck_num | this.index == -1)
             this.index = 0;
@@ -138,7 +138,7 @@ public class Cards {
     /// <summary>
     /// Draw all the cards from a deck.
     /// </summary>
-    /// <returns></returns>
+    /// <returns>All drawn cards.</returns>
     public List<string> DrawAll() {
         this.index = 0;
         List<string> draws = new List<string>();

@@ -14,6 +14,10 @@ class Card {
 	int pos_x;
 	int pos_y;
 
+	/// Card represents a single playing card.
+	/// [String] card Data URI for card graphic.
+	/// [int] posX X position for card.
+	/// [int] posY Y position for card.
 	Card(String card, int pos_x, int pos_y) {
 		this.image = new ImageElement();
 		this.image.src = card;
@@ -21,6 +25,9 @@ class Card {
 		this.pos_y = pos_y;
 	}
 
+	/// Get an image path from card string pattern.
+	/// [String] card String representation for card.
+	/// Returns [String] Path to card graphic.
 	static String getImage(String card) {
 
 		if(card == "c" || card == "d") {
@@ -48,23 +55,34 @@ class Card {
 		return "gfx/${suit}${rank}.png";
 	}
 
+	/// Get an image data URI from card string pattern.
+	/// [String] card String representation for card.
+	/// Returns [String] Data URI for card graphic.
 	static String getImageData(String card) {
 		return graphics[gfx_fns.indexOf(Card.getImage(card))];
 	}
 
+	/// Get source for image.
+	/// Returns [String] Image source.
 	String getImageSrc() {
 		return this.image.src;
 	}
 
+	/// Set X, Y position for card.
+	/// [int] posX X position for card.
+	/// [int] posY Y position for card.
 	void setXY(int pos_x, int pos_y) {
 		this.pos_x = pos_x;
 		this.pos_y = pos_y;
 	}
 
+	/// Get X, Y position of card.
+	/// Returns [List<int>] X, Y position of card.
 	List<int> getXY() {
 		return [this.pos_x, this.pos_y];
 	}
 
+	/// Draw the card.
 	void draw() {
 		var canvas = document.getElementById("blackjack-table");
 		var context = canvas.getContext("2d");

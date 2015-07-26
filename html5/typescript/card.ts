@@ -6,20 +6,39 @@
 	HTML5/TypeScript implementation
 */
 
-/// <reference path="graphics.ts"/>
+/// <reference path="graphics.ts" />
 
+/**
+ * @file Card class for Blackjack.
+ * @copyright 2015 Sam-Pettersen
+*/
 class Card {
 	private image: any;
-	private pos_x: number;
-	private pos_y: number;
+	private posX: number;
+	private posY: number;
 
-	constructor(card: string, pos_x: number, pos_y: number) {
+	/**
+	 * Card represents a single playing card.
+	 * @public
+	 * @constructor
+	 * @param {string} card - Data URI for card graphic.
+	 * @param {number} posX - X position for card.
+	 * @param {number} posY - Y position for card.
+	*/
+	constructor(card: string, posX: number, posY: number) {
 		this.image = new Image();
 		this.image.src = card;
-		this.pos_x = pos_x;
-		this.pos_y = pos_y;
+		this.posX = posX;
+		this.posY = posY;
 	}
 	
+	/**
+	 * Get an image path from card string pattern.
+	 * @public
+	 * @static
+	 * @param {string} card - String representation for card.
+	 * @returns {string} Path to card graphic.
+	*/
 	public static getImage(card: string): string {
 		if(card == "c" || card == "d") {
 			return "gfx/" + card + ".png";
@@ -41,26 +60,53 @@ class Card {
 		return "gfx/${suit}${rank}.png";
 	}
 	
+	/**
+	 * Get an image data URI from card string pattern.
+	 * @public
+	 * @static
+	 * @param {string} card - String representation for card.
+	 * @returns {string} Data URI for card graphic.
+	*/
 	public static getImageData(card: string): string {
 		return graphics[gfx_fns.indexOf(Card.getImage(card))];
 	}
 
+	/**
+	 * Get source for image.
+	 * @public
+	 * @returns {string} Image source.
+	*/
 	public getImageSrc(): string {
 		return this.image.src;
 	}
 	
-	public setXY(pos_x: number, pos_y: number): void {
-		this.pos_x = pos_x;
-		this.pos_y = pos_y;
+	/**
+	 * Set X, Y position for card.
+	 * @public
+	 * @param {number} posX - X position for card.
+	 * @param {number} posY - Y position for card.
+	*/
+	public setXY(posX: number, posY: number): void {
+		this.posX = posX;
+		this.posY = posY;
 	}
 
+	/**
+	 * Get X, Y position of card.
+	 * @public
+	 * @returns {number[]} X, Y position of card.
+	*/
 	public getXY(): number[] {
-		return [this.pos_x, this.pos_y];
+		return [this.posX, this.posY];
 	}
 
+	/**
+	 * Draw the card.
+	 * @public
+	*/
 	public draw(): void {
 		var canvas: any = document.getElementById("blackjack-table");
 		var context: any = canvas.getContext("2d");
-		context.drawImage(this.image, this.pos_x, this.pos_y, this.image.width, this.image.height);
+		context.drawImage(this.image, this.posX, this.posY, this.image.width, this.image.height);
 	}
 }

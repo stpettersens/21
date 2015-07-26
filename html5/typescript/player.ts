@@ -6,10 +6,14 @@
 	HTML5/TypeScript implementation
 */
 
-/// <reference path="cards.ts"/>
-/// <reference path="card.ts"/>
-/// <reference path="debug.ts"/>
+/// <reference path="cards.ts" />
+/// <reference path="card.ts" />
+/// <reference path="debug.ts" />
 
+/**
+ * @file Player class for Blackjack.
+ * @copyright 2015 Sam Saint-Pettersen
+*/
 class Player {
 	private debug: boolean;
 	private index: number;
@@ -17,6 +21,12 @@ class Player {
 	private cards: string[];
 	private values: number[];
 
+	/**
+	 * Player implements the player for Blackjack.
+	 * @public
+	 * @constructor
+	 * @param {boolean} debug - Enable debug messages?
+	*/
 	constructor(debug: boolean) {
 		this.debug = debug;
 		this.index = -1;
@@ -25,6 +35,11 @@ class Player {
 		this.values = new Array<number>();
 	}
 
+	/**
+	 * Calculate the total value of player's held cards.
+	 * @public
+	 * @returns {number} Total value for player's cards.
+	*/ 		
 	public calcTotal(): number {
 		this.values.sort(function(a, b) { return b - a });
 		var total: number = 0;
@@ -39,6 +54,11 @@ class Player {
 		return total;
 	}
 
+	/**
+	 * Determine if player has Blackjack.
+	 * @public
+	 * @returns {boolean} Does player have Blackjack?
+	*/
 	public hasBlackjack(): boolean {
 		var blackjack: boolean = false;
 		if(this.calcTotal() == 21) {
@@ -48,6 +68,11 @@ class Player {
 		return blackjack;
 	}
 
+	/**
+	 * Determine if player is bust.
+	 * @public
+	 * @returns {boolean} Is player bust?
+	*/
 	public isBust(): boolean {
 		var bust: boolean = false;
 		if(this.calcTotal() > 21) {
@@ -57,6 +82,12 @@ class Player {
 		return bust;
 	}
 
+	/**
+	 * Receive cards from dealer.
+	 * @public
+	 * @param {string[]} Player's cards as string[].
+	 * @returns {Card[]} Player's cards as Card[].
+	*/
 	public receiveCards(player_cards: string[]): Card[] {
 		var pc: string = "";
 		for(var i: number = 0; i < player_cards.length; i++) {
@@ -76,6 +107,12 @@ class Player {
 		return [cardA, cardB];
 	}
 
+	/**
+	 * Player hits.
+	 * @public
+	 * @param {Cards} cards - Game cards.
+	 * @returns {Card} Player's drawn card.
+	*/
 	public hit(cards: Cards): Card {
 		var card: string = cards.draw();
 		this.cards.push(card);
@@ -88,11 +125,20 @@ class Player {
 		return new Card(Card.getImageData(card.match(/\[*([A-Za-z0-9]+)\]*/)[0]), this.pos, 310);
 	}
 
+	/**
+	 * Player stands.
+	 * @public
+	*/
 	public stand(): void {
 		Debug.emit(this.debug, "Player stands.");
 		Debug.emit(this.debug, "Player has " + this.calcTotal().toString());
 	}
 
+	/**
+	 * Show player's cards.
+	 * @public
+	 * @returns {number} Total value of player's cards.
+	*/
 	public showCards(): number {
 		this.index = 0;
 		this.pos = 225;

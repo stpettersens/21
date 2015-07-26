@@ -22,7 +22,7 @@ public class Player {
     /// <summary>
     /// Constructor for player.
     /// </summary>
-    /// <param name="debug"></param>
+    /// <param name="debug">Enable debug messages?</param>
     public Player(bool debug) {
         this.debug = debug;
         this.index = -1;
@@ -79,8 +79,8 @@ public class Player {
     /// Receive cards from dealer.
     /// </summary>
     /// <param name="cards">Game cards.</param>
-    /// <param name="player_cards">String[] of player's cards.</param>
-    /// <returns></returns>
+    /// <param name="player_cards">Player's cards as String[].</param>
+    /// <returns>Player's cards as Card[].</returns>
     public List<Card> ReceiveCards(Cards cards, string[] player_cards) {
         string pc = "";
         for (int i = 0; i < player_cards.Length; i++) {
@@ -103,8 +103,8 @@ public class Player {
     /// <summary>
     /// Player hits.
     /// </summary>
-    /// <param name="cards"></param>
-    /// <returns></returns>
+    /// <param name="cards">Game cards.</param>
+    /// <returns>Player's drawn cards.</returns>
     public Card Hit(Cards cards) {
         string card = cards.Draw();
         this.cards.Add(card);
@@ -128,7 +128,7 @@ public class Player {
     /// <summary>
     /// Show player cards.
     /// </summary>
-    /// <returns></returns>
+    /// <returns>Total value of player's cards.</returns>
     public int ShowCards() {
         this.index = 0;
         this.pos = 225;

@@ -53,6 +53,9 @@ namespace BlackjackXNA
         List<string> strCards;
         List<Texture2D> gfxCards;
  
+        /// <summary>
+        /// Constructor for Blackjack.
+        /// </summary>
         public Blackjack()
         {
             ai = false;

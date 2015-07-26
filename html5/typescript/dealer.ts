@@ -6,10 +6,14 @@
 	HTML5/TypeScript implementation
 */
 
-/// <reference path="cards.ts"/>
-/// <reference path="card.ts"/>
-/// <reference path="debug.ts"/>
+/// <reference path="cards.ts" />
+/// <reference path="card.ts" />
+/// <reference path="debug.ts" />
 
+/**
+ * @file Dealer class for Blackjack.
+ * @copyright 2015 Sam Saint-Pettersen
+*/
 class Dealer {
 	private debug: boolean;
 	private index: number;
@@ -17,6 +21,12 @@ class Dealer {
 	private cards: string[];
 	private values: number[];
 
+	/**
+	 * Dealer implements the dealer for Blackjack.
+	 * @public
+	 * @constructor
+	 * @param {boolean} debug - Enable debug messages?
+	*/
 	constructor(debug: boolean) {
 		this.debug = debug;
 		this.index = 0;
@@ -25,6 +35,11 @@ class Dealer {
 		this.values = new Array<number>();
 	}
 
+	/**
+	 * Calculate the total value of dealer's held cards.
+	 * @public
+	 * @returns {number} Total value of dealer's cards.
+	*/
 	public calcTotal(): number {
 		this.values.sort(function(a, b) { return b - a });
 		var total: number = 0;
@@ -39,6 +54,12 @@ class Dealer {
 		return total;
 	}
 
+	/**
+	 * Dealer hits.
+	 * @private
+	 * @param {Cards} cards - Game cards.
+	 * @returns {Card} Dealer's drawn card.
+	*/
 	private hit(cards: Cards): Card {
 		this.index++;
 		this.pos += 90;
@@ -50,10 +71,19 @@ class Dealer {
 		return new Card(Card.getImageData(card), this.pos, 10);
 	}
 
+	/**
+	 * Dealer stands.
+	 * @private
+	*/
 	private stand(): void {
 		Debug.emit(this.debug, "Dealer stands.");
 	}
 
+	/**
+	 * Dealer shuffles.
+	 * @public
+	 * @param {Cards} cards - Game cards to shuffle.
+	*/
 	public shuffle(cards: Cards): void {
 		if(cards.getPlayed() == 0 || cards.getPlayed() >= 45) {
 			Debug.emit(this.debug, "-------------------------------------------------------");
@@ -63,6 +93,12 @@ class Dealer {
 		}
 	}
 
+	/**
+	 * Dealer deals.
+	 * @public
+	 * @param {Cards} cards - Game cards.
+	 * @returns {string[]} Player's cards.
+	*/
 	public deal(cards: Cards): string[] {
 		var dealt: string[] = new Array<string>();
 		var i: number = 1;
@@ -85,6 +121,11 @@ class Dealer {
 		return [dealt[2], dealt[3]]
 	}
 
+	/**
+	 * Determine if dealer has Blackjack.
+	 * @public
+	 * @returns {boolean} Does dealer have Blackjack?
+	*/
 	public hasBlackjack(): boolean {
 		var blackjack: boolean = false;
 		if(this.calcTotal() == 21) {
@@ -94,6 +135,11 @@ class Dealer {
 		return blackjack;
 	}
 
+	/**
+	 * Determine if dealer is bust.
+	 * @public
+	 * @returns {boolean} Is dealer bust?
+	*/
 	public isBust(): boolean {
 		var bust: boolean = false;
 		if(this.calcTotal() > 21) {
@@ -103,6 +149,12 @@ class Dealer {
 		return bust;
 	}
 
+	/**
+	 * Dealer reponds to player action (e.g. a hit or stand).
+	 * @public
+	 * @param {Cards} cards - Game cards.
+	 * @returns {Card[]} Cards returned.
+	*/
 	public respond(cards: Cards): Card[] {
 		this.showCards();
 		var responding: boolean = true;
@@ -132,6 +184,11 @@ class Dealer {
 		return response_cards;
 	}
 
+	/**
+	 * Show dealer's cards.
+	 * @public
+	 * @returns {number} Total value of dealer's cards.
+	*/
 	public showCards(): number {
 		this.index = 0;
 		this.pos = 225;
@@ -144,6 +201,11 @@ class Dealer {
 		return this.calcTotal();
 	}
 
+	/**
+	 * Dealer receives cards.
+	 * @public
+	 * @returns {Card[]} Dealer's received cards.
+	*/ 
 	public receiveCards(): Card[] {
 		var cardA = new Card(Card.getImageData("c"), this.pos, 10);
 		this.pos += 90;
@@ -152,6 +214,11 @@ class Dealer {
 		return [cardA, cardB];
 	}
 
+	/**
+	 * Dealer reveals first card.
+	 * @public
+	 * @returns {Card} Revealed first card.
+	*/
 	public revealFirstCard(): Card {
 		return new Card(Card.getImageData(this.cards[0]), 225, 10);
 	}

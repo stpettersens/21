@@ -6,6 +6,10 @@
 
 class Player
 
+	# Player implements the player for Blackjack.
+	#
+	# @param [Boolean] debug Enable debug messages?
+	#
 	constructor: (debug) ->
 		@debug = debug
 		@index = -1
@@ -13,6 +17,10 @@ class Player
 		@cards = []
 		@values = []
 
+	# Calculate the total value of player's held cards.
+	# 
+	# @param [Number] Total value for player's cards
+	#
 	calcTotal: () ->
 		@values.sort((a, b) ->  return b - a)
 		total = 0
@@ -29,6 +37,10 @@ class Player
 			i++
 		return total
 
+	# Determine if player has Blackjack.
+	#
+	# @return [Boolean] Does player have Blackjack?
+	#
 	hasBlackjack: () ->
 		blackjack = false
 		if @.calcTotal() == 21
@@ -36,6 +48,10 @@ class Player
 			blackjack = true
 		return blackjack
 
+	# Determine if player is bust.
+	# 
+	# @return [Boolean] Is player bust?
+	#
 	isBust: () ->
 		bust = false
 		if @.calcTotal() > 21
@@ -43,6 +59,11 @@ class Player
 			bust = true
 		return bust
 
+	# Receive cards from dealer.
+	#
+	# @param [Array<String>] player_cards Player's cards as Array<String>
+	# @return [Array<Card>] Player's cards as Array<Card>
+	#
 	receiveCards: (player_cards) ->
 		pc = ""
 		i = 0
@@ -62,6 +83,11 @@ class Player
 		cardB = new Card(Card_getImageData(@cards[@index]), @pos, 310)
 		return [cardA, cardB]
 
+	# Player hits.
+	#
+	# @param [Cards] cards Game cards
+	# @return [Card] Player's drawn card
+	#
 	hit: (cards) ->
 		card = cards.draw()
 		@cards.push(card)
@@ -73,10 +99,16 @@ class Player
 		Debug.emit(@debug, "Player has #{@.calcTotal()}");
 		return new Card(Card_getImageData(card.match(/\[*([A-Za-z0-9]+)\]*/)[0]), @pos, 310);
 
+	# Player stands.
+	#
 	stand: () ->
 		Debug.emit(@debug, "Player stands.")
 		Debug.emit(@debug, "Player has #{@.calcTotal()}")
 
+	# Show player's cards.
+	#
+	# @return [Number] Total value of player's cards
+	#
 	showCards: () ->
 		@index = 0
 		@pos = 225

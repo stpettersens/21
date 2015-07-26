@@ -47,6 +47,10 @@ namespace BlackjackXNA
             this.posXY = new Vector2(posX, posY);
         }
 
+        /// <summary>
+        /// Set X, Y position for card.
+        /// </summary>
+        /// <param name="posXY">X, Y position for card.</param>
         public void SetXY(Vector2 posXY)
         {
             this.posXY = posXY;
