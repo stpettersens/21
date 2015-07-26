@@ -119,7 +119,7 @@ namespace BlackjackXNA
         /// <summary>
         /// Draw a card.
         /// </summary>
-        /// <returns></returns>
+        /// <returns>Drawn card as string.</returns>
         public string Draw()
         {
             if (this.played.Count == this.deck_num || this.index == -1)
@@ -158,7 +158,7 @@ namespace BlackjackXNA
         /// <summary>
         /// Draw all the cards from a deck.
         /// </summary>
-        /// <returns></returns>
+        /// <returns>All drawn cards.</returns>
         public List<string> DrawAll()
         {
             this.index = 0;
