@@ -10,6 +10,7 @@
  * @file Card class for Blackjack.
  * @copyright 2015 Sam Saint-Pettersen
 */
+
 var imageSrcs = [
 'gfx/c.png',
 'gfx/c10.png',

@@ -14,10 +14,6 @@
 /// <reference path="score.ts" />
 /// <reference path="debug.ts" />
 
-/**
- * @file Blackjack implementation in TypeScript.
- * @copyright 2015 Sam Saint-Pettersen
-*/
 var debug: boolean = false;
 var use_ai: boolean = false;
 var playing: boolean = true;
@@ -308,3 +304,5 @@ window.onload = function(): void {
 		}
 	});
 };
+
+

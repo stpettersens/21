@@ -1,6 +1,7 @@
 *.pyc
 *.love
 *.userprefs
+*doc/
 /html5/javascript/dist
 /html5/javascript/index.html
 /html5/typescript/dist

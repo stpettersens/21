@@ -55,8 +55,8 @@ Dealer.prototype._hit = function(cards) {
 	var card = cards.draw();
 	this.cards.push(card);
 	this.values.push(cards.getValue());
-	_print('Dealer hits.');
-	_print('Dealer gets ' + card);
+	Debug.emit(this.debug, 'Dealer hits.');
+	Debug.emit(this.debug, 'Dealer gets ' + card);
 	return new Card(Card_getImageData(card), this.pos, 10);
 };
 
@@ -65,7 +65,7 @@ Dealer.prototype._hit = function(cards) {
  * @private
 */
 Dealer.prototype._stand = function() {
-	_print('Dealer stands.');
+	Debug.emit(this.debug, 'Dealer stands.');
 };
 
 /**
@@ -75,9 +75,9 @@ Dealer.prototype._stand = function() {
 */
 Dealer.prototype.shuffle = function(cards) {
 	if(cards.getPlayed() == 0 || cards.getPlayed() >= 45) {
-		_print('-------------------------------------------------------');
-		_print('Dealer is shuffling cards...');
-		_print('-------------------------------------------------------');
+		Debug.emit(this.debug, '-------------------------------------------------------');
+		Debug.emit(this.debug, 'Dealer is shuffling cards...');
+		Debug.emit(this.debug, '-------------------------------------------------------');
 		return cards.shuffle();
 	}
 };
@@ -91,9 +91,9 @@ Dealer.prototype.shuffle = function(cards) {
 Dealer.prototype.deal = function(cards) {
 	var dealt = [];
 	var i = 1;
-	_print('-------------------------------------------------------');
-	_print('Dealer is dealing cards for a new game...');
-	_print('-------------------------------------------------------');
+	Debug.emit(this.debug, '-------------------------------------------------------');
+	Debug.emit(this.debug, 'Dealer is dealing cards for a new game...');
+	Debug.emit(this.debug, '-------------------------------------------------------');
 	while(i <= (2 * 2)) {
 		dealt.push(cards.draw() + ':' + cards.getValue());
 		i++;
@@ -105,8 +105,8 @@ Dealer.prototype.deal = function(cards) {
 		this.values.push(parseInt(cv[1]));
 		i++;
 	}
-	_print('\nDealer has:');
-	_print('[**]' + this.cards[1]);
+	Debug.emit(this.debug, '\nDealer has:');
+	Debug.emit(this.debug, '[**]' + this.cards[1]);
 	return [dealt[2], dealt[3]];
 };
 
@@ -118,7 +118,7 @@ Dealer.prototype.deal = function(cards) {
 Dealer.prototype.hasBlackjack = function() {
 	var blackjack = false;
 	if(this.calcTotal() == 21) {
-		_print('Dealer has Blackjack!');
+		Debug.emit(this.debug, 'Dealer has Blackjack!');
 		blackjack = true;
 	}
 	return blackjack;
@@ -132,7 +132,7 @@ Dealer.prototype.hasBlackjack = function() {
 Dealer.prototype.isBust = function() {
 	var bust = false;
 	if(this.calcTotal() > 21) {
-		_print('Dealer is bust!');
+		Debug.emit(this.debug, 'Dealer is bust!');
 		bust = true;
 	}
 	return bust;
@@ -185,8 +185,8 @@ Dealer.prototype.showCards = function() {
 	for(var i = 0; i < this.cards.length; i++) {
 		cards += '[' + this.cards[i] + ']';
 	}
-	_print('\nDealer has:');
-	_print(cards + ' --> ' + this.calcTotal().toString());
+	Debug.emit(this.debug, '\nDealer has:');
+	Debug.emit(this.debug, cards + ' --> ' + this.calcTotal().toString());
 	return this.calcTotal();
 };
 
@@ -212,12 +212,3 @@ Dealer.prototype.receiveCards = function() {
 Dealer.prototype.revealFirstCard = function() {
 	return new Card(Card_getImageData(this.cards[0]), 225, 10);
 };
-
-/**
- * Print a debug mesage.
- * @private
- * @param {any} message - Message to print.
-*/
-function _print(message) {
-	if(debug) console.log(message);
-}

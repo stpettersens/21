@@ -5,6 +5,7 @@ var gulp = require('gulp'),
 	    fs = require('fs'),
 	 gutil = require('gutil'),
 	coffee = require('gulp-coffee'),
+	//codo = require('gulp-codo'),
 	concat = require('gulp-concat'),
 	rename = require('gulp-rename'),
 	insert = require('gulp-insert'),
@@ -43,6 +44,10 @@ gulp.task('html', function() {
 	fs.writeFileSync('index.html', html);
 	return gulp.src('index.html')
 	.pipe(gulp.dest('dist'));
+});
+
+gulp.task('doc', function() {
+	console.log('TODO');
 });
 
 gulp.task('clean', function() {

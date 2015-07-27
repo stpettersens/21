@@ -3,14 +3,15 @@
 */
 var gulp = require('gulp'),
       fs = require('fs'),
-      ts = require('gulp-typescript'),
+     tsc = require('gulp-typescript'),
+ typedoc = require('gulp-typedoc'),
   rename = require('gulp-rename'),
   insert = require('gulp-insert'),
   uglify = require('gulp-uglify');
 
 gulp.task('js', function() {
 	return gulp.src('main.ts')
-	.pipe(ts({
+	.pipe(tsc({
 		noImplicitAny: true,
 		removeComments: true,
 		out: 'blackjack.ts.js'
@@ -33,6 +34,14 @@ gulp.task('html', function() {
 	fs.writeFileSync('index.html', html);
 	return gulp.src('index.html')
 	.pipe(gulp.dest('dist'));
+});
+
+gulp.task('doc', function() {
+	return gulp.src('*.ts')
+	.pipe(typedoc({
+		out: './doc',
+		json: './doc/doc.json'
+	}));
 });
 
 gulp.task('clean', function() {

@@ -51,7 +51,7 @@ Player.prototype.calcTotal = function() {
 Player.prototype.hasBlackjack = function() {
 	var blackjack = false;
 	if(this.calcTotal() == 21) {
-		_print('Dealer has Blackjack!');
+		Debug.emit(this.debug, 'Dealer has Blackjack!');
 		blackjack = true;
 	}
 	return blackjack;
@@ -65,7 +65,7 @@ Player.prototype.hasBlackjack = function() {
 Player.prototype.isBust = function() {
 	var bust = false;
 	if(this.calcTotal() > 21) {
-		_print('Dealer is bust!');
+		Debug.emit(this.debug, 'Dealer is bust!');
 		bust = true;
 	}
 	return bust;
@@ -85,8 +85,8 @@ Player.prototype.receiveCards = function(player_cards) {
 		this.values.push(parseInt(cv[1]));
 	}
 	pc = '[' + this.cards[0] + '][' + this.cards[1] + ']';
-	_print('\nPlayer receives their cards:');
-	_print(pc + ' --> ' + this.calcTotal().toString())
+	Debug.emit(this.debug, '\nPlayer receives their cards:');
+	Debug.emit(this.debug, pc + ' --> ' + this.calcTotal().toString())
 
 	this.index++;
 	var cardA = new Card(Card_getImageData(this.cards[this.index]), this.pos, 310);
@@ -109,9 +109,9 @@ Player.prototype.hit = function(cards) {
 	this.values.push(parseInt(cards.getValue()));
 	this.index++;
 	this.pos += 90;
-	_print('Player hits.');
-	_print('Player gets ' + card);
-	_print('Player has ' + this.calcTotal().toString());
+	Debug.emit(this.debug, 'Player hits.');
+	Debug.emit(this.debug, 'Player gets ' + card);
+	Debug.emit(this.debug, 'Player has ' + this.calcTotal().toString());
 	return new Card(Card_getImageData(card.match(/\[*([A-Za-z0-9]+)\]*/)[0]), this.pos, 310); 
 };
 
@@ -120,8 +120,8 @@ Player.prototype.hit = function(cards) {
  * @public
 */
 Player.prototype.stand = function() {
-	_print('Player stands.');
-	_print('Player has ' + this.calcTotal().toString());
+	Debug.emit(this.debug, 'Player stands.');
+	Debug.emit(this.debug, 'Player has ' + this.calcTotal().toString());
 };
 
 /**
@@ -136,16 +136,7 @@ Player.prototype.showCards = function() {
 	for(var i = 0; i < this.cards.length; i++) {
 		cards += '[' + this.cards[i] + ']';
 	}
-	_print('\nPlayer has:');
-	_print(cards + ' --> ' + this.calcTotal().toString());
+	Debug.emit(this.debug, '\nPlayer has:');
+	Debug.emit(this.debug, cards + ' --> ' + this.calcTotal().toString());
 	return this.calcTotal();
 };
-
-/**
- * Print a debug message.
- * @private
- * @param {any} message - Message to print.
-*/
-function _print(message) {
-	if(debug) console.log(message);
-}

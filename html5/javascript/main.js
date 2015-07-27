@@ -35,7 +35,7 @@ var SCREEN_HEIGHT = 500;
 */
 window.onload = function() {
 
-	_print('Initialised HTML5 Blackjack.');
+	Debug.emit(this.debug, 'Initialised HTML5 Blackjack.');
 	var canvas = document.getElementById('blackjack-table');
 	canvas.width = SCREEN_WIDTH.toString();
 	canvas.height = SCREEN_HEIGHT.toString();
@@ -126,7 +126,7 @@ window.onload = function() {
 		if(cards.getPlayed() == 52) {
 			dealer_pile = new Card(Card_getImage('d'), 10, 10);
 		}
-		_print('Cards played ' + cards.getPlayed().toString());
+		Debug.emit(this.debug, 'Cards played ' + cards.getPlayed().toString());
 		d_score.emit(dealer.calcTotal());
 		if(!isTouchScreenDevice()) {
 			instruction.emit('Play again? Yes [Y key or LMB] or No [N key or Escape key].');
@@ -222,8 +222,8 @@ window.onload = function() {
 				var xy = dealer_cards[dealer_index].getXY();
 				dealer_cards[dealer_index] = received[i];
 				dealer_cards[dealer_index].setXY(xy[0], xy[1]);
-				_print('Added image at ' + xy[0] + ',' + xy[1]);
-				_print(dealer_index);
+				Debug.emit(this.debug, 'Added image at ' + xy[0] + ',' + xy[1]);
+				Debug.emit(this.debug, dealer_index);
 				dealer_index++;
 			}
 		}
@@ -236,14 +236,6 @@ window.onload = function() {
 	function clear() {
 		var context = canvas.getContext('2d');
 		context.clearRect(0, 0, canvas.width, canvas.height);
-	}
-
-	/**
-	 * Print a debug message.
-	 * @param [Any] message Message to print.
-	*/
-	function _print(message) {
-		if(debug) console.log(message);
 	}
 
 	/**
