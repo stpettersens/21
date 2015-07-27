@@ -108,7 +108,6 @@ function Card_getImageData(card) {
 
 /**
  * Card represents a single playing card.
- * @public
  * @constructor
  * @param {string} card - Data URI for card graphic.
  * @param {number} posX - X position for card.
