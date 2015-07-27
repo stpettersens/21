@@ -23,7 +23,6 @@ class Dealer {
 
 	/**
 	 * Dealer implements the dealer for Blackjack.
-	 * @public
 	 * @constructor
 	 * @param {boolean} debug - Enable debug messages?
 	*/
