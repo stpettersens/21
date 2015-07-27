@@ -23,7 +23,6 @@ class Player {
 
 	/**
 	 * Player implements the player for Blackjack.
-	 * @public
 	 * @constructor
 	 * @param {boolean} debug - Enable debug messages?
 	*/
