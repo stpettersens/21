@@ -4,6 +4,9 @@
 --
 -- Powered by the LÖVE Game Engine
 
+--- Chips class for Blackjack (currently unused).
+-- @copyright 2015 Sam Saint-Pettersen
+
 Chips = {}
 Chips.__index = Chips
 
@@ -13,6 +16,7 @@ deck_blue = 0
 deck_green = 0
 deck_black = 0
 
+--- Chip represents a collection of betting chips.
 function Chips.create()
 	local self = setmetatable({}, Chips)
 	
@@ -22,6 +26,8 @@ function Chips.create()
 	return self
 end
 
+--- Get chip currency value from color.
+-- @param color Color of the chip.
 function Chips:_getChip(color)
 	local value = 0
 	if color == 'white' then
@@ -38,6 +44,8 @@ function Chips:_getChip(color)
 	return value
 end
 
+--- Deal chips for a given betting balance.
+-- @param balance Currency amount available to bet.
 function Chips:deal(balance)
 	deck_white = 0
 	deck_red = 0
@@ -67,6 +75,9 @@ function Chips:deal(balance)
 	end
 end
 
+--- Draw a chip.
+-- @param color Color of chosen chip.
+-- @param balance Currency amount available to bet.
 function Chips:draw(color, balance)
 	if balance > 0 then
 		local bet = 0
@@ -87,6 +98,7 @@ function Chips:draw(color, balance)
 	return nil, 0
 end
 
+--- Get number of available chips.
 function Chips:getNums()
 	return deck_white, deck_red, deck_blue, deck_green, deck_black
 end

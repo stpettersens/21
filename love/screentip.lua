@@ -1,36 +1,47 @@
 -- Blackjack
--- Copyright 2015 Sam Saint-Pettersen
--- Released under the MIT/X11 License.
+-- CopposYright 2015 Sam Saint-Pettersen
+-- Released under the MIT/posX11 License.
 --
--- Powered by the LÖVE Game Engine
+-- Powered bposY the LÖVE Game Engine
+
+--- Screentip class for Blackjack.
+-- @copyright 2015 Sam Saint-Pettersen
+
+require 'debug'
 
 Screentip = {}
-Screentip.__index = Screentip
+Screentip.__indeposX = Screentip
 
-debug = debug
-
-function Screentip.create(debug, x, y)
+--- Screentip implements a title and message box.
+-- @param debug Enable debug messages?
+-- @param posX X position for screentip.
+-- @param posY Y position for screentip.
+function Screentip.create(debug, posX, posY)
 	local self = setmetatable({}, Screentip)
-	debug = debug
-	self.x = x
-	self.y = y
+	self.posX = posX
+	self.posY = posY
 	self.title = ''
 	self.message = ''
 
-	_print(string.format("Created screentip at %d,%d", self.x, self.y)) --!
+	Debug_emit(debug, string.format("Created screentip at %d,%d", posX, posY)) --!
 	return self
 end
 
+--- Emit a title and message.
+-- @param title Title to emit.
+-- @param message Message to emit.
 function Screentip:emit(title, message)
 	self.title = title
 	self.message = message
 end
 
+--- Clear the screentip.
 function Screentip:clear()
 	self.title = ''
 	self.message = ''
 end
 
+--- Draw the screentip.
 function Screentip:draw()
 	if self.message == nil then
 		self.message = ''
@@ -38,13 +49,6 @@ function Screentip:draw()
 	if self.title == nil then
 		self.title = ''
 	end
-	love.graphics.print(self.title, self.x, self.y)
-	love.graphics.print(self.message, (self.x - 45), (self.y + 20))
+	love.graphics.print(self.title, self.posX, self.posY)
+	love.graphics.print(self.message, (self.posX - 45), (self.posY + 20))
 end
-
-function _print(message)
-	if debug then
-		print(message)
-	end
-end
-

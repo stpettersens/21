@@ -4,17 +4,21 @@
 --
 -- Powered by the LÖVE Game Engine
 
+--- Player class for Blackjack.
+-- @copyright 2015 Sam Saint-Pettersen
+
 require 'helpers'
 require 'card'
+require 'debug'
 
 Player = {}
 Player.__index = Player
 
-debug = false
-
+--- Player implements the player for Blackjack.
+-- @param debug Enable debug messages?
 function Player.create(debug)
 	local self = setmetatable({}, Player)
-	debug = debug
+	self.debug = debug
 	self.index = 0
 	self.pos = 225
 	self.cards = {}
@@ -22,6 +26,8 @@ function Player.create(debug)
 	return self
 end
 
+--- Calculate the total value of player's held cards.
+-- @param Total value for player's cards.
 function Player:calcTotal()
 	Helper_bubbleSort(self.values, true)
 	local total = 0
@@ -39,24 +45,31 @@ function Player:calcTotal()
 	return total
 end
 
+--- Determine if player has Blackjack.
+-- @return Does player have Blackjack?
 function Player:hasBlackjack()
 	local blackjack = false
 	if self:calcTotal() == 21 then
-		_print('Player has Blackjack!')
+		Debug_emit(self.debug, 'Player has Blackjack!')
 		blackjack = true
 	end
 	return blackjack
 end
 
+--- Determine if player is bust.
+-- @return Does player is bust?
 function Player:isBust()
 	local bust = false
 	if self:calcTotal() > 21 then
-		_print('Player is bust!')
+		Debug_emit(self.debug, 'Player is bust!')
 		bust = true
 	end
 	return bust
 end
 
+--- Receive cards from dealer.
+-- @param player_cards Player's cards as table of strings.
+-- @return Player's cards as table of Card(s).
 function Player:receiveCards(player_cards)
 	local pc = ''
 	for i = 1, #player_cards do
@@ -65,8 +78,8 @@ function Player:receiveCards(player_cards)
 		table.insert(self.values, tonumber(value))
 	end
 	pc = string.format('%s[%s][%s]', pc, self.cards[1], self.cards[2])
-	_print('\nPlayer receives their cards:')
-	_print(string.format('%s --> %d', pc, self:calcTotal()))
+	Debug_emit(self.debug, '\nPlayer receives their cards:')
+	Debug_emit(self.debug, string.format('%s --> %d', pc, self:calcTotal()))
 
 	self.index = self.index + 1
 	cardA = Card.create(Card_getImage(self.cards[self.index]), self.pos, 310)
@@ -77,24 +90,30 @@ function Player:receiveCards(player_cards)
 	return cardA, cardB
 end
 
+--- Player hits.
+-- @param cards Game cards.
+-- @return Player's drawn card.
 function Player:hit(cards)
 	local card = cards:draw()
 	table.insert(self.cards, card)
 	table.insert(self.values, cards:getValue())
 	self.index = self.index + 1
 	self.pos = self.pos + 90
-	_print('Player hits.')
-	_print('Player gets ' .. card)
-	_print('Player has ' .. tostring(self:calcTotal()))
+	Debug_emit(self.debug, 'Player hits.')
+	Debug_emit(self.debug, 'Player gets ' .. card)
+	Debug_emit(self.debug, 'Player has ' .. tostring(self:calcTotal()))
 
 	return Card.create(Card_getImage(card:match('%[(%w+)%]')), self.pos, 310)
 end
 
+--- Player stands.
 function Player:stand()
-	_print('Player stands.')
-	_print('Player has ' .. tostring(self:calcTotal()))
+	Debug_emit(self.debug, 'Player stands.')
+	Debug_emit(self.debug, 'Player has ' .. tostring(self:calcTotal()))
 end
 
+--- Show player's cards.
+-- @return Total value of player's cards.
 function Player:showCards()
 	self.index = 0
 	self.pos = 225
@@ -102,15 +121,8 @@ function Player:showCards()
 	for i = 1, #self.cards do
 		cards = string.format('%s[%s]', cards, self.cards[i])
 	end
-	_print('\nPlayer has:')
-	_print(string.format('%s --> %d', cards, self:calcTotal()))
+	Debug_emit(self.debug, '\nPlayer has:')
+	Debug_emit(self.debug, string.format('%s --> %d', cards, self:calcTotal()))
 
 	return self:calcTotal()
 end
-
-function _print(message)
-	if debug then
-		print(message)
-	end
-end
-

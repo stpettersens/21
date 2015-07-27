@@ -11,6 +11,7 @@ require 'dealer'
 require 'ai'
 require 'screentip'
 require 'score'
+require 'debug'
 
 -- Window parameters
 TITLE = 'Blackjack'
@@ -32,6 +33,7 @@ dealer = nil
 cards = nil
 chips = nil
 
+--- Setup game.
 function love.load(args)
 	-- Handle any command line arguments to the game.
 	for i = 1, #args do
@@ -53,6 +55,7 @@ function love.load(args)
 	newGame()
 end
 
+--- Draw logic.
 function love.draw()
 	screentip:draw()
 	instruction:draw()
@@ -67,6 +70,8 @@ function love.draw()
 	end
 end
 
+--- Update logic.
+-- @param dt Delta Time.
 function love.update(dt)
 	timer = timer + dt
 	if timer >= 3 and use_ai and not playing then
@@ -101,6 +106,8 @@ function love.update(dt)
 	end
 end
 
+--- Determine if a Blackjack has occurred.
+-- @return Has a Blackjack occurred?
 function hasBlackjack()
 	local blackjack = false
 	if player:hasBlackjack() or dealer:hasBlackjack() then
@@ -109,6 +116,8 @@ function hasBlackjack()
 	return blackjack
 end
 
+--- Determine if a bust has occurred.
+-- @return Has a bust occurred?
 function isBust()
 	local bust = false
 	if player:isBust() or dealer:isBust() then
@@ -117,15 +126,18 @@ function isBust()
 	return bust
 end
 
+--- Is the game running on a touch screen device?
+-- @return Is touch screen device?
 function isTouchScreenDevice()
-	local isTouch = false;
+	local touch = false;
 	local os = love.system.getOS()
 	if os == 'Android' or os == 'iOS' then
-		isTouch = true
+		touch = true
 	end
-	return isTouch
+	return touch
 end
 
+--- Start a new game.
 function newGame()
 	playing = true
 	player_index = 3
@@ -166,6 +178,7 @@ function newGame()
 	end
 end
 
+--- Show cards at end of game.
 function showCards()
 	playing = false
 	dealer_cards[1] = dealer:revealFirstCard()
@@ -193,6 +206,7 @@ function showCards()
 	_print('Cards played ' .. tostring(cards:getPlayed()))
 end
 
+--- Take a hit.
 function hit()
 	if player_index < 6 then
 		player_cards[player_index] = player:hit(cards)
@@ -200,6 +214,7 @@ function hit()
 	end
 end
 
+--- Take a stand.
 function stand()
 	if not use_ai then
 		player:stand()
@@ -216,6 +231,8 @@ function stand()
 	showCards()
 end
 
+--- Read keyboard input.
+-- @param key Pressed key on keyboard.
 function love.keypressed(key)
 	if playing and not use_ai then
 		if key == 'h' then
@@ -240,6 +257,10 @@ function love.keypressed(key)
 	end
 end
 
+--- Read mouse input.
+-- @param x X position of mouse cursor.
+-- @param y Y position of mouse cursor.
+-- @param button Pressed mouse button.
 function love.mousepressed(x, y, button)
 	if playing and not use_ai then
 		if button == 'l' then
@@ -256,6 +277,10 @@ function love.mousepressed(x, y, button)
 	end		
 end
 
+-- Read touch screen input.
+-- @param id Touch screen id.
+-- @param x X cursor position.
+-- @param y Y cursor position.
 function love.touchpressed(id, x, y)
 	if playing and not use_ai then
 		if love.touch.getTouchCount() == 1 then
@@ -269,11 +294,5 @@ function love.touchpressed(id, x, y)
 			newGame()
 		end
 		-- Let device's usual button handle quit.
-	end
-end
-
-function _print(message)
-	if debug then
-		print(message)
 	end
 end

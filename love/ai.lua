@@ -4,17 +4,20 @@
 --
 -- Powered by the LÖVE Game Engine
 
+--- AI class for Blackjack.
+-- @copyright 2015 Sam Saint-Pettersen
+
 require 'helpers'
 require 'card'
+require 'debug'
 
 AI = {}
 AI.__index = AI
 
-debug = false
-
+--- AI implements an artifical player (not the dealer).
 function AI.create(debug)
 	local self = setmetatable({}, AI)
-	debug = debug
+	self.debug = debug
 	self.index = 0
 	self.pos = 255
 	self.cards = {}
@@ -22,6 +25,8 @@ function AI.create(debug)
 	return self
 end
 
+--- Calculate the total value of AI's held cards.
+-- @return Total value of AI's cards.
 function AI:calcTotal()
 	Helper_bubbleSort(self.values, true)
 	local total = 0
@@ -38,34 +43,41 @@ function AI:calcTotal()
 	return total
 end
 
+--- Determine if AI has Blackjack.
+-- @return Does AI have Blackjack?
 function AI:hasBlackjack()
 	local blackjack = false
 	if self:calcTotal() == 21 then
-		_print('\nPlayer has Blackjack!')
+		Debug_emit(self.debug, '\nPlayer has Blackjack!')
 		blackjack = true
 	end
 	return blackjack
 end
 
+--- Determine if dealer is bust.
+-- @return Is dealer bust?
 function AI:isBust()
 	local bust = false
 	if self:calcTotal() > 21 then
-		_print('\nPlayer is bust!')
+		Debug_emit(self.debug, '\nPlayer is bust!')
 		bust = true
 	end
 	return bust
 end
 
-function AI:receiveCards(player_cards)
+--- AI receives cards from dealer.
+-- @param ai_cards AI's cards as table of strings.
+-- @return AI's cards as table of Card(s).
+function AI:receiveCards(ai_cards)
 	local pc = ''
-	for i = 1, #player_cards do
-		card, value = player_cards[i]:match('%[(%w+)%]:(%d+)')
+	for i = 1, #ai_cards do
+		card, value = ai_cards[i]:match('%[(%w+)%]:(%d+)')
 		table.insert(self.cards, card)
 		table.insert(self.values, tonumber(value))
 	end
 	pc = string.format('%s[%s][%s]', pc, self.cards[1], self.cards[2])
-	_print('\nPlayer receives their cards:')
-	_print(string.format('%s --> %d', pc, self:calcTotal()))
+	Debug_emit(self.debug, '\nPlayer receives their cards:')
+	Debug_emit(self.debug, string.format('%s --> %d', pc, self:calcTotal()))
 
 	self.index = self.index + 1
 	cardA = Card.create(Card_getImage(self.cards[self.index]), self.pos, 310)
@@ -76,21 +88,24 @@ function AI:receiveCards(player_cards)
 	return cardA, cardB
 end
 
+--- AI hits.
 function AI:_hit(cards)
 	card = cards:draw()
 	table.insert(self.cards, card)
 	table.insert(self.values, cards:getValue())
-	_print('Player hits.')
-	_print('Player gets ' .. card)
+	Debug_emit(self.debug, 'Player hits.')
+	Debug_emit(self.debug, 'Player gets ' .. card)
 
 	return Card.create(Card_getImage(card:match('%[(%w+)%]')), self.pos, 310)
 end
 
+--- AI stands.
 function AI:_stand()
-	_print('Player stands.')
-	_print('Player has ' .. tostring(self:calcTotal()))
+	Debug_emit(self.debug, 'Player stands.')
+	Debug_emit(self.debug, 'Player has ' .. tostring(self:calcTotal()))
 end
 
+--- AI responds to cards received or dealer.
 function AI:respond(cards)
 	self:showCards()
 	local responding = true
@@ -121,19 +136,14 @@ function AI:respond(cards)
 	return response_cards
 end
 
+--- Show AI's cards.
+-- @return Total value of AI's cards.
 function AI:showCards()
 	local cards = ''
 	for i = 1, #self.cards do
 		cards = string.format('%s%s', cards, self.cards[i])
 	end
-	_print('\nPlayer has:')
-	_print(string.format('%s --> %d', cards, self:calcTotal()))
+	Debug_emit(self.debug, '\nPlayer has:')
+	Debug_emit(self.debug, string.format('%s --> %d', cards, self:calcTotal()))
 	return self:calcTotal()
 end
-
-function _print(message)
-	if debug then
-		print(message)
-	end
-end
-

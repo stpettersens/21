@@ -106,7 +106,7 @@ class Dealer
 			blackjack = true
 		return blackjack
 
-	# Determine if dealer is bust
+	# Determine if dealer is bust.
 	#
 	# @return [Boolean] Is dealer bust?
 	#

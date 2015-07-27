@@ -4,17 +4,21 @@
 --
 -- Powered by the LÖVE Game Engine
 
+--- Dealer class for Blackjack.
+-- @copyright 2015 Sam Saint-Pettersen
+
 require 'helpers'
 require 'card'
+require 'debug'
 
 Dealer = {}
 Dealer.__index = Dealer
 
-debug = false
-
+--- Dealer implements the dealer for Blackjack.
+-- @param debug Enable debug messages?
 function Dealer.create(debug)
 	local self = setmetatable({}, Dealer)
-	debug = debug
+	self.debug = debug
 	self.index = 0
 	self.pos = 225
 	self.cards = {}
@@ -22,6 +26,8 @@ function Dealer.create(debug)
 	return self
 end
 
+--- Calculate the total value of dealer's held cards.
+-- @return Total value of dealer's cards.
 function Dealer:calcTotal()
 	Helper_bubbleSort(self.values, true)
 	local total = 0
@@ -40,37 +46,46 @@ function Dealer:calcTotal()
 	return total
 end
 
+--- Dealer hits.
+-- @param cards Game cards.
+-- @return Dealer's drawn card.
 function Dealer:_hit(cards)
 	self.index = self.index + 1
 	self.pos = self.pos + 90
 	card = cards:draw()
 	table.insert(self.cards, card)
 	table.insert(self.values, cards:getValue())
-	_print('Dealer hits.')
-	_print('Dealer gets ' .. card)
+	Debug_emit(self.debug, self.debug, 'Dealer hits.')
+	Debug_emit(self.debug, self.debug, 'Dealer gets ' .. card)
 
 	return Card.create(Card_getImage(card), self.pos, 10)
 end
 
+--- Dealer stands.
 function Dealer:_stand()
-	_print('Dealer stands.')
+	Debug_emit(self.debug, 'Dealer stands.')
 end
 
+--- Dealer shuffles.
+-- @param cards Game cards to shuffle.
 function Dealer:shuffle(cards)
 	if cards:getPlayed() == 0 or cards:getPlayed() >= 45 then
-		_print('-------------------------------------------------------')
-		_print('Dealer is shuffling cards...')
-		_print('-------------------------------------------------------')
+		Debug_emit(self.debug, '-------------------------------------------------------')
+		Debug_emit(self.debug, 'Dealer is shuffling cards...')
+		Debug_emit(self.debug, '-------------------------------------------------------')
 		return cards:shuffle()
 	end
 end
 
+--- Dealer deals.
+-- @param cards Game cards.
+-- @return Player's cards.
 function Dealer:deal(cards)
 	local dealt = {}
 	local i = 1
-	_print('-------------------------------------------------------')
-	_print('Dealer is dealing cards for a new game...')
-	_print('-------------------------------------------------------')
+	Debug_emit(self.debug, '-------------------------------------------------------')
+	Debug_emit(self.debug, 'Dealer is dealing cards for a new game...')
+	Debug_emit(self.debug, '-------------------------------------------------------')
 	while i <= (2 * 2) do
 		table.insert(dealt, string.format('%s:%d', cards:draw(), cards:getValue()))
 		i = i + 1
@@ -84,29 +99,36 @@ function Dealer:deal(cards)
 		table.insert(self.values, tonumber(value))
 		i = i + 1
 	end
-	_print('\nDealer has:')
-	_print(string.format('[**][%s]', self.cards[2]))
+	Debug_emit(self.debug, '\nDealer has:')
+	Debug_emit(self.debug, string.format('[**][%s]', self.cards[2]))
 	return {dealt[3], dealt[4]}
 end
 
+--- Determine if dealer has Blackjack.
+-- @return Does dealer have Blackjack?
 function Dealer:hasBlackjack()
 	local blackjack = false
 	if self:calcTotal() == 21 then
-		_print('Dealer has Blackjack!')
+		Debug_emit(self.debug, 'Dealer has Blackjack!')
 		blackjack = true
 	end
 	return blackjack
 end
 
+--- Determine if dealer is bust.
+-- @return Is dealer bust?
 function Dealer:isBust()
 	local bust = false
 	if self:calcTotal() > 21 then
-		_print('Dealer is bust!')
+		Debug_emit(self.debug, 'Dealer is bust!')
 		bust = true
 	end
 	return bust
 end
 
+--- Dealer responds to player action (e.g. a hit or stand).
+-- @param cards Game cards.
+-- @return Cards returned.
 function Dealer:respond(cards)
 	self:showCards()
 	local responding = true
@@ -133,6 +155,8 @@ function Dealer:respond(cards)
 	return response_cards
 end
 
+--- Show dealer's cards.
+-- @return Total value of dealer's cards.
 function Dealer:showCards()
 	self.index = 0
 	self.pos = 225
@@ -140,12 +164,14 @@ function Dealer:showCards()
 	for i = 1, #self.cards do
 		cards = string.format('%s[%s]', cards, self.cards[i])
 	end
-	_print('\nDealer has:')
-	_print(string.format('%s --> %d', cards, self:calcTotal()))
+	Debug_emit(self.debug, '\nDealer has:')
+	Debug_emit(self.debug, string.format('%s --> %d', cards, self:calcTotal()))
 
 	return self:calcTotal()
 end
 
+--- Dealer receives cards.
+-- @return Dealer's received cards.
 function Dealer:receiveCards()
 	self.index = self.index + 1
 	local cardA = Card.create(Card_getImage('c'), self.pos, 10)
@@ -158,13 +184,8 @@ function Dealer:receiveCards()
 	return cardA, cardB
 end
 
+--- Dealer reveals first card.
+-- @return Revealed first card.
 function Dealer:revealFirstCard()
 	return Card.create(Card_getImage(self.cards[1]), 225, 10)
 end
-
-function _print(message)
-	if debug then
-		print(message)
-	end
-end
-

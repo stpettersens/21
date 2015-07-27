@@ -4,6 +4,9 @@
 --
 -- Powered by the LÖVE Game Engine
 
+--- Cards class for Blackjack.
+-- @copyright 2015 Sam Saint-Pettersen
+
 require 'helpers'
 
 Cards = {}
@@ -14,6 +17,8 @@ deck_num = 52
 deck = {}
 played = {}
 
+--- Card implements a collection of playing cards
+--  and methods to draw and shuffle.
 function Cards.create()
 	local self = setmetatable({}, Cards)
 
@@ -28,20 +33,27 @@ function Cards.create()
 	return self
 end
 
+--- Get a rank for a card.
+-- @return Card rank.
 function Cards:_getRank()
 	local i = love.math.random(1, #self.ranks)
 	return tostring(self.ranks[i])
 end
 
+--- Get a suite for a card.
+-- @return Card suit.
 function Cards:_getSuit()
 	local i = love.math.random(1, #self.suits)
 	return tostring(self.suits[i])
 end
 
+--- Get a card.
+-- @return Card as string.
 function Cards:_getCard()
 	return string.format('%s %s', self:_getRank(), self:_getSuit())
 end
 
+--- Shuffle cards.
 function Cards:shuffle()
 	index = 0
 	deck = {}
@@ -57,6 +69,7 @@ function Cards:shuffle()
 	end
 end
 
+-- Sort cards.
 function Cards:sort()
 	self.sorted_hearts = {}
 	self.sorted_diamonds = {}
@@ -169,6 +182,8 @@ function Cards:sort()
 	return string.format('Sorted cards:\nH %s\nD %s\nC %s\nS %s\n', hearts, diamonds, clubs, spades)
 end
 
+--- Draw a card.
+-- @return Drawn card as string.
 function Cards:draw()
 	if #played == deck_num or index == 0 then
 		index = 1
@@ -180,6 +195,8 @@ function Cards:draw()
 	return string.format('[%s%s]', rank, suit)
 end
 
+--- Get a card's value.
+-- @return Card's value.
 function Cards:getValue()
 	local rank = nil
 	local suit = nil
@@ -197,10 +214,14 @@ function Cards:getValue()
 	return tonumber(value)
 end
 
+--- Get number of played cards.
+-- @return Number of cards played.
 function Cards:getPlayed()
 	return tonumber(#played)
 end
 
+--- Draw all cards from the deck.
+-- @return All cards from deck.
 function Cards:drawAll()
 	local draws = ' '
 	for i = 1, deck_num do
@@ -208,4 +229,3 @@ function Cards:drawAll()
 	end
 	return tostring(draws)
 end
-
