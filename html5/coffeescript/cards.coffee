@@ -19,6 +19,7 @@ class Cards
 
 	# Get a rank for a card.
 	#
+	# @private
 	# @return [String] Card rank
 	#
 	_getRank: () ->
@@ -27,6 +28,7 @@ class Cards
 
 	# Get a suit for a card.
 	#
+	# @private
 	# @return [String] Card suit
 	#
 	_getSuit: () ->
@@ -35,6 +37,7 @@ class Cards
 
 	# Get a card.
 	#
+	# @private
 	# @return [String] Card as string
 	#
 	_getCard: () ->
