@@ -15,7 +15,6 @@ var debug = false;
 
 /**
  * Score implements a score or information box.
- * @public
  * @constructor
  * @param {boolean} debug - Enable debug messages?
  * @param {number} posX - X position for score box.
