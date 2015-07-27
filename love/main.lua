@@ -4,6 +4,9 @@
 --
 -- Powered by the LÖVE Game Engine
 
+--- Blackjack implementation in Lua.
+-- @copyright 2015 Sam Saint-Pettersen
+
 require 'cards'
 require 'card'
 require 'player'
