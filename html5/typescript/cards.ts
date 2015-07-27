@@ -21,7 +21,6 @@ class Cards {
 	/**
 	 * Cards implements a collection of playing cards
 	 * and methods to draw and shuffle.
-	 * @public
 	 * @constructor
 	*/
 	constructor() {
