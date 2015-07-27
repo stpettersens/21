@@ -21,7 +21,6 @@ class Screentip {
 
 	/** 
 	 * Screentip implements a title and message box.
-	 * @public
 	 * @constructor
 	 * @param {boolean} debug - Enable debug messages?
 	 * @param {number} posX - X position for screentip.
