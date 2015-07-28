@@ -15,6 +15,7 @@ AI = {}
 AI.__index = AI
 
 --- AI implements an artifical player (not the dealer).
+--- @constructor
 function AI.create(debug)
 	local self = setmetatable({}, AI)
 	self.debug = debug
@@ -26,7 +27,7 @@ function AI.create(debug)
 end
 
 --- Calculate the total value of AI's held cards.
--- @return Total value of AI's cards.
+-- @return [number] Total value of AI's cards.
 function AI:calcTotal()
 	Helper_bubbleSort(self.values, true)
 	local total = 0
@@ -44,7 +45,7 @@ function AI:calcTotal()
 end
 
 --- Determine if AI has Blackjack.
--- @return Does AI have Blackjack?
+-- @return [boolean] Does AI have Blackjack?
 function AI:hasBlackjack()
 	local blackjack = false
 	if self:calcTotal() == 21 then
@@ -55,7 +56,7 @@ function AI:hasBlackjack()
 end
 
 --- Determine if dealer is bust.
--- @return Is dealer bust?
+-- @return [boolean] Is dealer bust?
 function AI:isBust()
 	local bust = false
 	if self:calcTotal() > 21 then
@@ -67,7 +68,7 @@ end
 
 --- AI receives cards from dealer.
 -- @param ai_cards AI's cards as table of strings.
--- @return AI's cards as table of Card(s).
+-- @return [{Card}] AI's cards as table of Card(s).
 function AI:receiveCards(ai_cards)
 	local pc = ''
 	for i = 1, #ai_cards do
@@ -89,6 +90,7 @@ function AI:receiveCards(ai_cards)
 end
 
 --- AI hits.
+-- @private
 function AI:_hit(cards)
 	card = cards:draw()
 	table.insert(self.cards, card)
@@ -100,12 +102,14 @@ function AI:_hit(cards)
 end
 
 --- AI stands.
+-- @private
 function AI:_stand()
 	Debug_emit(self.debug, 'Player stands.')
 	Debug_emit(self.debug, 'Player has ' .. tostring(self:calcTotal()))
 end
 
 --- AI responds to cards received or dealer.
+-- @param [{Card}] Game cards.
 function AI:respond(cards)
 	self:showCards()
 	local responding = true
@@ -137,7 +141,7 @@ function AI:respond(cards)
 end
 
 --- Show AI's cards.
--- @return Total value of AI's cards.
+-- @return [number] Total value of AI's cards.
 function AI:showCards()
 	local cards = ''
 	for i = 1, #self.cards do

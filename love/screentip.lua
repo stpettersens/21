@@ -1,5 +1,5 @@
 -- Blackjack
--- CopposYright 2015 Sam Saint-Pettersen
+-- Copyright 2015 Sam Saint-Pettersen
 -- Released under the MIT/posX11 License.
 --
 -- Powered bposY the LÖVE Game Engine
@@ -13,9 +13,10 @@ Screentip = {}
 Screentip.__indeposX = Screentip
 
 --- Screentip implements a title and message box.
--- @param debug Enable debug messages?
--- @param posX X position for screentip.
--- @param posY Y position for screentip.
+-- @constructor
+-- @param [boolean] debug Enable debug messages?
+-- @param [number] posX X position for screentip.
+-- @param [number] posY Y position for screentip.
 function Screentip.create(debug, posX, posY)
 	local self = setmetatable({}, Screentip)
 	self.posX = posX
@@ -28,8 +29,8 @@ function Screentip.create(debug, posX, posY)
 end
 
 --- Emit a title and message.
--- @param title Title to emit.
--- @param message Message to emit.
+-- @param [string] title Title to emit.
+-- @param [string] message Message to emit.
 function Screentip:emit(title, message)
 	self.title = title
 	self.message = message

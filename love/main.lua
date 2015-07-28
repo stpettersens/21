@@ -37,6 +37,7 @@ cards = nil
 chips = nil
 
 --- Setup game.
+-- @param [{string}] args Command-line arguments.
 function love.load(args)
 	-- Handle any command line arguments to the game.
 	for i = 1, #args do
@@ -74,7 +75,7 @@ function love.draw()
 end
 
 --- Update logic.
--- @param dt Delta Time.
+-- @param [number] dt Delta Time.
 function love.update(dt)
 	timer = timer + dt
 	if timer >= 3 and use_ai and not playing then
@@ -110,7 +111,7 @@ function love.update(dt)
 end
 
 --- Determine if a Blackjack has occurred.
--- @return Has a Blackjack occurred?
+-- @return [boolean] Has a Blackjack occurred?
 function hasBlackjack()
 	local blackjack = false
 	if player:hasBlackjack() or dealer:hasBlackjack() then
@@ -120,7 +121,7 @@ function hasBlackjack()
 end
 
 --- Determine if a bust has occurred.
--- @return Has a bust occurred?
+-- @return [boolean] Has a bust occurred?
 function isBust()
 	local bust = false
 	if player:isBust() or dealer:isBust() then
@@ -130,7 +131,7 @@ function isBust()
 end
 
 --- Is the game running on a touch screen device?
--- @return Is touch screen device?
+-- @return [boolean] Is touch screen device?
 function isTouchScreenDevice()
 	local touch = false;
 	local os = love.system.getOS()
@@ -235,7 +236,7 @@ function stand()
 end
 
 --- Read keyboard input.
--- @param key Pressed key on keyboard.
+-- @param [string] key Pressed key on keyboard.
 function love.keypressed(key)
 	if playing and not use_ai then
 		if key == 'h' then
@@ -261,9 +262,9 @@ function love.keypressed(key)
 end
 
 --- Read mouse input.
--- @param x X position of mouse cursor.
--- @param y Y position of mouse cursor.
--- @param button Pressed mouse button.
+-- @param [number] x X position of mouse cursor.
+-- @param [number] y Y position of mouse cursor.
+-- @param [string] button Pressed mouse button.
 function love.mousepressed(x, y, button)
 	if playing and not use_ai then
 		if button == 'l' then
@@ -281,9 +282,9 @@ function love.mousepressed(x, y, button)
 end
 
 -- Read touch screen input.
--- @param id Touch screen id.
--- @param x X cursor position.
--- @param y Y cursor position.
+-- @param [string] id Touch screen id.
+-- @param [number] x X cursor position.
+-- @param [number] y Y cursor position.
 function love.touchpressed(id, x, y)
 	if playing and not use_ai then
 		if love.touch.getTouchCount() == 1 then

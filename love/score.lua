@@ -13,6 +13,7 @@ Score = {}
 Score.__index = Score
 
 --- Score implements a score or information box.
+-- @constructor
 -- @param debug Enable debug messages?
 -- @param posX X position for score box.
 -- @param posY Y position for score box.
@@ -27,7 +28,7 @@ function Score.create(debug, posX, posY)
 end
 
 --- Emit a score or similar message.
--- @param score Score or similar message to emit.
+-- @param [any] score Score or similar message to emit.
 function Score:emit(score)
 	self:clear()
 	self.score = tostring(score)

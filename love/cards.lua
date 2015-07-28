@@ -17,8 +17,9 @@ deck_num = 52
 deck = {}
 played = {}
 
---- Card implements a collection of playing cards
---  and methods to draw and shuffle.
+---Card implements a collection of playing cards
+-- and methods to draw and shuffle.
+-- @constructor
 function Cards.create()
 	local self = setmetatable({}, Cards)
 
@@ -34,20 +35,23 @@ function Cards.create()
 end
 
 --- Get a rank for a card.
--- @return Card rank.
+-- @private
+-- @return [string] Card rank.
 function Cards:_getRank()
 	local i = love.math.random(1, #self.ranks)
 	return tostring(self.ranks[i])
 end
 
 --- Get a suite for a card.
--- @return Card suit.
+-- @private
+-- @return [string] Card suit.
 function Cards:_getSuit()
 	local i = love.math.random(1, #self.suits)
 	return tostring(self.suits[i])
 end
 
 --- Get a card.
+-- @private
 -- @return Card as string.
 function Cards:_getCard()
 	return string.format('%s %s', self:_getRank(), self:_getSuit())
@@ -183,7 +187,7 @@ function Cards:sort()
 end
 
 --- Draw a card.
--- @return Drawn card as string.
+-- @return [string] Drawn card as string.
 function Cards:draw()
 	if #played == deck_num or index == 0 then
 		index = 1
@@ -196,7 +200,7 @@ function Cards:draw()
 end
 
 --- Get a card's value.
--- @return Card's value.
+-- @return [number] Card's value.
 function Cards:getValue()
 	local rank = nil
 	local suit = nil
@@ -215,13 +219,13 @@ function Cards:getValue()
 end
 
 --- Get number of played cards.
--- @return Number of cards played.
+-- @return [number] Number of cards played.
 function Cards:getPlayed()
 	return tonumber(#played)
 end
 
 --- Draw all cards from the deck.
--- @return All cards from deck.
+-- @return [string] All cards from deck.
 function Cards:drawAll()
 	local draws = ' '
 	for i = 1, deck_num do

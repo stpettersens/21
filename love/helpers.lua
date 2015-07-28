@@ -2,9 +2,12 @@
 -- Static helper functions
 --
 
--- Is data in table?
--- Adapted from: http://stackoverflow.com/questions/656199/search-for-an-item-in-a-lua-list
+--- Is data in table?
+-- @param [any] data Data to search for.
+-- @param [{any}] table Table to search in.
+-- @return [boolean] Is that data in the table? 
 function Helper_inTable(data, table)
+	-- Adapted from: http://stackoverflow.com/questions/656199/search-for-an-item-in-a-lua-list
  	local valid = {}
  	for i = 1, #table do
   		valid[table[i]] = true
@@ -16,9 +19,11 @@ function Helper_inTable(data, table)
  	end
 end
 
--- Bubble sort a table in either decending (true) or ascending order (false)
--- Adapted from: http://rosettacode.org/wiki/Sorting_algorithms/Bubble_sort#Lua
+--- Bubble sort a table in either decending (true) or ascending order (false)
+-- @param [{any}] table Table to sort.
+-- @param [boolean] descending Sort in descending order?
 function Helper_bubbleSort(table, descending)
+  -- Adapted from: http://rosettacode.org/wiki/Sorting_algorithms/Bubble_sort#Lua
   local itemCount = #table
   local hasChanged
   repeat

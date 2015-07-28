@@ -11,8 +11,8 @@ Card = {}
 Card.__index = Card
 
 --- Get an image path from card string pattern.
--- @param card String representation for card.
--- @return Path to card graphic.
+-- @param [string] card String representation for card.
+-- @return [string] Path to card graphic.
 function Card_getImage(card)
 	local suit = ''
 	if card:match('(h)') ~= nil then
@@ -29,8 +29,10 @@ function Card_getImage(card)
 end
 
 --- Card represents a single playing card.
--- @param card Path for card graphic.
--- @param posX X position for card.
+-- @constructor
+-- @param [string] card Path for card graphic.
+-- @param [number] posX X position for card.
+-- @param [number] posY Y position for card.
 function Card.create(card, posX, posY)
 	local self = setmetatable({}, Card)
 	self.src = card
@@ -42,21 +44,21 @@ function Card.create(card, posX, posY)
 end
 
 --- Set X, Y position for card.
--- @param posX X position for card.
--- @param posY Y position for card.
+-- @param [number] posX X position for card.
+-- @param [number] posY Y position for card.
 function Card:setXY(posX, posY)
 	self.posX = posX
 	self.posY = posY
 end
 
 --- Get X, Y position of card.
--- @return X, Y position of card.
+-- @return [number, number] X, Y position of card.
 function Card:getXY()
 	return self.posX, self.posY
 end
 
 --- Get source for image.
--- @return Image source (path). 
+-- @return [string] Image source (path). 
 function Card:getImageSrc()
 	return self.src
 end

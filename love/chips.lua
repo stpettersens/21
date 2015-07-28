@@ -17,6 +17,7 @@ deck_green = 0
 deck_black = 0
 
 --- Chip represents a collection of betting chips.
+-- @constructor
 function Chips.create()
 	local self = setmetatable({}, Chips)
 	
@@ -27,7 +28,8 @@ function Chips.create()
 end
 
 --- Get chip currency value from color.
--- @param color Color of the chip.
+-- @private
+-- @param [string] color Color of the chip.
 function Chips:_getChip(color)
 	local value = 0
 	if color == 'white' then
@@ -45,7 +47,7 @@ function Chips:_getChip(color)
 end
 
 --- Deal chips for a given betting balance.
--- @param balance Currency amount available to bet.
+-- @param [number] balance Currency amount available to bet.
 function Chips:deal(balance)
 	deck_white = 0
 	deck_red = 0
@@ -76,8 +78,8 @@ function Chips:deal(balance)
 end
 
 --- Draw a chip.
--- @param color Color of chosen chip.
--- @param balance Currency amount available to bet.
+-- @param [string] color Color of chosen chip.
+-- @param [number] balance Currency amount available to bet.
 function Chips:draw(color, balance)
 	if balance > 0 then
 		local bet = 0
@@ -99,6 +101,7 @@ function Chips:draw(color, balance)
 end
 
 --- Get number of available chips.
+-- @return [number] Number of chips.
 function Chips:getNums()
 	return deck_white, deck_red, deck_blue, deck_green, deck_black
 end

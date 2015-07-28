@@ -15,7 +15,8 @@ Player = {}
 Player.__index = Player
 
 --- Player implements the player for Blackjack.
--- @param debug Enable debug messages?
+-- @constructor
+-- @param [boolean] debug Enable debug messages?
 function Player.create(debug)
 	local self = setmetatable({}, Player)
 	self.debug = debug
@@ -27,7 +28,7 @@ function Player.create(debug)
 end
 
 --- Calculate the total value of player's held cards.
--- @param Total value for player's cards.
+-- @param [number] Total value for player's cards.
 function Player:calcTotal()
 	Helper_bubbleSort(self.values, true)
 	local total = 0
@@ -46,7 +47,7 @@ function Player:calcTotal()
 end
 
 --- Determine if player has Blackjack.
--- @return Does player have Blackjack?
+-- @return [boolean] Does player have Blackjack?
 function Player:hasBlackjack()
 	local blackjack = false
 	if self:calcTotal() == 21 then
@@ -57,7 +58,7 @@ function Player:hasBlackjack()
 end
 
 --- Determine if player is bust.
--- @return Does player is bust?
+-- @return [boolean] Does player is bust?
 function Player:isBust()
 	local bust = false
 	if self:calcTotal() > 21 then
@@ -68,8 +69,8 @@ function Player:isBust()
 end
 
 --- Receive cards from dealer.
--- @param player_cards Player's cards as table of strings.
--- @return Player's cards as table of Card(s).
+-- @param [{string}] player_cards Player's cards as table of strings.
+-- @return [Card, Card] Player's cards as tuple of Card[s].
 function Player:receiveCards(player_cards)
 	local pc = ''
 	for i = 1, #player_cards do
@@ -91,8 +92,8 @@ function Player:receiveCards(player_cards)
 end
 
 --- Player hits.
--- @param cards Game cards.
--- @return Player's drawn card.
+-- @param [Cards] cards Game cards.
+-- @return [Card] Player's drawn card.
 function Player:hit(cards)
 	local card = cards:draw()
 	table.insert(self.cards, card)
@@ -113,7 +114,7 @@ function Player:stand()
 end
 
 --- Show player's cards.
--- @return Total value of player's cards.
+-- @return [number] Total value of player's cards.
 function Player:showCards()
 	self.index = 0
 	self.pos = 225

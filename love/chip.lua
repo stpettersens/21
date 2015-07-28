@@ -11,16 +11,17 @@ Chip = {}
 Chip.__index = Chip
 
 --- Get an image path from chip color.
--- @param color Color string for chip.
--- @return Path to chip graphic.
+-- @param [string] color Color string for chip.
+-- @return [string] Path to chip graphic.
 function Chip_getImage(color)
 	return string.format('gfx/c_%s.png', color)
 end
 
 --- Chip represents a single betting chip.
--- @param chip Path to chip graphic.
--- @param posX X position for chip.
--- @param posY Y position for chip.
+-- @constructor
+-- @param [string] chip Path to chip graphic.
+-- @param [number] posX X position for chip.
+-- @param [number] posY Y position for chip.
 function Chip.create(chip, posX, posY)
 	local self = setmetatable({}, Chip)
 	self.src = chip
@@ -32,21 +33,21 @@ function Chip.create(chip, posX, posY)
 end
 
 --- Set X, Y position for chip.
--- @param posX X position for chip.
--- @param posY Y position for chip.
+-- @param [number] posX X position for chip.
+-- @param [number] posY Y position for chip.
 function Chip:setXY(posX, posY)
 	self.posX = posX
 	self.posY = posY
 end
 
 --- Get X, Y position of chip.
--- @return X, Y position of chip.
+-- @return [number, number] X, Y position of chip.
 function Chip:getXY()
 	return self.posX, self.posY
 end
 
 --- Get source for image.
--- @return Image source (path).
+-- @return [string] Image source (path).
 function Chip:getImageSrc()
 	return self.src
 end

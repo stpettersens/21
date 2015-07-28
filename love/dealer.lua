@@ -15,7 +15,8 @@ Dealer = {}
 Dealer.__index = Dealer
 
 --- Dealer implements the dealer for Blackjack.
--- @param debug Enable debug messages?
+-- @constructor
+-- @param [boolean] debug Enable debug messages?
 function Dealer.create(debug)
 	local self = setmetatable({}, Dealer)
 	self.debug = debug
@@ -27,7 +28,7 @@ function Dealer.create(debug)
 end
 
 --- Calculate the total value of dealer's held cards.
--- @return Total value of dealer's cards.
+-- @return [number] Total value of dealer's cards.
 function Dealer:calcTotal()
 	Helper_bubbleSort(self.values, true)
 	local total = 0
@@ -47,8 +48,9 @@ function Dealer:calcTotal()
 end
 
 --- Dealer hits.
--- @param cards Game cards.
--- @return Dealer's drawn card.
+-- @private
+-- @param [Cards] cards Game cards.
+-- @return [Card] Dealer's drawn card.
 function Dealer:_hit(cards)
 	self.index = self.index + 1
 	self.pos = self.pos + 90
@@ -62,12 +64,13 @@ function Dealer:_hit(cards)
 end
 
 --- Dealer stands.
+-- @private
 function Dealer:_stand()
 	Debug_emit(self.debug, 'Dealer stands.')
 end
 
 --- Dealer shuffles.
--- @param cards Game cards to shuffle.
+-- @param [Cards] cards Game cards to shuffle.
 function Dealer:shuffle(cards)
 	if cards:getPlayed() == 0 or cards:getPlayed() >= 45 then
 		Debug_emit(self.debug, '-------------------------------------------------------')
@@ -78,8 +81,8 @@ function Dealer:shuffle(cards)
 end
 
 --- Dealer deals.
--- @param cards Game cards.
--- @return Player's cards.
+-- @param [Cards] cards Game cards.
+-- @return [{string}] Player's cards.
 function Dealer:deal(cards)
 	local dealt = {}
 	local i = 1
@@ -105,7 +108,7 @@ function Dealer:deal(cards)
 end
 
 --- Determine if dealer has Blackjack.
--- @return Does dealer have Blackjack?
+-- @return [boolean] Does dealer have Blackjack?
 function Dealer:hasBlackjack()
 	local blackjack = false
 	if self:calcTotal() == 21 then
@@ -116,7 +119,7 @@ function Dealer:hasBlackjack()
 end
 
 --- Determine if dealer is bust.
--- @return Is dealer bust?
+-- @return [boolean] Is dealer bust?
 function Dealer:isBust()
 	local bust = false
 	if self:calcTotal() > 21 then
@@ -127,8 +130,8 @@ function Dealer:isBust()
 end
 
 --- Dealer responds to player action (e.g. a hit or stand).
--- @param cards Game cards.
--- @return Cards returned.
+-- @param [Cards] cards Game cards.
+-- @return [{Card}] Cards returned.
 function Dealer:respond(cards)
 	self:showCards()
 	local responding = true
@@ -156,7 +159,7 @@ function Dealer:respond(cards)
 end
 
 --- Show dealer's cards.
--- @return Total value of dealer's cards.
+-- @return [number] Total value of dealer's cards.
 function Dealer:showCards()
 	self.index = 0
 	self.pos = 225
@@ -171,7 +174,7 @@ function Dealer:showCards()
 end
 
 --- Dealer receives cards.
--- @return Dealer's received cards.
+-- @return [Card, Card] Dealer's received cards.
 function Dealer:receiveCards()
 	self.index = self.index + 1
 	local cardA = Card.create(Card_getImage('c'), self.pos, 10)
@@ -185,7 +188,7 @@ function Dealer:receiveCards()
 end
 
 --- Dealer reveals first card.
--- @return Revealed first card.
+-- @return [Card] Revealed first card.
 function Dealer:revealFirstCard()
 	return Card.create(Card_getImage(self.cards[1]), 225, 10)
 end
