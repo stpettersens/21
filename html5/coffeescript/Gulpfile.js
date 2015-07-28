@@ -2,10 +2,10 @@
 	Combine Blackjack (CoffeeScript) scripts into two minified JavaScript files (logic and graphics).
 */
 var gulp = require('gulp'),
-	  fs = require('fs'),
+      fs = require('fs'),
    gutil = require('gutil'),
   coffee = require('gulp-coffee'),
-	codo = require('gulp-codo'),
+    codo = require('gulp-codo'),
   concat = require('gulp-concat'),
   rename = require('gulp-rename'),
   insert = require('gulp-insert'),
