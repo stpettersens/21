@@ -48,10 +48,10 @@ gulp.task('html', function() {
 
 gulp.task('doc', function() {
 	return gulp.src('*.coffee')
-	.pipe(codo(
-		'Blackjack',
-		'Blackjack Documentation'
-	));
+	.pipe(codo({
+		name: 'Blackjack',
+		title: 'Blackjack documentation'
+	}));
 });
 
 gulp.task('clean', function() {
