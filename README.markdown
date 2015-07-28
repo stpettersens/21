@@ -1,6 +1,6 @@
 ### Blackjack
-> Blackjack implementations in Lua ([Love2D](https://love2d.org)), C# ([XNA](https://en.wikipedia.org/wiki/Microsoft_XNA) & [Unity](http://unity3d.com)) and HTML5 
-> (JavaScript, [TypeScript](http://www.typescriptlang.org), [CoffeeScript](http://coffeescript.org) & [Dart](https://www.dartlang.org)).
+> Blackjack implementations in Lua ([Love2D](https://github.com/stpettersens/21/tree/master/love)), C# ([XNA](https://github.com/stpettersens/21/tree/master/xna) & [Unity](https://github.com/stpettersens/21/tree/master/unity/BlackjackUnity)) and HTML5 
+> (JavaScript, [TypeScript](https://github.com/stpettersens/21/tree/master/html5/typescript), [CoffeeScript](https://github.com/stpettersens/21/tree/master/html5/coffeescript) & [Dart](https://github.com/stpettersens/21/tree/master/html5/dart)).
 
 * [Play the HTML5/JavaScript implementation here.](http://stpettersens.github.io/21)
 * [TypeScript implementation.](http://stpettersens.github.io/21/typescript)
