@@ -7,9 +7,7 @@
 class Dealer 
 
 	# Dealer implements the dealer for Blackjack.
-	#
 	# @param [Boolean] debug Enable debug messages?
-	#
 	constructor: (debug) ->
 		@debug = debug
 		@index = 0
@@ -18,9 +16,7 @@ class Dealer
 		@values = []
 
 	# Calculate the total value of dealer's held cards.
-	#
 	# @return [Number] Total value of dealer's cards
-	#
 	calcTotal: () ->
 		@values.sort((a, b) ->  return b - a)
 		total = 0
@@ -39,10 +35,8 @@ class Dealer
 		return total
 
 	# Dealer hits.
-	#
 	# @param [Cards] cards Game cards
 	# @return [Card] Dealer's drawn card
-	#
 	_hit: (cards) ->
 		@index++
 		@pos += 90
@@ -54,14 +48,11 @@ class Dealer
 		return new Card(Card_getImageData(card), @pos, 10)
 
 	# Dealer stands.
-	#
 	_stand: () ->
 		Debug.emit(@debug, "Dealer stands.")
 
 	# Dealer shuffles.
-	#
 	# @param [Cards] cards Game cards to shuffle
-	#
 	shuffle: (cards) ->
 		if cards.getPlayed() == 0 or cards.getPlayed() >= 45
 			Debug.emit(@debug, "-------------------------------------------------------");
@@ -70,10 +61,8 @@ class Dealer
 			cards.shuffle()
 
 	# Dealer deals.
-	#
 	# @param [Cards] cards Game cards
 	# @return [Array<String>] Player's cards
-	#
 	deal: (cards) ->
 		dealt = []
 		i = 1
@@ -96,9 +85,7 @@ class Dealer
 		return [dealt[2], dealt[3]]
 
 	# Determine if dealer has Blackjack.
-	#
 	# @return [Boolean] Does dealer have Blackjack?
-	#
 	hasBlackjack: () ->
 		blackjack = false
 		if @.calcTotal() == 21
@@ -107,9 +94,7 @@ class Dealer
 		return blackjack
 
 	# Determine if dealer is bust.
-	#
 	# @return [Boolean] Is dealer bust?
-	#
 	isBust: () ->
 		bust = false
 		if @.calcTotal() > 21
@@ -118,10 +103,8 @@ class Dealer
 		return bust
 
 	# Dealer responds to player action (e.g. a hit or stand).
-	#
 	# @param [Cards] cards Game cards
 	# @return [Array<Card>] Cards returned
-	#
 	respond: (cards) ->
 		@.showCards()
 		responding = true
@@ -146,9 +129,7 @@ class Dealer
 		return response_cards
 
 	# Show dealer's cards.
-	#
 	# @return [Number] Total value of dealer's cards
-	#
 	showCards: () ->
 		@index = 0
 		@pos = 225
@@ -163,9 +144,7 @@ class Dealer
 		return @.calcTotal()
 
 	# Dealer receives cards.
-	#
 	# @return [Array<Card>] Dealer's received cards
-	#
 	receiveCards: () ->
 		cardA = new Card(Card_getImageData("c"), @pos, 10)
 		@pos += 90
@@ -174,8 +153,6 @@ class Dealer
 		return [cardA, cardB]
 
 	# Dealer reveals first card.
-	#
 	# @return [Card] Revealed first card
-	# 
 	revealFirstCard: () ->
 		return new Card(Card_getImageData(@cards[0]), 225, 10)

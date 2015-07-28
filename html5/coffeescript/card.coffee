@@ -7,11 +7,9 @@
 class Card 
 
 	# Card represents a single playing card.
-	#
 	# @param [String] card Data URI for card graphic
 	# @param [Number] posX X position for card
 	# @param [Number] posY Y position for card
-	#
 	constructor: (card, posX, posY) ->
 		@image = new Image()
 		@image.src = card
@@ -19,10 +17,8 @@ class Card
 		@posY = posY
 		
 	# Get an image path from card string pattern.
-	#
 	# @param [String] card String representation for card
 	# @return [String] Path to card graphic
-	#
 	@getImage: (card) ->
 		if card == "c" or card == "d"
 			return "gfx/#{card}.png"
@@ -41,38 +37,29 @@ class Card
 		return "gfx/" + suit + rank + ".png"
 	
 	# Get an image data URI from card string pattern.
-	#
 	# @param [String] card String represenation for card
 	# @return [String] Data URI for card graphic
-	#
 	@getImageData: (card) ->
 		return graphics[gfx_fns.indexOf(Card.getImage(card))]
 
 	# Get source for image.
-	#
 	# @return [String] Image source
-	#
 	getImageSrc: () ->
 		return @image.src
 
 	# Set X, Y position for card.
-	#
 	# @param [Number] posX X position for card
 	# @param [Number] posY Y position for card
-	#
 	setXY: (posX, posY) ->
 		@posX = posX
 		@posY = posY
 
 	# Get X, Y position of card.
-	#
 	# @return [Array<Number>] X, Y position of card
-	#
 	getXY: () ->
 		return [@posX, @posY]
 
 	# Draw the card.
-	#
 	draw: () ->
 		canvas = document.getElementById("blackjack-table")
 		context = canvas.getContext("2d")

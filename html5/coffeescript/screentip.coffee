@@ -7,11 +7,9 @@
 class Screentip
 
 	# Screentip implements a title and message box.
-	# 
 	# @param [Boolean] debug Enable debug messages?
 	# @param [Number] posX X position for screentip
 	# @param [Number] posY Y position for screentip
-	#
 	constructor: (debug, posX, posY) ->
 		@debug = debug
 		@posX = posX
@@ -21,23 +19,19 @@ class Screentip
 		Debug.emit(@debug, "Created screentip at #{posX},#{posY}") # !
 
 	# Emit a title and message.
-	# 
 	# @param [String] title Title to emit
 	# @param [String] message Message to emit
-	#
 	emit: (title, message) ->
 		@.clear()
 		@title = title
 		@msg = message
 
 	# Clear the screentip.
-	#
 	clear: () ->
 		@title = ""
 		@msg = ""
 
 	# Draw the screentip.
-	#
 	draw: () ->
 		if @msg == null 
 			@msg = ""

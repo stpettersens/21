@@ -5,7 +5,7 @@ var gulp = require('gulp'),
 	    fs = require('fs'),
 	 gutil = require('gutil'),
 	coffee = require('gulp-coffee'),
-	//codo = require('gulp-codo'),
+	  codo = require('gulp-codo'),
 	concat = require('gulp-concat'),
 	rename = require('gulp-rename'),
 	insert = require('gulp-insert'),
@@ -47,7 +47,11 @@ gulp.task('html', function() {
 });
 
 gulp.task('doc', function() {
-	console.log('TODO');
+	return gulp.src('*.coffee')
+	.pipe(codo(
+		'Blackjack',
+		'Blackjack Documentation'
+	));
 });
 
 gulp.task('clean', function() {
