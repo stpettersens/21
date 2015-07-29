@@ -57,7 +57,7 @@ namespace BlackjackXNA
         }
 
         /// <summary>
-        /// Get X, Y position of card as a Vector2.
+        /// Get X, Y position of card as Vector2.
         /// </summary>
         /// <returns>X, Y co-ordinates of card.</returns>
         public Vector2 GetXY() {
