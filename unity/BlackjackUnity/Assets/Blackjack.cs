@@ -107,7 +107,7 @@ public class Blackjack : MonoBehaviour {
         
         InitCards();
         screentip = new Screentip(DEBUG, ((SCREEN_WIDTH / 2) - 50), 190);
-        instruction = new Score(DEBUG, ((SCREEN_WIDTH / 2) - 130), 440);
+        instruction = new Score(DEBUG, ((SCREEN_WIDTH / 2) - 155), 440);
         p_score = new Score(DEBUG, 153, 315);
         d_score = new Score(DEBUG, 153, 25);
         cards = new Cards(strCards, gfxCards);
@@ -147,7 +147,7 @@ public class Blackjack : MonoBehaviour {
 
         if (playing) {
             d_score.Emit("?");
-            instruction.Emit("Hit [H key] or Stand [S key]?");
+            instruction.Emit("Hit [H key or LMB] or Stand [S key or RMB]?");
         }
 
         UpdateInput();
@@ -165,14 +165,14 @@ public class Blackjack : MonoBehaviour {
         }
 
         if (playing) {
-            if (Input.GetKeyDown(KeyCode.H))
+            if (Input.GetKeyDown(KeyCode.H) || Input.GetMouseButtonDown(0))
                 Hit();
 
-            else if (Input.GetKeyDown(KeyCode.S))
+            else if (Input.GetKeyDown(KeyCode.S) || Input.GetMouseButtonDown(1))
                 Stand();
         }
         else {
-            if (Input.GetKeyDown(KeyCode.Y))
+            if (Input.GetKeyDown(KeyCode.Y) || Input.GetMouseButtonDown(0))
                 NewGame();
 
             else if (Input.GetKeyDown(KeyCode.N))
@@ -274,9 +274,9 @@ public class Blackjack : MonoBehaviour {
         Debugger.Emit(DEBUG, String.Format("Cards played {0}", cards.GetPlayed()));
 
         if (cards.GetPlayed() >= CARD_LIMIT)
-            instruction.Emit("Dealer is shuffling cards... [Press Y key]");
+            instruction.Emit("Dealer is shuffling cards... [Press Y key or LMB]");
         else
-            instruction.Emit("Play again? Yes [Y key] or N [N key]");
+            instruction.Emit("Play again? Yes [Y key or LMB] or N [N key or Ecape key]");
 
         if (cards.GetPlayed() == 52)
             dealer_pile = new Card(cards.GetImage("d"), 10, 10);
