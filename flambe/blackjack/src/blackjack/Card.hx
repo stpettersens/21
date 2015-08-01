@@ -23,7 +23,7 @@ class Card
 
 	public function new(card: String, posX: Int, posY: Int, pack: AssetPack) 
 	{
-		this.image = new ImageSprite(pack.getTexture("hK"));
+		this.image = new ImageSprite(pack.getTexture(this.getImage(card)));
 		this.src = card;
 		this.posX = posX;
 		this.posY = posY;
@@ -31,9 +31,9 @@ class Card
 		this.image.y._ = posY;
 	}
 
-	public static function getImage(card: String): String 
+	function getImage(card: String): String 
 	{
-		return "hk";
+		return card;
 	}
 
 	public function getImageSrc(): String 

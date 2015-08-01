@@ -17,8 +17,6 @@ import flambe.display.ImageSprite;
 class Dealer
 {
 	var debug: Bool;
-	var index: Int;
-	var pos: Int;
 	var cards: Array<String>;
 	var values: Array<Int>;
 	var pack: AssetPack;
@@ -26,8 +24,6 @@ class Dealer
 	public function new(debug: Bool, pack: AssetPack)
 	{
 		this.debug = debug;
-		this.index = 0;
-		this.pos = 225;
 		this.cards = new Array<String>();
 		this.values = new Array<Int>();
 		this.pack = pack;
@@ -50,16 +46,14 @@ class Dealer
 		return total;
 	}
 
-	function hit(cards: Cards): Card
+	function hit(cards: Cards): String
 	{
-		this.index++;
-		this.pos += 90;
 		var card: String = cards.draw();
 		this.cards.push(card);
 		this.values.push(cards.getValue());
 		Debug.emit(this.debug, "Dealer hits.");
 		Debug.emit(this.debug, "Dealer gets $card");
-		return new Card(card, this.pos, 10, this.pack);
+		return card;
 	}
 
 	function stand(): Void
@@ -125,11 +119,11 @@ class Dealer
 		return bust;
 	}
 
-	public function respond(cards: Cards): Array<Card>
+	public function respond(cards: Cards): Array<String>
 	{
 		this.showCards();
 		var responding: Bool = true;
-		var response_cards = new Array<Card>();
+		var response_cards = new Array<String>();
 		while(responding)
 		{
 			var total: Int = 0;
@@ -158,8 +152,6 @@ class Dealer
 
 	public function showCards(): Int
 	{
-		this.index = 0;
-		this.pos = 225;
 		var cards: String = "";
 		for(i in 0 ... this.cards.length)
 		{
@@ -170,17 +162,13 @@ class Dealer
 		return this.calcTotal();
 	}
 
-	public function receiveCards(): Array<Card>
+	public function receiveCards(): Array<String>
 	{
-		var cardA = new Card("c", this.pos, 10, this.pack);
-		this.pos += 90;
-		var cardB = new Card(this.cards[1], this.pos, 10, this.pack);
-		this.index += 2;
-		return [ cardA, cardB ];
+		return [ "c", this.cards[1] ];
 	}
 
-	public function revealFirstCard(): Card
+	public function revealFirstCard(): String
 	{
-		return new Card(this.cards[0], 225, 10, this.pack);
+		return this.cards[0];
 	}
 }

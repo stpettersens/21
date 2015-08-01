@@ -58,12 +58,12 @@ class Cards
 		while(true)
 		{
 			var card: String = this.getCard();
-			if(this.deck.indexOf(card) != -1)
-			{
-				this.deck.push(card);
-				if(this.deck.length == this.deck_num)
-					break;
-			}
+			//if(this.deck.indexOf(card) != -1)
+			//{
+			this.deck.push(card);
+			if(this.deck.length == 5) //this.deck_num)
+				break;
+			//}
 		}
 	}
 

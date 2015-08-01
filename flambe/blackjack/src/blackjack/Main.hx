@@ -20,9 +20,9 @@ class Main
     static var ai: Bool = false;
     static var playing: Bool = true;
     static var player_index: Int = 2;
-    static var player_cards: Array<Card>;
+    static var player_cards: Array<String>;
     static var dealer_index: Int = 2;
-    static var dealer_cards: Array<Card>;
+    static var dealer_cards: Array<String>;
     static var screentip: Screentip = null;
     static var instruction: Score = null;
     static var p_score: Score = null;
@@ -99,16 +99,15 @@ class Main
         Debug.emit(debug, "Cards played $cards.getPlayed()");
         d_score.emit(dealer.calcTotal());
         instruction.emit("Play again? Yes [Y key or LMB] or No [N key or Escape key].");
-        draw();
     }
 
     private static function newGame(): Void
     {
         playing = true;
         player_index = 2;
-        player_cards = new Array<Card>();
+        player_cards = new Array<String>();
         dealer_index = 2;
-        dealer_cards = new Array<Card>();
+        dealer_cards = new Array<String>();
         dealer_pile = new Card("c", 10, 10, assets);
         dealer_pile.draw();
 
@@ -117,15 +116,31 @@ class Main
         dealer = new Dealer(debug, assets);
         dealer.shuffle(cards);
         player_cards = player.receiveCards(dealer.deal(cards));
-        dealer_cards = dealer.receiveCards();
-        player_cards.push(new Card("d", 405, 310, assets));
-        player_cards.push(new Card("d", 495, 310, assets));
-        player_cards.push(new Card("d", 585, 310, assets));
-        dealer_cards.push(new Card("d", 405, 10, assets));
-        dealer_cards.push(new Card("d", 495, 10, assets));
-        dealer_cards.push(new Card("d", 585, 10, assets));
-        //update();
-        //draw();
+        /*dealer_cards = dealer.receiveCards();*/
+   
+        var pc1 = new Card("sA", 205, 310, assets);
+        var pc2 = new Card("s2", 295, 310, assets);
+        var pc3 = new Card("s3", 385, 310, assets);
+        var pc4 = new Card("s4", 475, 310, assets);
+        var pc5 = new Card("s5", 565, 310, assets);
+
+        var dc1 = new Card("hA", 205, 10, assets);
+        var dc2 = new Card("h2", 295, 10, assets);
+        var dc3 = new Card("h3", 385, 10, assets);
+        var dc4 = new Card("h4", 475, 10, assets);
+        var dc5 = new Card("h5", 565, 10, assets);
+        
+        pc1.draw();
+        pc2.draw();
+        pc3.draw();
+        pc4.draw();
+        pc5.draw();
+        
+        dc1.draw();
+        dc2.draw();
+        dc3.draw();
+        dc4.draw();
+        dc5.draw();
     }
 
     private static function update(): Void
@@ -140,24 +155,6 @@ class Main
             d_score.emit("?");
             instruction.emit("Hit [H key or LMB] or Stand [S key or RMB]?");
         }
-    }
-
-    private static function draw(): Void
-    {
-        //clear();
-        dealer_pile.draw();
-        //screentip.draw();
-        //instruction.draw();
-        //p_score.draw();
-        //d_score.draw();
-        /*for(i in 0 ... player_cards.length)
-        {
-            player_cards[i].draw();
-        }
-        for(i in 0 ... dealer_cards.length)
-        {
-            dealer_cards[i].draw();
-        }*/
     }
 
     private static function hasBlackjack(): Bool
@@ -186,13 +183,12 @@ class Main
             player_index++;
             update();
         }
-        draw();
     }
 
     private static function stand(): Void
     {
         player.stand();
-        var received: Array<Card> = dealer.respond(cards);
+        /*var received: Array<String> = dealer.respond(cards);
         for(i in 0 ... received.length)
         {
             var xy: Array<Int> = dealer_cards[dealer_index].getXY();
@@ -200,7 +196,7 @@ class Main
             Debug.emit(debug, "Added image at $xy[0],$xy[1]");
             Debug.emit(debug, dealer_index);
             dealer_index++;
-        }
+        }*/
         showCards();
     }
 
