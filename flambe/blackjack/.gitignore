@@ -1,0 +1,7 @@
+/build/
+/web/
+
+.*.swp
+._*
+.DS_Store
+RECOVER_*
