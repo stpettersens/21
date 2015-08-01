@@ -112,7 +112,7 @@ class Main
         dealer_pile = new Card("c", 10, 10, assets);
         dealer_pile.draw();
 
-        /*screentip.clear();
+        screentip.clear();
         player = new Player(debug, assets);
         dealer = new Dealer(debug, assets);
         dealer.shuffle(cards);
@@ -124,8 +124,8 @@ class Main
         dealer_cards.push(new Card("d", 405, 10, assets));
         dealer_cards.push(new Card("d", 495, 10, assets));
         dealer_cards.push(new Card("d", 585, 10, assets));
-        update();
-        draw();*/
+        //update();
+        //draw();
     }
 
     private static function update(): Void
