@@ -16,7 +16,7 @@ class Player
 		@values = []
 
 	# Calculate the total value of player's held cards.
-	# @param [Number] Total value for player's cards
+	# @return [Number] Total value for player's cards
 	calcTotal: () ->
 		@values.sort((a, b) ->  return b - a)
 		total = 0
@@ -67,10 +67,10 @@ class Player
 		Debug.emit(@debug, "\nPlayer receives their cards:")
 		Debug.emit(@debug, "#{pc} --> #{@.calcTotal()}")
 		@index++
-		cardA = new Card(Card_getImageData(@cards[@index]), @pos, 310)
+		cardA = new Card(Card.getImageData(@cards[@index]), @pos, 310)
 		@pos += 90
 		@index++
-		cardB = new Card(Card_getImageData(@cards[@index]), @pos, 310)
+		cardB = new Card(Card.getImageData(@cards[@index]), @pos, 310)
 		return [cardA, cardB]
 
 	# Player hits.
@@ -82,10 +82,10 @@ class Player
 		@values.push(cards.getValue())
 		@index++
 		@pos += 90
-		Debug.emit(@debug, "Player hits.");
-		Debug.emit(@debug, "Player gets #{card}");
-		Debug.emit(@debug, "Player has #{@.calcTotal()}");
-		return new Card(Card_getImageData(card.match(/\[*([A-Za-z0-9]+)\]*/)[0]), @pos, 310);
+		Debug.emit(@debug, "Player hits.")
+		Debug.emit(@debug, "Player gets #{card}")
+		Debug.emit(@debug, "Player has #{@.calcTotal()}")
+		return new Card(Card.getImageData(card.match(/\[*([A-Za-z0-9]+)\]*/)[0]), @pos, 310)
 
 	# Player stands.
 	stand: () ->

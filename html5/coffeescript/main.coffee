@@ -11,6 +11,7 @@
 #include card.coffee
 #include player.coffee
 #include dealer.coffee
+#include ai.coffee
 #include screentip.coffee
 #include score.coffee
 #include debug.coffee

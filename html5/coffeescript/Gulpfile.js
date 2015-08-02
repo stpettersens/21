@@ -22,7 +22,7 @@ gulp.task('graphics', function() {
 
 gulp.task('js', function() {
 	return gulp.src(['cards.coffee','card.coffee','player.coffee','dealer.coffee',
-	'screentip.coffee','score.coffee','debug.coffee','main.coffee'])
+	'ai.coffee','screentip.coffee','score.coffee','debug.coffee','main.coffee'])
 	.pipe(concat('blackjack.coffee'))
 	.pipe(coffee({bare: true}).on('error', gutil.log))
 	.pipe(gulp.dest('dist'))

@@ -48,7 +48,7 @@ class Player {
 	bool hasBlackjack() {
 		bool blackjack = false;
 		if(this.calcTotal() == 21) {
-			Debug.emit(this.debug, "Dealer has Blackjack!");
+			Debug.emit(this.debug, "Player has Blackjack!");
 			blackjack = true;
 		}
 		return blackjack;
@@ -59,7 +59,7 @@ class Player {
 	bool isBust() {
 		bool bust = false;
 		if(this.calcTotal() > 21) {
-			Debug.emit(this.debug, "Dealer is bust!");
+			Debug.emit(this.debug, "Player is bust!");
 			bust = true;
 		}
 		return bust;
@@ -115,7 +115,7 @@ class Player {
 		this.pos = 225;
 		String cards = "";
 		for(int i = 0; i < this.cards.length; i++) {
-			cards = "${cards}${this.cards[i]}";
+			cards += "${cards}${this.cards[i]}";
 		}
 		Debug.emit(this.debug, "\nPlayer has:");
 		Debug.emit(this.debug, "${cards} --> ${this.calcTotal()}");

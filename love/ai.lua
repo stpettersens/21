@@ -15,7 +15,8 @@ AI = {}
 AI.__index = AI
 
 --- AI implements an artifical player (not the dealer).
---- @constructor
+-- @constructor
+-- @param [boolean] debug Enable debug messages?
 function AI.create(debug)
 	local self = setmetatable({}, AI)
 	self.debug = debug
@@ -109,7 +110,8 @@ function AI:_stand()
 end
 
 --- AI responds to cards received or dealer.
--- @param [{Card}] Game cards.
+-- @param [Cards] Game cards.
+-- @return [{Card}] Response cards.
 function AI:respond(cards)
 	self:showCards()
 	local responding = true

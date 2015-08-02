@@ -96,12 +96,12 @@ class Player {
 		}
 		pc = this.cards[0] + this.cards[1];
 		Debug.emit(this.debug, "\nPlayer receives their cards:");
-		Debug.emit(this.debug, pc + " --> " + this.calcTotal().toString())
+		Debug.emit(this.debug, "${pc} --> ${this.calcTotal()}");
 
 		this.index++;
 		var cardA = new Card(Card.getImageData(this.cards[this.index]), this.pos, 310);
 		this.pos += 90;
-		this.index ++;
+		this.index++;
 		var cardB = new Card(Card.getImageData(this.cards[this.index]), this.pos, 310);
 		return [cardA, cardB];
 	}
@@ -119,8 +119,8 @@ class Player {
 		this.index++;
 		this.pos += 90;
 		Debug.emit(this.debug, "Player hits.");
-		Debug.emit(this.debug, "Player gets " + card);
-		Debug.emit(this.debug, "Player has " + this.calcTotal().toString());
+		Debug.emit(this.debug, "Player gets ${card}");
+		Debug.emit(this.debug, "Player has ${this.calcTotal()}");
 		return new Card(Card.getImageData(card.match(/\[*([A-Za-z0-9]+)\]*/)[0]), this.pos, 310);
 	}
 
@@ -130,7 +130,7 @@ class Player {
 	*/
 	public stand(): void {
 		Debug.emit(this.debug, "Player stands.");
-		Debug.emit(this.debug, "Player has " + this.calcTotal().toString());
+		Debug.emit(this.debug, "Player has ${this.calcTotal()}");
 	}
 
 	/**
@@ -146,7 +146,7 @@ class Player {
 			cards += this.cards[i];
 		}
 		Debug.emit(this.debug, "\nPlayer has:");
-		Debug.emit(this.debug, cards + " --> " + this.calcTotal().toString());
+		Debug.emit(this.debug, "${cards} --> ${this.calcTotal()}");
 		return this.calcTotal();
 	}
 }

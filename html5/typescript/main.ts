@@ -10,6 +10,7 @@
 /// <reference path="card.ts" />
 /// <reference path="player.ts" />
 /// <reference path="dealer.ts" />
+/// <reference path="ai.ts" />
 /// <reference path="screentip.ts" />
 /// <reference path="score.ts" />
 /// <reference path="debug.ts" />
