@@ -116,7 +116,10 @@ class Main
         dealer = new Dealer(debug, assets);
         dealer.shuffle(cards);
         player_cards = player.receiveCards(dealer.deal(cards));
-        /*dealer_cards = dealer.receiveCards();*/
+        dealer_cards = dealer.receiveCards();
+		
+		trace(player_cards);
+		trace(debug_cards);
    
         var pc1 = new Card("sA", 205, 310, assets);
         var pc2 = new Card("s2", 295, 310, assets);

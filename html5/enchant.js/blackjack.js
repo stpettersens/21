@@ -11,15 +11,20 @@
  * @copyright 2015 Sam Saint-Pettersen
 */
 
+var g = 'graphics/';
+var graphics = [
+	g + 'c.png',
+	g + 'd.png'
+];
+
 window.onload = function() {
 	enchant();
-	var game = new Core(780, 700);
-	var g = 'graphics/';
-	game.preload(g + 'c.png', g + 'sA.png');
+	var game = new Core(1000, 500);
+	game.preload(graphics);
 	game.onload = function() {
 		var scene = new Scene();
 		var sprite = new Sprite(71, 96);
-		sprite.image = game.assets[g + 'sA.png'];
+		sprite.image = game.assets[graphics[0]];
 		scene.addChild(sprite);
 		game.pushScene(scene);
 	};
