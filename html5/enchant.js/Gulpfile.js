@@ -13,9 +13,9 @@ var gulp = require('gulp'),
 gulp.task('js', function() {
 	return gulp.src(['graphics.js','debug.js','cards.js','card.js',
 	'screentip.js','score.js','player.js','dealer.js','ai.js','main.js'])
-	.pipe(concat('blackjack.js'))
+	.pipe(concat('blackjack.enchant_js.js'))
 	.pipe(gulp.dest('dist'))
-	.pipe(rename('blackjack.min.js'))
+	.pipe(rename('blackjack.enchant_js.min.js'))
 	.pipe(uglify())
 	.pipe(insert.prepend('/*\nBlackjack (enchant.js build).\nCopyright 2015 Sam Saint-Pettersen'
 	 + '\nReleased under the MIT/X11 License.'
@@ -33,7 +33,7 @@ gulp.task('html', function() {
 	var html = '<!DOCTYPE html>\n<head>' +
 	'\n<title>HTML5 Blackjack<\/title>\n' +
 	'<script type="text/javascript" src="//cdn.jsdelivr.net/enchantjs/0.8.1/enchant.min.js"></script>\n' +
-	'<script type="text/javascript" src="blackjack.min.js"></script>\n' +
+	'<script type="text/javascript" src="blackjack.enchant_js.min.js"></script>\n' +
 	'</head>\n<body>\n<h3 style="text-align: center;">HTML5 Blackjack' +
 	' (<a href="http://enchantjs.com">enchant.js</a> build)</h3>\n' +
 	'<div id="enchant-stage"></div>\n' +
