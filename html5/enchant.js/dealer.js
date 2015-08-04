@@ -185,7 +185,7 @@ Dealer.prototype.showCards = function() {
 	this.pos = 225;
 	var cards = '';
 	for(var i = 0; i < this.cards.length; i++) {
-		cards += '[' + this.cards[i] + ']';
+		cards += this.cards[i];
 	}
 	Debug.emit(this.debug, '\nDealer has:');
 	Debug.emit(this.debug, cards + ' --> ' + this.calcTotal().toString());
@@ -212,5 +212,5 @@ Dealer.prototype.receiveCards = function() {
  * @returns {Card} Revealed first card.
 */
 Dealer.prototype.revealFirstCard = function() {
-	return new Card(Card.getImage(this.cards[0]), 225, 10);
+	return new Card(Card.getImage(this.cards[0]), 225, 10, this.game);
 };

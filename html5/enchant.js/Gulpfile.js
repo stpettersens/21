@@ -26,7 +26,7 @@ gulp.task('js', function() {
 gulp.task('debug-on', function() {
 	return gulp.src('main.js')
 	.pipe(replace(/(debug =) false/g, '$1 true'))
-	.pipe(gulp.dest('dist'));
+	.pipe(gulp.dest('.'));
 });
 
 gulp.task('html', function() {
@@ -34,7 +34,14 @@ gulp.task('html', function() {
 	'\n<title>HTML5 Blackjack<\/title>\n' +
 	'<script type="text/javascript" src="//cdn.jsdelivr.net/enchantjs/0.8.1/enchant.min.js"></script>\n' +
 	'<script type="text/javascript" src="blackjack.min.js"></script>\n' +
-	'</head>\n<body></body>\n</html>\n';
+	'</head>\n<body>\n<h3 style="text-align: center;">HTML5 Blackjack' +
+	' (<a href="http://enchantjs.com">enchant.js</a> build)</h3>\n' +
+	'<div id="enchant-stage"></div>\n' +
+	'<p style="font-size: 11pt; text-align: center;">\n' +
+	'Press Escape key to <a href="https://github.com/stpettersens/21">visit project</a>\n' +
+	' on Github.<br/><br/>\n' +
+	'Cards courtesy of <a href="http://www.jfitz.com/cards">Jfitz.com</a>.\n' +
+	'</p>\n</body>\n</html>\n';
 	fs.writeFileSync('index.html', html);
 	return gulp.src('index.html')
 	.pipe(gulp.dest('dist'));
@@ -46,7 +53,7 @@ gulp.task('graphics', function() {
 });
 
 gulp.task('doc', function() {
-	return gulp.src('*.ts')
+	return gulp.src('*.js')
 	.pipe(jsdoc('./doc'));
 });
 
@@ -56,6 +63,7 @@ gulp.task('clean', function() {
 	fs.unlinkSync('dist/index.html');
 	fs.unlinkSync('index.html');
 	fs.rmdir('dist');
+	fs.rdmir('doc');
 });
 
 gulp.task('default', ['js','html','graphics'], function(){});

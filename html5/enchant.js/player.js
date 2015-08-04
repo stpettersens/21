@@ -136,7 +136,7 @@ Player.prototype.showCards = function() {
 	this.pos = 225;
 	var cards = '';
 	for(var i = 0; i < this.cards.length; i++) {
-		cards += '[' + this.cards[i] + ']';
+		cards += this.cards[i];
 	}
 	Debug.emit(this.debug, '\nPlayer has:');
 	Debug.emit(this.debug, cards + ' --> ' + this.calcTotal().toString());

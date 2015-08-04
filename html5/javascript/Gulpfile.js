@@ -42,7 +42,7 @@ gulp.task('html', function() {
 });
 
 gulp.task('doc', function() {
-	return gulp.src('*.ts')
+	return gulp.src('*.js')
 	.pipe(jsdoc('./doc'));
 });
 

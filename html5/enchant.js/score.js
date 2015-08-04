@@ -18,10 +18,13 @@
  * @param {number} posX - X position for score box.
  * @param {number} posY - Y position for score box.
 */
-function Score(debug, posX, posY) {;
-	this.posX = posX;
-	this.posY = posY;
-	this.score = '';
+function Score(debug, posX, posY) {
+	this.box = new Label('');
+	this.box.color = 'rgb(255, 255, 255)';
+	this.box.font = '10pt verdana, sans-serif';
+	this.box.x = posX;
+	this.box.y = posY;
+	this.box.width = 500;
 
 	Debug.emit(debug, 'Created score counter at ' + posX + ',' + posY); // !
 }
@@ -33,26 +36,22 @@ function Score(debug, posX, posY) {;
 */
 Score.prototype.emit = function(score) {
 	this.clear();
-	this.score = score;
-};
+	this.box.text = score;
+}
 
 /**
  * Clear the score box.
  * @public
 */
 Score.prototype.clear = function() {
-	this.score = '';
-};
+	this.box.text = '';
+}
 
 /**
  * Draw the score box.
  * @public
 */
 Score.prototype.draw = function() {
-	var box = new Label(this.score);
-	box.color = 'rgb(255, 255, 255)';
-	box.font = '10pt verdana, sans-serif';
-	box.x = this.posX;
-	box.y = this.posY;
-	return box;
-};
+
+	return this.box;
+}

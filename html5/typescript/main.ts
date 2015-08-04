@@ -71,7 +71,7 @@ window.onload = function(): void {
 	}
 
 	/**
-	  * Show cards at end of game.
+	 * Show cards at end of game.
 	*/
 	function showCards(): void {
 		playing = false;

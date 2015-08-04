@@ -19,10 +19,16 @@
  * @param {number} posY - Y position for screentip.
 */
 function Screentip(debug, posX, posY) {
-	this.posX = posX;
-	this.posY = posY;
-	this.title = '';
-	this.msg = '';
+	this.title = new Label('');
+	this.msg = new Label('');
+	this.title.color = 'rgb(255, 255, 255)';
+	this.title.font = '10pt verdana, sans-serif';
+	this.title.x = posX;
+	this.title.y = posY;
+	this.msg.color = this.title.color;
+	this.msg.font = this.title.font;
+	this.msg.x = posX - 45;
+	this.msg.y = posY + 20;
 
 	Debug.emit(debug, 'Created screentip at ' + posX + ',' + posY); // !
 }
@@ -35,35 +41,26 @@ function Screentip(debug, posX, posY) {
 */
 Screentip.prototype.emit = function(title, message) {
 	this.clear();
-	this.title = title;
-	this.msg = message;
-};
+	this.title.text = title;
+	this.msg.text = message;
+}
 
 /**
  * Clear the screentip.
  * @public
 */
 Screentip.prototype.clear = function() {
-	this.title = '';
-	this.msg = '';
-};
+	this.title.text = '';
+	this.msg.text = '';
+}
 
 /**
  * Draw the screentip.
  * @public
 */
 Screentip.prototype.draw = function() {
-	if(this.msg == null) this.msg = '';
-	if(this.title == null) this.title = '';
-	var st_title = new Label(this.title);
-	var st_msg = new Label(this.msg);
-	st_title.color = 'rgb(255, 255, 255)';
-	st_title.font = '10pt verdana, sans-serif';
-	st_title.x = this.posX;
-	st_title.y = this.posY;
-	st_msg.color = st_title.color;
-	st_msg.font = st_title.font;
-	st_msg.x = this.posX - 45;
-	st_msg.y = this.posY + 20;
-	return [st_title, st_msg];
-};
+	if(this.msg.text == null) this.msg.text = '';
+	if(this.title.text == null) this.title.text = '';
+
+	return [this.title, this.msg];
+}

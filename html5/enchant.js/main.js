@@ -11,7 +11,7 @@
  * @copyright 2015 Sam Saint-Pettersen
 */
 
-var debug = true;
+var debug = false;
 var ai = false;
 var playing = true;
 var player_index = 2;
@@ -28,7 +28,7 @@ var player = null;
 var dealer = null;
 var timer = 0;
 
-var SCREEN_WIDTH = 780 + 400;
+var SCREEN_WIDTH = 780;
 var SCREEN_HEIGHT = 500;
 
 /**
@@ -42,18 +42,75 @@ window.onload = function() {
 		var scene = new Scene();
 		scene.backgroundColor = 'rgb(0, 153, 0)';
 
-		screentip = new Screentip(debug, ((SCREEN_WIDTH / 2) - 50), 190);
-		instruction = new Score(debug, ((SCREEN_WIDTH / 2) - 155), 450);
+		screentip = new Screentip(debug, ((SCREEN_WIDTH / 2) - 60), 190);
+		instruction = new Score(debug, ((SCREEN_WIDTH / 2) - 200), 450);
 		p_score = new Score(debug, 153, 315);
 		d_score = new Score(debug, 153, 25);
 		cards = new Cards();
 		newGame();
 
 		/**
+		 * Is the game running on a touch screen device?
+		 * @returns {boolean} Is touch screen device?
+		*/
+		function isTouchScreenDevice() {
+			var touch = false;
+			var ua = navigator.userAgent;
+			if(ua.indexOf('Mobile') !== -1 || ua.indexOf('Tablet') !== -1)
+				touch = true;
+
+			return touch;
+		}
+
+		/**
+		 * Show cards at end of game.
+		*/
+		function showCards() {
+			playing = false;
+			dealer_cards[0] = dealer.revealFirstCard();
+			var ds = dealer.showCards();
+			var ps = player.showCards();
+
+			if(ps === 21 && player_index === 2 && ds !== 21)
+				screentip.emit('PLAYER BLACKJACK!', 'Player has 21. That\'s a Blackjack!');
+
+			else if(ds === 21 && dealer_index === 2 && ps !== 21)
+				screentip.emit('DEALER BLACKJACK!', 'Dealer has 21. That\'s a Blackjack!');
+
+			else if((ps == ds) || (ps > 21 && ds > 21))
+				screentip.emit('PUSH', 'Neither dealer nor player won.');
+
+			else if(ps <= 21 && ps > ds)
+				screentip.emit('PLAYER WINS', 'Player wins with ' + ps.toString() + '. Well done.');
+
+			else if(ds <= 21 && ds > ps)
+				screentip.emit('DEALER WINS', 'Dealer wins with ' + ds.toString() + '. Too bad.');
+
+			else if(ps > 21 && ds <= 21)
+				screentip.emit('DEALER WINS', 'Dealer wins. Player bust.');
+
+			else if(ds > 21 && ps <= 21)
+				screentip.emit('PLAYER WINS', 'Player wins. Dealer bust.');
+
+			if(cards.getPlayed() == 52)
+				dealer_pile = new Card(Card.getImage('d'), 10, 10, game);
+
+			Debug.emit(debug, 'Cards played ' + cards.getPlayed().toString());
+			d_score.emit(dealer.calcTotal());
+			if(!isTouchScreenDevice())
+				instruction.emit('Play again? Yes [Y key or LMB] or No [N key or Escape key].');
+
+			else
+				instruction.emit('Play again? Long tap screen to continue.');
+
+			draw();
+		}
+
+		/**
 		 * Start a new game.
 		*/
 		function newGame() {
-			//clear();
+			clear();
 			playing = true;
 			player_index = 2;
 			player_cards = new Array(5);
@@ -95,7 +152,6 @@ window.onload = function() {
 		 * Draw logic.
 		*/
 		function draw() {
-			//clear();
 			scene.addChild(dealer_pile.draw());
 			scene.addChild(screentip.draw()[0]);
 			scene.addChild(screentip.draw()[1]);
@@ -109,6 +165,23 @@ window.onload = function() {
 				scene.addChild(dealer_cards[i].draw());
 			}
 			game.pushScene(scene);
+		}
+
+		/**
+		 * Clear the table.
+		*/
+		function clear() {
+			scene.removeChild(screentip.draw()[0]);
+			scene.removeChild(screentip.draw()[1]);
+			scene.removeChild(instruction.draw());
+			scene.removeChild(p_score.draw());
+			scene.removeChild(d_score.draw());
+			for(var i = 0; i < player_cards.length; i++) {
+				scene.removeChild(player_cards[i].draw());
+			}
+			for(var i = 0; i < dealer_cards.length; i++) {
+				scene.removeChild(dealer_cards[i].draw());
+			}
 		}
 
 		/**
@@ -147,7 +220,86 @@ window.onload = function() {
 			draw();
 		}
 
+		/**
+		 * Take a stand.
+		*/
+		function stand() {
+			player.stand();
+			var received = dealer.respond(cards);
+			for(var i = 0; i < received.length; i++) {
+				var xy = dealer_cards[dealer_index].getXY();
+				dealer_cards[dealer_index] = received[i];
+				dealer_cards[dealer_index].setXY(xy[0], xy[1]);
+				Debug.emit(debug, 'Added image at ' + xy[0].toString() + ',' + xy[1].toString());
+				Debug.emit(debug, dealer_index);
+				dealer_index++;
+			}
+			showCards();
+		}
+
+		/**
+		 * Exit to project's repository on GitHub.
+		*/
+		function exitToGitHub() {
+			window.location.href = 'https://github.com/stpettersens/21';
+		}
+
+		// Touch controls.
+		var start = null;
+		document.addEventListener('touchstart', function(event) {
+			event.preventDefault();
+			start = new Date().getTime();
+		});
+
+		document.addEventListener('touchend', function(event) {
+			event.preventDefault();
+			var elapsed = new Date().getTime() - start;
+			if((elapsed < 600) && (elapsed > 0))
+				if(playing) hit();
+
+			else
+				if(playing) stand();
+				else newGame();
+		});
+
+		// Mouse controls.
+		document.addEventListener('mousedown', function(event) {
+			if(playing && event.which === 1)
+				hit();
+
+			else if(playing && event.which === 3)
+				stand();
+
+			else if(!playing && event.which === 1)
+				newGame();
+		});
+		// Prevent context menu show up on right click.
+		document.addEventListener('contextmenu', function(event) {
+			event.preventDefault();
+		}, false);
+
+		// Keyboard controls.
+		document.addEventListener('keydown', function(event) {
+			if(playing && event.keyCode === 72)
+				hit();
+
+			else if(playing && event.keyCode === 83)
+				stand();
+
+			else if(!playing && event.keyCode === 89)
+				newGame();
+
+			else if(!playing && event.keyCode === 78)
+				exitToGitHub();
+
+			else if(event.keyCode === 27)
+				exitToGitHub();
+		});
 	};
 	Debug.emit(debug, 'Initialized HTML5 Blackjack (enchant.js build).');
+	var stage = document.getElementById('enchant-stage');
+	stage.style.marginLeft = 'auto';
+	stage.style.marginRight = 'auto';
+	stage.style.border = '1px dotted rgb(0, 0, 0)';
 	game.start();
 };
