@@ -7,7 +7,7 @@
 */
 
 /**
- * @file Blackjack implementation in JavaScript.
+ * @file Blackjack implementation with enchant.js
  * @copyright 2015 Sam Saint-Pettersen
 */
 
@@ -28,7 +28,7 @@ var player = null;
 var dealer = null;
 var timer = 0;
 
-var SCREEN_WIDTH = 780 + 220;
+var SCREEN_WIDTH = 780 + 400;
 var SCREEN_HEIGHT = 500;
 
 /**
@@ -46,6 +46,7 @@ window.onload = function() {
 		instruction = new Score(debug, ((SCREEN_WIDTH / 2) - 155), 450);
 		p_score = new Score(debug, 153, 315);
 		d_score = new Score(debug, 153, 25);
+		cards = new Cards();
 		newGame();
 
 		/**
@@ -55,12 +56,23 @@ window.onload = function() {
 			//clear();
 			playing = true;
 			player_index = 2;
-			player_cards = [];
+			player_cards = new Array(5);
 			dealer_index = 2;
-			dealer_cards = [];
+			dealer_cards = new Array(5);
 			dealer_pile = new Card(Card.getImage('c'), 10, 10, game);
 			screentip.clear();
-			update();
+			player = new Player(debug, game);
+			dealer = new Dealer(debug, game);
+			dealer.shuffle(cards);
+			player_cards = player.receiveCards(dealer.deal(cards));
+			dealer_cards = dealer.receiveCards();
+			player_cards[2] = new Card(Card.getImage('d'), 405, 310, game);
+			player_cards[3] = new Card(Card.getImage('d'), 495, 310, game);
+			player_cards[4] = new Card(Card.getImage('d'), 585, 310, game);
+			dealer_cards[2] = new Card(Card.getImage('d'), 405, 10, game);
+			dealer_cards[3] = new Card(Card.getImage('d'), 495, 10, game);
+			dealer_cards[4] = new Card(Card.getImage('d'), 585, 10, game);
+ 			update();
 			draw();
 		}
 
@@ -68,7 +80,15 @@ window.onload = function() {
 		 * Update logic.
 		*/
 		function update() {
-			// TODO
+			if(hasBlackjack() || isBust())
+				showCards();
+
+			p_score.emit(player.calcTotal());
+
+			if(playing) {
+				d_score.emit('?');
+				instruction.emit('Hit [H key or LMB] or Stand [S key or RMB]?');
+			}
 		}
 
 		/**
@@ -90,6 +110,43 @@ window.onload = function() {
 			}
 			game.pushScene(scene);
 		}
+
+		/**
+		 * Determine if a Blackjack has occurred.
+		 * @returns {boolean} Has a Blackjack occurred?
+		*/
+		function hasBlackjack() {
+			var blackjack = false;
+			if(player.hasBlackjack() || dealer.hasBlackjack())
+				blackjack = true;
+
+			return blackjack;
+		}
+
+		/**
+		 * Determine if a bust has occurred.
+		 * @returns {boolean} Has a bust occurred?
+		*/
+		function isBust() {
+			var bust = false;
+			if(player.isBust() || dealer.isBust())
+				bust = true;
+
+			return bust;
+		}
+
+		/**
+		 * Take a hit.
+		*/
+		function hit() {
+			if(player_index < 6) {
+				player_cards[player_index] = player.hit(cards);
+				player_index++;
+				update();
+			}
+			draw();
+		}
+
 	};
 	Debug.emit(debug, 'Initialized HTML5 Blackjack (enchant.js build).');
 	game.start();

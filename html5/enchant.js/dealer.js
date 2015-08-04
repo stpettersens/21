@@ -3,7 +3,7 @@
 	Copyright 2015 Sam Saint-Pettersen
 	Released under the MIT/X11 License.
 	
-	HTML5 implementation
+	HTML5/enchant.js implementation
 */
 
 /**
@@ -15,9 +15,11 @@
  * Dealer implements the dealer for Blackjack.
  * @constructor
  * @param {boolean} debug - Enable debug messages?
+ * @param {Object} game - Enchant.js game object.
 */
-function Dealer(debug) {
+function Dealer(debug, game) {
 	this.debug = debug;
+	this.game = game;
 	this.index = 0;
 	this.pos = 225;
 	this.cards = [];
@@ -57,7 +59,7 @@ Dealer.prototype._hit = function(cards) {
 	this.values.push(cards.getValue());
 	Debug.emit(this.debug, 'Dealer hits.');
 	Debug.emit(this.debug, 'Dealer gets ' + card);
-	return new Card(Card.getImageData(card), this.pos, 10);
+	return new Card(Card.getImage(card), this.pos, 10, this.game);
 };
 
 /**
@@ -197,10 +199,10 @@ Dealer.prototype.showCards = function() {
 */
 Dealer.prototype.receiveCards = function() {
 	this.index++;
-	var cardA = new Card(Card.getImageData('c'), this.pos, 10);
+	var cardA = new Card(Card.getImage('c'), this.pos, 10, this.game);
 	this.index++;
 	this.pos += 90;
-	var cardB = new Card(Card.getImageData(this.cards[1]), this.pos, 10);
+	var cardB = new Card(Card.getImage(this.cards[1]), this.pos, 10, this.game);
 	return [cardA, cardB];
 };
 
@@ -210,5 +212,5 @@ Dealer.prototype.receiveCards = function() {
  * @returns {Card} Revealed first card.
 */
 Dealer.prototype.revealFirstCard = function() {
-	return new Card(Card.getImageData(this.cards[0]), 225, 10);
+	return new Card(Card.getImage(this.cards[0]), 225, 10);
 };

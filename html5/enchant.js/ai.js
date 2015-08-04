@@ -3,7 +3,7 @@
 	Copyright 2015 Sam Saint-Pettersen
 	Released under the MIT/X11 License.
 	
-	HTML5 implementation
+	HTML5/enchant.js implementation
 */
 
 /**
@@ -15,9 +15,11 @@
  * AI implements an artificial player (not the dealer).
  * @constructor
  * @param {boolean} debug - Enable debug messages?
+ * @param {Object} game - Enchant.js game object.
 */
-function AI(debug) {
+function AI(debug, game) {
 	this.debug = debug;
+	this.game = game;
 	this.index = 0;
 	this.pos = 225;
 	this.cards = [];
@@ -88,10 +90,10 @@ AI.prototype.receiveCards = function(ai_cards) {
 	Debug.emit(this.debug, '\nAI receives their cards:');
 	Debug.emit(this.debug, ac + ' --> ' + this.calcTotal().toString());
 	this.index++;
-	var cardA = new Card(Card.getImageData(this.cards[this.index]), this.pos, 310);
+	var cardA = new Card(Card.getImage(this.cards[this.index]), this.pos, 310, this.game);
 	this.pos += 90;
 	this.index++;
-	var cardB = new Card(Card.getImageData(this.cards[this.index]), this.pos, 310);
+	var cardB = new Card(Card.getImage(this.cards[this.index]), this.pos, 310, this.game);
 	return [cardA, cardB];
 }
 
@@ -110,7 +112,7 @@ AI.prototype._hit = function(cards) {
 	Debug.emit(this.debug, 'AI hits.');
 	Debug.emit(this.debug, 'AI gets ' + card);
 	Debug.emit(this.debug, 'AI has ' + this.calcTotal().toString());
-	return new Card(Card.getImageData(card.match(/\[*([A-Za-z0-9]+)\]*/)[0]), this.pos, 310);
+	return new Card(Card.getImage(card.match(/\[*([A-Za-z0-9]+)\]*/)[0]), this.pos, 310, this.game);
 }
 
 /**

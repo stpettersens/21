@@ -3,7 +3,7 @@
 	Copyright 2015 Sam Saint-Pettersen
 	Released under the MIT/X11 License.
 	
-	HTML5 implementation
+	HTML5/enchant.js implementation
 */
 
 /**
@@ -15,9 +15,11 @@
  * Player implements the player for Blackjack.
  * @constructor
  * @param {boolean} debug - Enable debug messages?
+ * @param {Object} game - Enchant.js game object.
 */
-function Player(debug) {
+function Player(debug, game) {
 	this.debug = debug;
+	this.game = game;
 	this.index = -1;
 	this.pos = 225;
 	this.cards = [];
@@ -89,11 +91,11 @@ Player.prototype.receiveCards = function(player_cards) {
 	Debug.emit(this.debug, pc + ' --> ' + this.calcTotal().toString())
 
 	this.index++;
-	var cardA = new Card(Card.getImageData(this.cards[this.index]), this.pos, 310);
+	var cardA = new Card(Card.getImage(this.cards[this.index]), this.pos, 310, this.game);
 
 	this.index++;
 	this.pos += 90;
-	var cardB = new Card(Card.getImageData(this.cards[this.index]), this.pos, 310);
+	var cardB = new Card(Card.getImage(this.cards[this.index]), this.pos, 310, this.game);
 	return [cardA, cardB];
 };
 
@@ -112,7 +114,7 @@ Player.prototype.hit = function(cards) {
 	Debug.emit(this.debug, 'Player hits.');
 	Debug.emit(this.debug, 'Player gets ' + card);
 	Debug.emit(this.debug, 'Player has ' + this.calcTotal().toString());
-	return new Card(Card.getImageData(card.match(/\[*([A-Za-z0-9]+)\]*/)[0]), this.pos, 310); 
+	return new Card(Card.getImage(card.match(/\[*([A-Za-z0-9]+)\]*/)[0]), this.pos, 310, this.game); 
 };
 
 /**

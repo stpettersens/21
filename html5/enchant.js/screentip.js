@@ -3,7 +3,7 @@
 	Copyright 2015 Sam Saint-Pettersen
 	Released under the MIT/X11 License.
 	
-	HTML5 implementation
+	HTML5/enchant.js implementation
 */
 
 /**
@@ -58,9 +58,11 @@ Screentip.prototype.draw = function() {
 	var st_title = new Label(this.title);
 	var st_msg = new Label(this.msg);
 	st_title.color = 'rgb(255, 255, 255)';
+	st_title.font = '10pt verdana, sans-serif';
 	st_title.x = this.posX;
 	st_title.y = this.posY;
 	st_msg.color = st_title.color;
+	st_msg.font = st_title.font;
 	st_msg.x = this.posX - 45;
 	st_msg.y = this.posY + 20;
 	return [st_title, st_msg];

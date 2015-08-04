@@ -20,9 +20,8 @@
  * @param {Object} game - Enchant.js game object.
 */
 function Card(card, posX, posY, game) {
-	this.game = game;
 	this.sprite = new Sprite(71, 96);
-	this.sprite.image = this.game.assets[card];
+	this.sprite.image = game.assets[card];
 	this.sprite.x = posX;
 	this.sprite.y = posY;
 	this.src = card;

@@ -72,9 +72,9 @@ window.onload = function() {
 		clear();
 		playing = true;
 		player_index = 2;
-		player_cards = [];
+		player_cards = new Array(5);
 		dealer_index = 2;
-		dealer_cards = [];
+		dealer_cards = new Array(5);
 		dealer_pile = new Card(Card.getImageData('c'), 10, 10);
 		screentip.clear();
 		player = new Player(debug);		

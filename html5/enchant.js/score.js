@@ -3,7 +3,7 @@
 	Copyright 2015 Sam Saint-Pettersen
 	Released under the MIT/X11 License.
 	
-	HTML5 implementation
+	HTML5/enchant.js implementation
 */
 
 /**
@@ -51,6 +51,7 @@ Score.prototype.clear = function() {
 Score.prototype.draw = function() {
 	var box = new Label(this.score);
 	box.color = 'rgb(255, 255, 255)';
+	box.font = '10pt verdana, sans-serif';
 	box.x = this.posX;
 	box.y = this.posY;
 	return box;

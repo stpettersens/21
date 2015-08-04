@@ -12,7 +12,7 @@ var gulp = require('gulp'),
 
 gulp.task('js', function() {
 	return gulp.src(['graphics.js','debug.js','cards.js','card.js',
-	'screentip.js','score.js','main.js'])
+	'screentip.js','score.js','player.js','dealer.js','ai.js','main.js'])
 	.pipe(concat('blackjack.js'))
 	.pipe(gulp.dest('dist'))
 	.pipe(rename('blackjack.min.js'))
@@ -40,6 +40,11 @@ gulp.task('html', function() {
 	.pipe(gulp.dest('dist'));
 });
 
+gulp.task('graphics', function() {
+	return gulp.src(['graphics/*.png'])
+	.pipe(gulp.dest('dist/graphics'));
+});
+
 gulp.task('doc', function() {
 	return gulp.src('*.ts')
 	.pipe(jsdoc('./doc'));
@@ -53,5 +58,5 @@ gulp.task('clean', function() {
 	fs.rmdir('dist');
 });
 
-gulp.task('default', ['js','html'], function(){});
-gulp.task('debug', ['default', 'debug-on'], function(){});
+gulp.task('default', ['js','html','graphics'], function(){});
+gulp.task('debug', ['default','debug-on'], function(){});
