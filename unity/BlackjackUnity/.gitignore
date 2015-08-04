@@ -1,0 +1,6 @@
+blackjack_Data/
+Library/
+obj/
+ProjectSettings/
+*.userprefs
+

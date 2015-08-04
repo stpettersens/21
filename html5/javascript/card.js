@@ -40,7 +40,6 @@ var imageSrcs = [
 'gfx/dJ.png',
 'gfx/dK.png',
 'gfx/dQ.png',
-'gfx/dummy.png',
 'gfx/h10.png',
 'gfx/h2.png',
 'gfx/h3.png',
@@ -68,6 +67,22 @@ var imageSrcs = [
 'gfx/sK.png',
 'gfx/sQ.png'];
 
+
+/**
+ * Card represents a single playing card.
+ * @constructor
+ * @param {string} card - Data URI for card graphic.
+ * @param {number} posX - X position for card.
+ * @param {number} posX - Y position for card.
+*/
+function Card(card, posX, posY) {
+
+	this.image = new Image();
+	this.image.src = card;
+	this.posX = posX;
+	this.posY = posY;
+}
+
 /**
  * Get image path from card string pattern.
  * @public
@@ -75,7 +90,7 @@ var imageSrcs = [
  * @param {string} card - Card string pattern.
  * @returns {string} Path for card image.
 */
-function Card_getImage(card) {
+Card.getImage = function(card) {
 	if(card == 'c' || card == 'd') {
 		return 'gfx/' + card + '.png';
 	}
@@ -103,23 +118,8 @@ function Card_getImage(card) {
  * @param {string} card - String representation for card.
  * @returns {string} data URI for card graphic.
 */
-function Card_getImageData(card) {
-	return graphics(imageSrcs.indexOf(Card_getImage(card)));
-}
-
-/**
- * Card represents a single playing card.
- * @constructor
- * @param {string} card - Data URI for card graphic.
- * @param {number} posX - X position for card.
- * @param {number} posX - Y position for card.
-*/
-function Card(card, posX, posY) {
-
-	this.image = new Image();
-	this.image.src = card;
-	this.posX = posX;
-	this.posY = posY;
+Card.getImageData = function(card) {
+	return graphics(imageSrcs.indexOf(Card.getImage(card)));
 }
 
 /**
