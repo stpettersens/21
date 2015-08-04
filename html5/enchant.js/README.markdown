@@ -1,4 +1,4 @@
-### HTML5/enchant.js Blackjack
+### HTML5/[enchant.js](http://enchantjs.com) Blackjack
 
 ![](enchant.png)
 
