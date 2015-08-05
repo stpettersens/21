@@ -22,11 +22,10 @@ window.onload = function() {
 		event.preventDefault();
 		var elapsed = new Date().getTime() - start;
 		if((elapsed < 600) && (elapsed > 0)) {
-			alert('short tap');
+			alert('Short tap');
 		}
 		else {
 			alert('Long tap');
 		}
 	});
 };
-
