@@ -20,6 +20,9 @@
 function Dealer(debug, game) {
 	this.debug = debug;
 	this.game = game;
+	this.game.sfxShuffle = game.assets['sounds/shuffle.ogg'];
+	this.game.sfxDeal = game.assets['sounds/deal.ogg'];
+	this.game.sfxReveal = game.assets['sounds/reveal.ogg'];
 	this.index = 0;
 	this.pos = 225;
 	this.cards = [];
@@ -43,7 +46,7 @@ Dealer.prototype.calcTotal = function() {
 		total += v;
 	}
 	return total;
-};
+}
 
 /**
  * Dealer hits.
@@ -60,7 +63,7 @@ Dealer.prototype._hit = function(cards) {
 	Debug.emit(this.debug, 'Dealer hits.');
 	Debug.emit(this.debug, 'Dealer gets ' + card);
 	return new Card(Card.getImage(card), this.pos, 10, this.game);
-};
+}
 
 /**
  * Dealer stands.
@@ -68,7 +71,7 @@ Dealer.prototype._hit = function(cards) {
 */
 Dealer.prototype._stand = function() {
 	Debug.emit(this.debug, 'Dealer stands.');
-};
+}
 
 /**
  * Dealer shuffles.
@@ -77,12 +80,13 @@ Dealer.prototype._stand = function() {
 */
 Dealer.prototype.shuffle = function(cards) {
 	if(cards.getPlayed() == 0 || cards.getPlayed() >= 45) {
+		if(this.game.sfx) this.game.sfxShuffle.play();	
 		Debug.emit(this.debug, '-------------------------------------------------------');
 		Debug.emit(this.debug, 'Dealer is shuffling cards...');
-		Debug.emit(this.debug, '-------------------------------------------------------');
+		Debug.emit(this.debug, '-------------------------------------------------------');	
 		return cards.shuffle();
 	}
-};
+}
 
 /**
  * Dealer deals.
@@ -91,6 +95,7 @@ Dealer.prototype.shuffle = function(cards) {
  * @returns {string[]} Player's cards.
 */
 Dealer.prototype.deal = function(cards) {
+	if(this.game.sfx) this.game.sfxDeal.play();
 	var dealt = [];
 	var i = 1;
 	Debug.emit(this.debug, '-------------------------------------------------------');
@@ -110,7 +115,7 @@ Dealer.prototype.deal = function(cards) {
 	Debug.emit(this.debug, '\nDealer has:');
 	Debug.emit(this.debug, '[**]' + this.cards[1]);
 	return [dealt[2], dealt[3]];
-};
+}
 
 /**
  * Determine if dealer has Blackjack.
@@ -124,7 +129,7 @@ Dealer.prototype.hasBlackjack = function() {
 		blackjack = true;
 	}
 	return blackjack;
-};
+}
 
 /**
  * Determine if dealer is bust.
@@ -138,7 +143,7 @@ Dealer.prototype.isBust = function() {
 		bust = true;
 	}
 	return bust;
-};
+}
 
 /**
  * Dealer responds to player action (e.g. a hit or stand).
@@ -173,7 +178,7 @@ Dealer.prototype.respond = function(cards) {
 		}
 	}
 	return response_cards;
-};
+}
 
 /**
  * Show dealer's cards.
@@ -190,7 +195,7 @@ Dealer.prototype.showCards = function() {
 	Debug.emit(this.debug, '\nDealer has:');
 	Debug.emit(this.debug, cards + ' --> ' + this.calcTotal().toString());
 	return this.calcTotal();
-};
+}
 
 /**
  * Dealer receives cards.
@@ -204,7 +209,7 @@ Dealer.prototype.receiveCards = function() {
 	this.pos += 90;
 	var cardB = new Card(Card.getImage(this.cards[1]), this.pos, 10, this.game);
 	return [cardA, cardB];
-};
+}
 
 /**
  * Dealer reveals first card.
@@ -212,5 +217,6 @@ Dealer.prototype.receiveCards = function() {
  * @returns {Card} Revealed first card.
 */
 Dealer.prototype.revealFirstCard = function() {
+	if(this.game.sfx) this.game.sfxReveal.play();
 	return new Card(Card.getImage(this.cards[0]), 225, 10, this.game);
-};
+}

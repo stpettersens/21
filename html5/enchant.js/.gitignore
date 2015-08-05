@@ -4,3 +4,6 @@ dist/
 enchant.js
 *.min.js
 index.html
+*.as
+*.swf
+

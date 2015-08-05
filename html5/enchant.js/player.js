@@ -43,7 +43,7 @@ Player.prototype.calcTotal = function() {
 		total += v;
 	}
 	return total;
-};
+}
 
 /**
  * Determine if player has Blackjack.
@@ -57,7 +57,7 @@ Player.prototype.hasBlackjack = function() {
 		blackjack = true;
 	}
 	return blackjack;
-};
+}
 
 /**
  * Determine if player is bust.
@@ -71,7 +71,7 @@ Player.prototype.isBust = function() {
 		bust = true;
 	}
 	return bust;
-};
+}
 
 /**
  * Receive cards from dealer.
@@ -97,7 +97,7 @@ Player.prototype.receiveCards = function(player_cards) {
 	this.pos += 90;
 	var cardB = new Card(Card.getImage(this.cards[this.index]), this.pos, 310, this.game);
 	return [cardA, cardB];
-};
+}
 
 /**
  * Player hits.
@@ -115,7 +115,7 @@ Player.prototype.hit = function(cards) {
 	Debug.emit(this.debug, 'Player gets ' + card);
 	Debug.emit(this.debug, 'Player has ' + this.calcTotal().toString());
 	return new Card(Card.getImage(card.match(/\[*([A-Za-z0-9]+)\]*/)[0]), this.pos, 310, this.game); 
-};
+}
 
 /**
  * Player stands.
@@ -124,7 +124,7 @@ Player.prototype.hit = function(cards) {
 Player.prototype.stand = function() {
 	Debug.emit(this.debug, 'Player stands.');
 	Debug.emit(this.debug, 'Player has ' + this.calcTotal().toString());
-};
+}
 
 /**
  * Show player's cards.
@@ -141,4 +141,4 @@ Player.prototype.showCards = function() {
 	Debug.emit(this.debug, '\nPlayer has:');
 	Debug.emit(this.debug, cards + ' --> ' + this.calcTotal().toString());
 	return this.calcTotal();
-};
+}

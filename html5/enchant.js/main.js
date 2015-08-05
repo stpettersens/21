@@ -35,9 +35,16 @@ var SCREEN_HEIGHT = 500;
  * @function Main function.
 */
 window.onload = function() {
+	var stage = document.getElementById('enchant-stage');
+	stage.style.marginLeft = 'auto';
+	stage.style.marginRight = 'auto';
+	stage.style.border = '1px dotted rgb(0, 0, 0)';
 	enchant();
 	var game = new Core(SCREEN_WIDTH, SCREEN_HEIGHT);
-	game.preload(graphics);
+	var content = graphics.concat(sounds);
+	Debug.emit(debug, 'Loading assets:');
+	Debug.emit(debug, content);
+	game.preload(content);
 	game.onload = function() {
 		var scene = new Scene();
 		scene.backgroundColor = 'rgb(0, 153, 0)';
@@ -47,6 +54,8 @@ window.onload = function() {
 		p_score = new Score(debug, 153, 315);
 		d_score = new Score(debug, 153, 25);
 		cards = new Cards();
+		game.sfx = toggleSoundEffects();
+		game.sfxHit = game.assets['sounds/hit.ogg'];
 		newGame();
 
 		/**
@@ -60,6 +69,23 @@ window.onload = function() {
 				touch = true;
 
 			return touch;
+		}
+
+		/**
+		 * Does the browser support sound effects?
+		 * (Disable on WebKit based due to bug).
+		 * @returns {boolean} Are sound effects enabled?
+		*/
+		function toggleSoundEffects() {
+			var effects = true;
+			var ua = navigator.userAgent;
+			if(ua.indexOf('WebKit') !== -1) {
+				effects = false;
+				alert('Sound effects disabled due to bug ' 
+			 	+ 'occurring with this browser.');
+			}
+
+			return effects;
 		}
 
 		/**
@@ -213,6 +239,7 @@ window.onload = function() {
 		*/
 		function hit() {
 			if(player_index < 6) {
+				if(game.sfx) game.sfxHit.play();
 				player_cards[player_index] = player.hit(cards);
 				player_index++;
 				update();
@@ -246,12 +273,12 @@ window.onload = function() {
 
 		// Touch controls.
 		var start = null;
-		document.addEventListener('touchstart', function(event) {
+		stage.addEventListener('touchstart', function(event) {
 			event.preventDefault();
 			start = new Date().getTime();
 		});
 
-		document.addEventListener('touchend', function(event) {
+		stage.addEventListener('touchend', function(event) {
 			event.preventDefault();
 			var elapsed = new Date().getTime() - start;
 			if((elapsed < 600) && (elapsed > 0))
@@ -263,7 +290,7 @@ window.onload = function() {
 		});
 
 		// Mouse controls.
-		document.addEventListener('mousedown', function(event) {
+		stage.addEventListener('mousedown', function(event) {
 			if(playing && event.which === 1)
 				hit();
 
@@ -274,7 +301,7 @@ window.onload = function() {
 				newGame();
 		});
 		// Prevent context menu show up on right click.
-		document.addEventListener('contextmenu', function(event) {
+		stage.addEventListener('contextmenu', function(event) {
 			event.preventDefault();
 		}, false);
 
@@ -297,9 +324,5 @@ window.onload = function() {
 		});
 	};
 	Debug.emit(debug, 'Initialized HTML5 Blackjack (enchant.js build).');
-	var stage = document.getElementById('enchant-stage');
-	stage.style.marginLeft = 'auto';
-	stage.style.marginRight = 'auto';
-	stage.style.border = '1px dotted rgb(0, 0, 0)';
 	game.start();
 };
