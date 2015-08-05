@@ -58,12 +58,12 @@ gulp.task('doc', function() {
 });
 
 gulp.task('clean', function() {
-	fs.unlinkSync('dist/blackjack.min.js');
-	fs.unlinkSync('dist/blackjack.js');
+	fs.unlinkSync('dist/blackjack.enchant_js.min.js');
+	fs.unlinkSync('dist/blackjack.enchant_js.js');
 	fs.unlinkSync('dist/index.html');
 	fs.unlinkSync('index.html');
 	fs.rmdir('dist');
-	fs.rdmir('doc');
+	fs.rmdir('doc');
 });
 
 gulp.task('default', ['js','html','graphics'], function(){});
