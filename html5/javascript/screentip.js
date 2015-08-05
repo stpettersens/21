@@ -11,8 +11,6 @@
  * @copyright 2015 Sam Saint-Pettersen
 */
 
-var debug = false;
-
 /**
  * Screentip implements a title and message box.
  * @constructor
@@ -21,13 +19,12 @@ var debug = false;
  * @param {number} posY - Y position for screentip.
 */
 function Screentip(debug, posX, posY) {
-	debug = debug;
 	this.posX = posX;
 	this.posY = posY;
 	this.title = '';
 	this.msg = '';
 
-	_print('Created screentip at ' + posX + ',' + posY); // !
+	Debug.emit(debug, 'Created screentip at ' + posX + ',' + posY); // !
 }
 
 /**
@@ -65,11 +62,3 @@ Screentip.prototype.draw = function() {
 	context.fillText(this.title, this.posX, this.posY);
 	context.fillText(this.msg, (this.posX - 45), (this.posY + 20));
 };
-
-/**
- * Print debug message.
- * @param {any} message - Message to print.
-*/
-function _print(message) {
-	if(debug) console.log(message);
-}
