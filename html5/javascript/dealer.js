@@ -3,7 +3,7 @@
 	Copyright 2015 Sam Saint-Pettersen
 	Released under the MIT/X11 License.
 	
-	HTML5 implementation
+	HTML5/JavaScript implementation
 */
 
 /**
