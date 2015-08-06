@@ -54,7 +54,7 @@ window.onload = function() {
 		p_score = new Score(debug, 153, 315);
 		d_score = new Score(debug, 153, 25);
 		cards = new Cards();
-		game.sfx = toggleSoundEffects();
+		game.sfx = enchantSFXSupported();
 		game.sfxHit = game.assets['sounds/hit.ogg'];
 		newGame();
 
@@ -72,18 +72,14 @@ window.onload = function() {
 		}
 
 		/**
-		 * Does the browser support sound effects?
-		 * (Disable on WebKit based due to bug).
+		 * Does the browser support sound effects via enchant.js?
 		 * @returns {boolean} Are sound effects enabled?
 		*/
-		function toggleSoundEffects() {
+		function enchantSFXSupported() {
 			var effects = true;
 			var ua = navigator.userAgent;
-			if(ua.indexOf('WebKit') !== -1) {
+			if(ua.indexOf('WebKit') !== -1)
 				effects = false;
-				alert('Sound effects disabled due to bug ' 
-			 	+ 'occurring with this browser.');
-			}
 
 			return effects;
 		}
@@ -239,7 +235,11 @@ window.onload = function() {
 		*/
 		function hit() {
 			if(player_index < 6) {
-				if(game.sfx) game.sfxHit.play();
+				if(game.sfx)
+					game.sfxHit.play();
+				else
+					new Audio('sounds/hit.ogg').play();
+
 				player_cards[player_index] = player.hit(cards);
 				player_index++;
 				update();

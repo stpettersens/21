@@ -1,4 +1,4 @@
-/* Sounds for generated game. */
+/* Sound effects for generated game. */
 var s = 'sounds/';
 var sounds = [
 s + 'shuffle.ogg',
