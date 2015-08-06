@@ -13,6 +13,7 @@
 
 var debug = false;
 var ai = false;
+var sound = true;
 var playing = true;
 var player_index = 2;
 var player_cards = [];
@@ -55,7 +56,7 @@ window.onload = function() {
 		d_score = new Score(debug, 153, 25);
 		cards = new Cards();
 		game.sfx = enchantSFXSupported();
-		game.sfxHit = game.assets['sounds/hit.ogg'];
+		toggle_sound = new Score(debug, 600, 15);
 		newGame();
 
 		/**
@@ -69,6 +70,13 @@ window.onload = function() {
 				touch = true;
 
 			return touch;
+		}
+
+		/**
+		 * Toggle sound effects on/off.
+		*/
+		function toggleSound() {
+			sound = SoundEffects.toggle();
 		}
 
 		/**
@@ -158,7 +166,9 @@ window.onload = function() {
 		/**
 		 * Update logic.
 		*/
-		function update() {
+		function update() {				
+			toggle_sound.emit('Turn sound on/off [E key]');
+	
 			if(hasBlackjack() || isBust())
 				showCards();
 
@@ -174,6 +184,7 @@ window.onload = function() {
 		 * Draw logic.
 		*/
 		function draw() {
+			scene.addChild(toggle_sound.draw());
 			scene.addChild(dealer_pile.draw());
 			scene.addChild(screentip.draw()[0]);
 			scene.addChild(screentip.draw()[1]);
@@ -235,11 +246,7 @@ window.onload = function() {
 		*/
 		function hit() {
 			if(player_index < 6) {
-				if(game.sfx)
-					game.sfxHit.play();
-				else
-					new Audio('sounds/hit.ogg').play();
-
+				SoundEffects.play(game, 'hit');
 				player_cards[player_index] = player.hit(cards);
 				player_index++;
 				update();
@@ -321,6 +328,9 @@ window.onload = function() {
 
 			else if(event.keyCode === 27)
 				exitToGitHub();
+
+			else if(event.keyCode == 69)
+				toggleSound();
 		});
 	};
 	Debug.emit(debug, 'Initialized HTML5 Blackjack (enchant.js build).');

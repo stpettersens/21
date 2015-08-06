@@ -20,9 +20,9 @@
 function Dealer(debug, game) {
 	this.debug = debug;
 	this.game = game;
-	this.game.sfxShuffle = game.assets['sounds/shuffle.ogg'];
-	this.game.sfxDeal = game.assets['sounds/deal.ogg'];
-	this.game.sfxReveal = game.assets['sounds/reveal.ogg'];
+	//this.game.sfxShuffle = game.assets['sounds/shuffle.ogg'];
+	//this.game.sfxDeal = game.assets['sounds/deal.ogg'];
+	//this.game.sfxReveal = game.assets['sounds/reveal.ogg'];
 	this.index = 0;
 	this.pos = 225;
 	this.cards = [];
@@ -80,11 +80,7 @@ Dealer.prototype._stand = function() {
 */
 Dealer.prototype.shuffle = function(cards) {
 	if(cards.getPlayed() == 0 || cards.getPlayed() >= 45) {
-		if(this.game.sfx)
-			this.game.sfxShuffle.play();	
-		else
-			new Audio('sounds/shuffle.ogg').play();
-
+		SoundEffects.play(this.game, 'shuffle');
 		Debug.emit(this.debug, '-------------------------------------------------------');
 		Debug.emit(this.debug, 'Dealer is shuffling cards...');
 		Debug.emit(this.debug, '-------------------------------------------------------');	
@@ -99,11 +95,7 @@ Dealer.prototype.shuffle = function(cards) {
  * @returns {string[]} Player's cards.
 */
 Dealer.prototype.deal = function(cards) {
-	if(this.game.sfx)
-		this.game.sfxDeal.play();
-	else
-		new Audio('sounds/deal.ogg').play();
-
+	SoundEffects.play(this.game, 'deal');
 	var dealt = [];
 	var i = 1;
 	Debug.emit(this.debug, '-------------------------------------------------------');
@@ -225,10 +217,6 @@ Dealer.prototype.receiveCards = function() {
  * @returns {Card} Revealed first card.
 */
 Dealer.prototype.revealFirstCard = function() {
-	if(this.game.sfx)
-		this.game.sfxReveal.play();
-	else
-		new Audio('sounds/reveal.ogg').play();
-	
+	SoundEffects.play(this.game, 'reveal');
 	return new Card(Card.getImage(this.cards[0]), 225, 10, this.game);
 }
