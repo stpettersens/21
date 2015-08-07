@@ -57,7 +57,7 @@ window.onload = function(): void {
 	p_score = new Score(debug, 153, 315);
 	d_score = new Score(debug, 153, 25);
 	cards = new Cards();
-	toggle_sound = new Score(debug, 600, 15);
+	//toggle_sound = new Score(debug, 600, 15);
 	newGame();
 
 	/**
@@ -76,9 +76,9 @@ window.onload = function(): void {
 	/**
 	 * Toggole sound effects on/off.
 	*/
-	function toggleSound() {
+	/*function toggleSound() {
 		sound = SoundEffects.toggle();
-	}
+	}*/
 
 	/**
 	 * Show cards at end of game.
@@ -219,7 +219,7 @@ window.onload = function(): void {
 	*/
 	function hit(): void {
 		if(player_index < 6) {
-			SoundEffects.play("hit");
+			//SoundEffects.play("hit");
 			player_cards[player_index] = player.hit(cards);
 			player_index++;
 			update();
