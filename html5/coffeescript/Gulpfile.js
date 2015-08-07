@@ -52,7 +52,12 @@ gulp.task('html', function() {
 	'<script type="text/javascript" src="blackjack.min.coffee.js"></script>\n' +
 	'</head>\n<body onload="init();">\n<h3 style="text-align: center;">HTML5 Blackjack ' +
 	'(<a href="http://coffeescript.org">CoffeeScript</a> build)</h3>\n' +
-	'<canvas id="blackjack-table"></canvas>\n</body>\n</html>\n';
+	'<canvas id="blackjack-table"></canvas>\n' +
+	'<p style="font-size: 11pt; text-align: center;">\n' +
+	'Press Escape key to <a href="https://github.com/stpettersens/21">visit project</a>\n' +
+	' on Github.<br/><br/>\nSound effects courtesy of <a href="https://www.youtube.com/audiolibrary/' +
+	'soundeffects">YouTube Audio Library</a>. Cards courtesy of <a href="http://www.jfitz.com/cards">' +
+	'Jfitz.com</a>.\n</body>\n</html>\n';
 	fs.writeFileSync('index.html', html);
 	return gulp.src('index.html')
 	.pipe(gulp.dest('dist'));

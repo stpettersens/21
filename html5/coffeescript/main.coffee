@@ -127,7 +127,6 @@ SCREEN_HEIGHT = 500
 
 # Update logic.
 @update = () ->
-	toggle_sound.clear()
 	if sound
 		toggle_sound.emit("Turn sound off [E key]")
 	else
