@@ -45,7 +45,7 @@ class Dealer
 		@values.push(cards.getValue())
 		Debug.emit(@debug, "Dealer hits.")
 		Debug.emit(@debug, "Dealer gets #{card}")
-		return new Card(Card_getImageData(card), @pos, 10)
+		return new Card(Card.getImageData(card), @pos, 10)
 
 	# Dealer stands.
 	_stand: () ->
@@ -146,13 +146,13 @@ class Dealer
 	# Dealer receives cards.
 	# @return [Array<Card>] Dealer's received cards
 	receiveCards: () ->
-		cardA = new Card(Card_getImageData("c"), @pos, 10)
+		cardA = new Card(Card.getImageData("c"), @pos, 10)
 		@pos += 90
-		cardB = new Card(Card_getImageData(@cards[1]), @pos, 10)
+		cardB = new Card(Card.getImageData(@cards[1]), @pos, 10)
 		@index += 2
 		return [cardA, cardB]
 
 	# Dealer reveals first card.
 	# @return [Card] Revealed first card
 	revealFirstCard: () ->
-		return new Card(Card_getImageData(@cards[0]), 225, 10)
+		return new Card(Card.getImageData(@cards[0]), 225, 10)
