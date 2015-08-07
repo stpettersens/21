@@ -1,5 +1,6 @@
 /*
-	Combine Blackjack (CoffeeScript) scripts into two minified JavaScript files (logic and graphics).
+	Combine Blackjack (CoffeeScript) scripts into three minified 
+	JavaScript files (logic, graphics and sound).
 */
 var gulp = require('gulp'),
       fs = require('fs'),
@@ -16,6 +17,15 @@ gulp.task('graphics', function() {
 	.pipe(coffee({bare: true}).on('error', gutil.log))
 	.pipe(gulp.dest('dist'))
 	.pipe(rename('graphics.min.coffee.js'))
+	.pipe(uglify())
+	.pipe(gulp.dest('dist'));
+});
+
+gulp.task('sounds', function() {
+	return gulp.src('sounds.coffee')
+	.pipe(coffee({bare: true}).on('error', gutil.log))
+	.pipe(gulp.dest('dist'))
+	.pipe(rename('sounds.min.coffee.js'))
 	.pipe(uglify())
 	.pipe(gulp.dest('dist'));
 });
@@ -38,8 +48,10 @@ gulp.task('html', function() {
 	var html = '<!DOCTYPE html>\n<head>' +
 	'\n<title>HTML5 Blackjack<\/title>\n' +
 	'<script type="text/javascript" src="graphics.min.coffee.js"></script>\n' +
+	'<script type="text/javascript" src="sounds.min.coffee.js"></script>\n' +
 	'<script type="text/javascript" src="blackjack.min.coffee.js"></script>\n' +
-	'</head>\n<body onload="init();">\n<h3 style="text-align: center;">HTML5 Blackjack  (CoffeeScript build)</h3>\n' +
+	'</head>\n<body onload="init();">\n<h3 style="text-align: center;">HTML5 Blackjack ' +
+	'(<a href="http://coffeescript.org">CoffeeScript</a> build)</h3>\n' +
 	'<canvas id="blackjack-table"></canvas>\n</body>\n</html>\n';
 	fs.writeFileSync('index.html', html);
 	return gulp.src('index.html')
@@ -64,4 +76,4 @@ gulp.task('clean', function() {
 	fs.rmdir('dist');
 });
 
-gulp.task('default', ['graphics','js','html'], function(){});
+gulp.task('default', ['graphics','sounds','js','html'], function(){});

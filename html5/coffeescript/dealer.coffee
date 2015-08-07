@@ -55,20 +55,22 @@ class Dealer
 	# @param [Cards] cards Game cards to shuffle
 	shuffle: (cards) ->
 		if cards.getPlayed() == 0 or cards.getPlayed() >= 45
-			Debug.emit(@debug, "-------------------------------------------------------");
-			Debug.emit(@debug, "Dealer is shuffling cards...");
-			Debug.emit(@debug, "-------------------------------------------------------");
+			SoundEffects.play("shuffle")
+			Debug.emit(@debug, "-------------------------------------------------------")
+			Debug.emit(@debug, "Dealer is shuffling cards...")
+			Debug.emit(@debug, "-------------------------------------------------------")
 			cards.shuffle()
 
 	# Dealer deals.
 	# @param [Cards] cards Game cards
 	# @return [Array<String>] Player's cards
 	deal: (cards) ->
+		SoundEffects.play("deal")
 		dealt = []
 		i = 1
-		Debug.emit(@debug, "-------------------------------------------------------");
-		Debug.emit(@debug, "Dealer is dealing cards for a new game...");
-		Debug.emit(@debug, "-------------------------------------------------------");
+		Debug.emit(@debug, "-------------------------------------------------------")
+		Debug.emit(@debug, "Dealer is dealing cards for a new game...")
+		Debug.emit(@debug, "-------------------------------------------------------")
 		while i <= (2 * 2)
 			dealt.push("#{cards.draw()}:#{cards.getValue()}")
 			i++
@@ -155,4 +157,5 @@ class Dealer
 	# Dealer reveals first card.
 	# @return [Card] Revealed first card
 	revealFirstCard: () ->
+		SoundEffects.play("reveal")
 		return new Card(Card.getImageData(@cards[0]), 225, 10)

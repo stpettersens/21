@@ -4,34 +4,24 @@
 #	
 # HTML5/CoffeeScript implementation
 
-# Coffee-stir includes; 
-# invoke "coffee-stir main.coffee -o blackjack.coffee"
-
-#include cards.coffee
-#include card.coffee
-#include player.coffee
-#include dealer.coffee
-#include ai.coffee
-#include screentip.coffee
-#include score.coffee
-#include debug.coffee
-
-debug = true
+debug = false
 use_ai = false
+sound = true
 playing = true
-player_index = 2;
+player_index = 2
 player_cards = []
-dealer_index = 2;
+dealer_index = 2
 dealer_cards = []
-screentip = null;
+screentip = null
 instruction = null
-p_score = null;
-d_score = null;
+p_score = null
+d_score = null
 dealer_pile = null
 cards = null
 player = null
 dealer = null
 canvas = null
+toggle_sound = null
 timer = 0;
 
 SCREEN_WIDTH = 780
@@ -54,6 +44,7 @@ SCREEN_HEIGHT = 500
 	p_score = new Score(debug, 153, 315)
 	d_score = new Score(debug, 153, 25)
 	cards = new Cards()
+	toggle_sound = new Score(debug, 600, 15)
 	newGame()
 
 # Is the game running on a touch screen device?
@@ -64,6 +55,11 @@ SCREEN_HEIGHT = 500
 	if ua.indexOf("Mobile") != -1 or ua.indexOf("Tablet") != -1
 		touch = true
 	return touch
+
+# Toggle sound effects on/off.
+@toggleSound = () ->
+	sound = SoundEffects.toggle()
+	update()
 
 # Show cards at end of game.
 @showCards = () ->
@@ -131,6 +127,12 @@ SCREEN_HEIGHT = 500
 
 # Update logic.
 @update = () ->
+	toggle_sound.clear()
+	if sound
+		toggle_sound.emit("Turn sound off [E key]")
+	else
+		toggle_sound.emit("Turn sound on [E key]")
+
 	if hasBlackjack() or isBust()
 		showCards()
 
@@ -146,6 +148,7 @@ SCREEN_HEIGHT = 500
 # Draw logic.
 @draw = () ->
 	clear()
+	toggle_sound.draw()
 	dealer_pile.draw()
 	screentip.draw()
 	instruction.draw()
@@ -179,6 +182,7 @@ SCREEN_HEIGHT = 500
 # Take a hit.
 @hit = () ->
 	if player_index < 6
+		SoundEffects.play("hit")
 		player_cards[player_index] = player.hit(cards)
 		player_index++
 		update()
@@ -253,3 +257,5 @@ document.addEventListener "keydown", (event) ->
 		exitToGithub()
 	else if event.keyCode == 27 # Escape key always exits.
 		exitToGithub()
+	else if event.keyCode == 69 # E key toggles sound on/off.
+		toggleSound()

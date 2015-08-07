@@ -78,6 +78,7 @@ window.onload = function() {
 		*/
 		function toggleSound() {
 			sound = SoundEffects.toggle();
+			update();
 		}
 
 		/**
@@ -167,8 +168,11 @@ window.onload = function() {
 		/**
 		 * Update logic.
 		*/
-		function update() {				
-			toggle_sound.emit('Turn sound on/off [E key]');
+		function update() {
+			if(sound)				
+				toggle_sound.emit('Turn sound off [E key]');
+			else
+				toggle_sound.emit('Turn sound on [E key]');
 	
 			if(hasBlackjack() || isBust())
 				showCards();
