@@ -16,6 +16,7 @@ function SoundEffects() {};
 SoundEffects.toggle = function() {
 	if(soundOn) soundOn = false;
 	else soundOn = true;
+	return soundOn;
 }
 
 /**

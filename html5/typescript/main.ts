@@ -17,6 +17,7 @@
 
 var debug: boolean = false;
 var use_ai: boolean = false;
+var sound: boolean = true;
 var playing: boolean = true;
 var player_index: number = 2;
 var player_cards: Card[] = [];
@@ -30,6 +31,7 @@ var dealer_pile: Card = null;
 var cards: Cards = null;
 var player: Player = null;
 var dealer: Dealer = null;
+var toggle_sound: Score = null;
 var timer: number = 0;
 
 var SCREEN_WIDTH: number = 780;
@@ -55,6 +57,7 @@ window.onload = function(): void {
 	p_score = new Score(debug, 153, 315);
 	d_score = new Score(debug, 153, 25);
 	cards = new Cards();
+	toggle_sound = new Score(debug, 600, 15);
 	newGame();
 
 	/**
@@ -68,6 +71,13 @@ window.onload = function(): void {
 			touch = true;
 		}
 		return touch;
+	}
+
+	/**
+	 * Toggole sound effects on/off.
+	*/
+	function toggleSound() {
+		sound = SoundEffects.toggle();
 	}
 
 	/**
@@ -209,6 +219,7 @@ window.onload = function(): void {
 	*/
 	function hit(): void {
 		if(player_index < 6) {
+			SoundEffects.play("hit");
 			player_cards[player_index] = player.hit(cards);
 			player_index++;
 			update();

@@ -27,6 +27,7 @@ var dealer_pile = null;
 var cards = null;
 var player = null;
 var dealer = null;
+var toggle_sound = null;
 var timer = 0;
 
 var SCREEN_WIDTH = 780;
@@ -81,7 +82,7 @@ window.onload = function() {
 
 		/**
 		 * Does the browser support sound effects via enchant.js?
-		 * @returns {boolean} Are sound effects enabled?
+		 * @returns {boolean} Are sound effects supported via enchant.js?
 		*/
 		function enchantSFXSupported() {
 			var effects = true;

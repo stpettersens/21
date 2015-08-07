@@ -94,7 +94,7 @@ class AI {
 			this.cards.push(cv[0]);
 			this.values.push(parseInt(cv[1]));
 		}
-		ac = this.cards[0] + this.card[1]; 
+		ac = this.cards[0] + this.cards[1]; 
 		Debug.emit(this.debug, "\nAI receives their cards:");
 		Debug.emit(this.debug, "${pc} --> ${this.calcTotal()}");
 
@@ -141,6 +141,7 @@ class AI {
 	public respond(cards: Cards): Card[] {
 		this.showCards();
 		var responding: boolean = true;
+		var response_cards: Card[] = new Array<Card>();
 		while(responding) {
 			var total: number = 0;
 			while(total <= 18) {
