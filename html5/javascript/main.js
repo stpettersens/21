@@ -10,7 +10,7 @@
  * @file Blackjack implementation in JavaScript.
  * @copyright 2015 Sam Saint-Pettersen
 */
-var debug = true;
+var debug = false;
 var use_ai = false;
 var playing = true;
 var player_index = 2;
