@@ -17,7 +17,7 @@
  * @param {string} card - Data URI for card graphic.
  * @param {number} posX - X position for card.
  * @param {number} posX - Y position for card.
- * @param {Object} game - Enchant.js game object.
+ * @param {Core} game - Enchant.js game object.
 */
 function Card(card, posX, posY, game) {
 	this.sprite = new Sprite(71, 96);

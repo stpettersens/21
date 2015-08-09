@@ -53,7 +53,7 @@ Player.prototype.calcTotal = function() {
 Player.prototype.hasBlackjack = function() {
 	var blackjack = false;
 	if(this.calcTotal() == 21) {
-		Debug.emit(this.debug, 'Dealer has Blackjack!');
+		Debug.emit(this.debug, 'Player has Blackjack!');
 		blackjack = true;
 	}
 	return blackjack;
@@ -67,7 +67,7 @@ Player.prototype.hasBlackjack = function() {
 Player.prototype.isBust = function() {
 	var bust = false;
 	if(this.calcTotal() > 21) {
-		Debug.emit(this.debug, 'Dealer is bust!');
+		Debug.emit(this.debug, 'Player is bust!');
 		bust = true;
 	}
 	return bust;
