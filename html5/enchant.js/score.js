@@ -50,8 +50,8 @@ Score.prototype.clear = function() {
 /**
  * Draw the score box.
  * @public
+ * @returns {Label} The score box.
 */
 Score.prototype.draw = function() {
-
 	return this.box;
 }

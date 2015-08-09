@@ -1,0 +1,27 @@
+{
+  "name": "html5-blackjack-enchant.js-ts",
+  "version": "1.0.0",
+  "description": "Blackjack implemented in TypeScript with enchant.js",
+  "author": "Sam Saint-Pettersen <s.stpettersen+github@gmail.com>",
+  "license": "MIT",
+  "homepage": "http://stpettersens.github.io/21",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/stpettersens/21"
+  },
+  "scripts": {
+    "dist": "gulp",
+    "clean": "gulp clean"
+  },
+  "preferGlobal": false,
+  "dependencies": {
+    "gulp": "^3.9.0",
+    "gulp-concat": "^2.6.0",
+    "gulp-insert": "^0.4.0",
+    "gulp-rename": "^1.2.2",
+    "gulp-replace": "^0.5.3",
+    "gulp-uglify": "^1.2.0",
+    "gulp-typescript": "~2.8.0",
+    "gulp-typedoc": "~1.2.1"
+  }
+}

@@ -3,13 +3,15 @@
 */
 module.exports = function(grunt) {
 	grunt.initConfig({
-		pkg: grunt.file.readJSON('package.json'),
 		uglify: {
 			options: {
-				banner: '/* <%=pkg.name %> */\n'
+				banner: '/*\nBlackjack (enchant.js build).\n' +
+				'Copyright 2015 Sam Saint-Pettersen' +
+				'\nReleased under the MIT/X11 License.' +
+				'\nhttps://github.com/stpettersens/21\n*/\n'
 			},
 			build: {
-				src: ['graphics.js','sounds.js,debug.js','cards.js','card.js','screentip.js','score.js','player.js','dealer.js','ai.js','main.js'],
+				src: ['graphics.js','sounds.js','debug.js','cards.js','card.js','screentip.js','score.js','player.js','dealer.js','ai.js','main.js'],
 				dest: 'dist/blackjack.enchant_js.min.js'
 			}
 		}

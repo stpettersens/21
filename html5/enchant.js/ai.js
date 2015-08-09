@@ -40,9 +40,9 @@ AI.prototype.calcTotal = function() {
 			if((total + 11) <= 21) v = 11;
 			if((total + 11) > 21) v = 1
 		}
-		total += v
+		total += v;
 	}
-	return total
+	return total;
 }
 
 /**
@@ -82,7 +82,7 @@ AI.prototype.isBust = function() {
 AI.prototype.receiveCards = function(ai_cards) {
 	var ac = '';
 	for(var i = 0; i < ai_cards.length; i++) {
-		var cv = ai_cards[i].split(":");
+		var cv = ai_cards[i].split(':');
 		this.cards.push(cv[0]);
 		this.values.push(parseInt(cv[1]));
 	}
@@ -126,6 +126,7 @@ AI.prototype._stand = function() {
 
 /**
  * AI responds to cards received or dealer.
+ * @public
  * @param {Cards} cards - Game cards.
  * @returns {Card[]} Response cards.
 */
@@ -163,6 +164,7 @@ AI.prototype.respond = function(cards) {
 
 /**
  * Show AI's cards.
+ * @public
  * @returns {number} Total value of AI's cards.
 */
 AI.prototype.showCards = function() {

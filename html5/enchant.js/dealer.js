@@ -15,14 +15,11 @@
  * Dealer implements the dealer for Blackjack.
  * @constructor
  * @param {boolean} debug - Enable debug messages?
- * @param {Object} game - Enchant.js game object.
+ * @param {Core} game - Enchant.js game object.
 */
 function Dealer(debug, game) {
 	this.debug = debug;
 	this.game = game;
-	//this.game.sfxShuffle = game.assets['sounds/shuffle.ogg'];
-	//this.game.sfxDeal = game.assets['sounds/deal.ogg'];
-	//this.game.sfxReveal = game.assets['sounds/reveal.ogg'];
 	this.index = 0;
 	this.pos = 225;
 	this.cards = [];
@@ -84,7 +81,7 @@ Dealer.prototype.shuffle = function(cards) {
 		Debug.emit(this.debug, '-------------------------------------------------------');
 		Debug.emit(this.debug, 'Dealer is shuffling cards...');
 		Debug.emit(this.debug, '-------------------------------------------------------');	
-		return cards.shuffle();
+		cards.shuffle(); // return cards.shuffle();
 	}
 }
 

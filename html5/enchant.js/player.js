@@ -15,7 +15,7 @@
  * Player implements the player for Blackjack.
  * @constructor
  * @param {boolean} debug - Enable debug messages?
- * @param {Object} game - Enchant.js game object.
+ * @param {Core} game - Enchant.js game object.
 */
 function Player(debug, game) {
 	this.debug = debug;
@@ -76,7 +76,7 @@ Player.prototype.isBust = function() {
 /**
  * Receive cards from dealer.
  * @public
- * @param {string[]} Player's cards as string[].
+ * @param {string[]} player_cards - Player's cards as string[].
  * @returns {Card[]} Player's cards as Card[].
 */
 Player.prototype.receiveCards = function(player_cards) {
@@ -108,7 +108,7 @@ Player.prototype.receiveCards = function(player_cards) {
 Player.prototype.hit = function(cards) {
 	var card = cards.draw();
 	this.cards.push(card);
-	this.values.push(parseInt(cards.getValue()));
+	this.values.push(cards.getValue());
 	this.index++;
 	this.pos += 90;
 	Debug.emit(this.debug, 'Player hits.');

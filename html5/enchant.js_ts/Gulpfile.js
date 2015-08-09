@@ -4,19 +4,21 @@
 var gulp = require('gulp'),
 	  fs = require('fs'),
   concat = require('gulp-concat'),
-   jsdoc = require('gulp-jsdoc'),
+     tsc = require('gulp-typescript'),
+ typedoc = require('gulp-typedoc'),
   rename = require('gulp-rename'),
  replace = require('gulp-replace'),
   insert = require('gulp-insert'),
   uglify = require('gulp-uglify');
 
 gulp.task('js', function() {
-	return gulp.src(['graphics.js','sounds.js','debug.js','cards.js',
-	'card.js','screentip.js','score.js','player.js','dealer.js',
-	'ai.js','main.js'])
-	.pipe(concat('blackjack.enchant_js.js'))
+	return gulp.src('main.ts')
+	.pipe(tsc({
+	    removecomments: true,
+	    out: 'blackjack.ts.js'
+	}))
 	.pipe(gulp.dest('dist'))
-	.pipe(rename('blackjack.enchant_js.min.js'))
+	.pipe(rename('blackjack.enchant_js.ts.min.js'))
 	.pipe(uglify())
 	.pipe(insert.prepend('/*\nBlackjack (enchant.js build).\nCopyright 2015 Sam Saint-Pettersen'
 	 + '\nReleased under the MIT/X11 License.'
@@ -25,7 +27,7 @@ gulp.task('js', function() {
 });
 
 gulp.task('debug-on', function() {
-	return gulp.src('main.js')
+	return gulp.src('main.ts')
 	.pipe(replace(/(debug =) false/g, '$1 true'))
 	.pipe(gulp.dest('.'));
 });
@@ -34,7 +36,7 @@ gulp.task('html', function() {
 	var html = '<!DOCTYPE html>\n<head>' +
 	'\n<title>HTML5 Blackjack<\/title>\n' +
 	'<script type="text/javascript" src="bower_components/enchant/enchant.min.js"></script>\n' +
-	'<script type="text/javascript" src="blackjack.enchant_js.min.js"></script>\n' +
+	'<script type="text/javascript" src="blackjack.enchant_js.ts.min.js"></script>\n' +
 	'</head>\n<body>\n<h3 style="text-align: center;">HTML5 Blackjack' +
 	' (<a href="http://enchantjs.com">enchant.js</a> build)</h3>\n' +
 	'<div id="enchant-stage"></div>\n' +
@@ -69,8 +71,11 @@ gulp.task('sounds', function() {
 });
 
 gulp.task('doc', function() {
-	return gulp.src('*.js')
-	.pipe(jsdoc('./doc'));
+        return gulp.src('*.ts')
+        .pipe(typedoc({
+                out: './doc',
+                json: './doc/doc.json'
+        }));
 });
 
 gulp.task('clean', function() {

@@ -57,6 +57,7 @@ Screentip.prototype.clear = function() {
 /**
  * Draw the screentip.
  * @public
+ * @returns {Label[]} The screentip.
 */
 Screentip.prototype.draw = function() {
 	if(this.msg.text == null) this.msg.text = '';

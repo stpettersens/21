@@ -1,0 +1,21 @@
+{
+  "name": "html5-blackjack-enchant.js",
+  "main": "main.js",
+  "version": "1.0.0",
+  "homepage": "https://github.com/stpettersens/21",
+  "authors": [
+    "Sam Saint-Pettersen <s.stpettersen+github@gmail.com>"
+  ],
+  "description": "Blackjack implemented in JavaScript with enchant.js",
+  "license": "MIT",
+  "dependencies": {
+    "enchant": "0.8.2"
+  },
+  "ignore": [
+    "**/.*",
+    "node_modules",
+    "bower_components",
+    "test",
+    "tests"
+  ]
+}
