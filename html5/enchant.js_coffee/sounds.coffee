@@ -1,7 +1,6 @@
 # Sound effects for generated game.
 s = 'sounds/'
-sounds = [ 
-s + 'shuffle.ogg',
+sounds = [ s + 'shuffle.ogg',
 s + 'deal.ogg',
 s + 'reveal.ogg',
 s + 'hit.ogg' 

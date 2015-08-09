@@ -1,5 +1,7 @@
 bower_components/
 node_modules/
+graphics/
+sounds/
 doc/
 dist/
 index.html

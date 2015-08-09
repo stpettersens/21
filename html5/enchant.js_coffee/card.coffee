@@ -23,7 +23,7 @@ class Card
 	# @return [String] Path to card graphic
 	@getImage: (card) ->
 		if card == "c" or card == "d"
-			return "gfx/#{card}.png"
+			return "graphics/#{card}.png"
 	
 		suit = ""
 		if /(h)/.test(card)
