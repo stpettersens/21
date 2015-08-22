@@ -19,19 +19,22 @@ public class Dealer {
     private List<string> cards;
     private List<int> values;
     private Cards gameCards;
+    private SoundEffects sfx;
 
     /// <summary>
     /// Constructor for dealer.
     /// </summary>
     /// <param name="debug">Enable debug messages?</param>
     /// <param name="gameCards">Game cards.</param>
-    public Dealer(bool debug, Cards gameCards) {
+    /// <param name="sfx">Sound effects.</param>
+    public Dealer(bool debug, Cards gameCards, SoundEffects sfx) {
         this.debug = debug;
         this.index = 0;
         this.pos = 225;
         this.cards = new List<string>();
         this.values = new List<int>();
         this.gameCards = gameCards;
+        this.sfx = sfx;
     }
 
     /// <summary>
@@ -78,6 +81,7 @@ public class Dealer {
     /// Dealer shuffles.
     /// </summary>
     public void Shuffle() {
+        //sfx.Play("shuffle");
         Debugger.Emit(this.debug, "----------------------------------------------------");
         Debugger.Emit(this.debug, "Dealer is shuffling cards...");
         Debugger.Emit(this.debug, "----------------------------------------------------");

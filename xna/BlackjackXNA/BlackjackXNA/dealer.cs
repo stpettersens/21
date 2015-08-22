@@ -22,13 +22,16 @@ namespace BlackjackXNA
     private List<string> cards;
     private List<int> values;
     private Cards gameCards;
+    private SoundEffects soundEffects;
+    private bool playerStood;
   
     /// <summary>
     /// Constructor for dealer.
     /// </summary>
     /// <param name="debug">Enable debug messages?</param>
     /// <param name="gameCards">Game cards.</param>
-    public Dealer(bool debug, Cards gameCards) 
+    /// <param name="SoundEffects">Sound SoundEffects.</param>
+    public Dealer(bool debug, Cards gameCards, SoundEffects soundEffects) 
     {
       this.debug = debug;
       this.index = 0;
@@ -36,6 +39,8 @@ namespace BlackjackXNA
       this.cards = new List<string>();
       this.values = new List<int>();
       this.gameCards = gameCards;
+      this.soundEffects = soundEffects;
+      this.playerStood = false;
     }
   
     /// <summary>
@@ -89,6 +94,7 @@ namespace BlackjackXNA
     /// </summary>
     public void Shuffle()
     {
+        soundEffects.Play("shuffle");
         Debugger.Emit(this.debug, "----------------------------------------------------");
         Debugger.Emit(this.debug, "Dealer is shuffling cards....");
         Debugger.Emit(this.debug, "----------------------------------------------------");
@@ -102,27 +108,28 @@ namespace BlackjackXNA
     /// <returns>Player's cards.</returns>
     public string[] Deal(Cards cards) 
     {
-      List<string> dealt = new List<string>();
-      int i = 1;
-      Debugger.Emit(this.debug, "----------------------------------------------------");
-      Debugger.Emit(this.debug, "Dealer is dealing cards for a new game...");
-      Debugger.Emit(this.debug, "----------------------------------------------------");
-      while(i <= (2 * 2)) 
-      {
-        dealt.Add(cards.Draw() + " " + cards.GetValue());
-        i++;
-      }
-      i = 0;
-      while(i < 2) 
-      {
-        string[] cv = dealt[i].Split();
-        this.cards.Add(cv[0]);
-        this.values.Add(int.Parse(cv[1]));
-        i++;
-      }
-      Debugger.Emit(this.debug, "\nDealer has:");
-      Debugger.Emit(this.debug, String.Format("[**][{0}]", this.cards[1]));
-      return new string[] { dealt[2], dealt[3] };
+        soundEffects.Play("deal");
+        List<string> dealt = new List<string>();
+        int i = 1;
+        Debugger.Emit(this.debug, "----------------------------------------------------");
+        Debugger.Emit(this.debug, "Dealer is dealing cards for a new game...");
+        Debugger.Emit(this.debug, "----------------------------------------------------");
+        while(i <= (2 * 2)) 
+        {
+            dealt.Add(cards.Draw() + " " + cards.GetValue());
+            i++;
+        }
+        i = 0;
+        while(i < 2) 
+        {
+            string[] cv = dealt[i].Split();
+            this.cards.Add(cv[0]);
+            this.values.Add(int.Parse(cv[1]));
+            i++;
+        }
+        Debugger.Emit(this.debug, "\nDealer has:");
+        Debugger.Emit(this.debug, String.Format("[**][{0}]", this.cards[1]));
+        return new string[] { dealt[2], dealt[3] };
     }
   
     /// <summary>
@@ -159,9 +166,11 @@ namespace BlackjackXNA
     /// Dealer responds to player action (e.g. a hit or stand).
     /// </summary>
     /// <param name="cards">Game cards.</param>
+    /// <param name="playerStood">Did player just stand?</param>
     /// <returns>Cards returned.</returns>
-    public List<Card> Respond(Cards cards) 
+    public List<Card> Respond(Cards cards, bool playerStood)
     {
+      this.playerStood = playerStood;
       this.ShowCards();
       bool responding = true;
       List<Card> response_cards = new List<Card>();
@@ -237,6 +246,7 @@ namespace BlackjackXNA
     /// <returns>Revealed first card.</returns>
     public Card RevealFirstCard(Cards cards) 
     {
+        if(this.playerStood) soundEffects.Play("reveal");
         return new Card(cards.GetImage(this.cards[0]), 225, 10);
     }
   }

@@ -54,3 +54,7 @@ Content\sK.xnb
 Content\sQ.xnb
 Content\scoreFont.xnb
 Content\screentipFont.xnb
+Content\deal.xnb
+Content\hit.xnb
+Content\reveal.xnb
+Content\shuffle.xnb

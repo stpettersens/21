@@ -54,6 +54,7 @@
      <Compile Include="Assets\Player.cs" />
      <Compile Include="Assets\Score.cs" />
      <Compile Include="Assets\Screentip.cs" />
+     <Compile Include="Assets\SoundEffects.cs" />
  <Reference Include="UnityEngine.UI">
  <HintPath>C:/Program Files/Unity/Editor/Data/UnityExtensions/Unity/GUISystem/UnityEngine.UI.dll</HintPath>
  </Reference>

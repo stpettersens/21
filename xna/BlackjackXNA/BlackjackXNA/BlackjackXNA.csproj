@@ -83,6 +83,7 @@
     <Compile Include="Blackjack.cs" />
     <Compile Include="score.cs" />
     <Compile Include="screentip.cs" />
+    <Compile Include="sound.cs" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="Game.ico" />

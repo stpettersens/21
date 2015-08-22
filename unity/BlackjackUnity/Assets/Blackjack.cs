@@ -29,6 +29,7 @@ public class Blackjack : MonoBehaviour {
     Cards cards;
     Player player;
     Dealer dealer;
+    SoundEffects soundEffects;
 
     const int SCREEN_WIDTH = 720;  // 800 
     const int SCREEN_HEIGHT = 480; // 600
@@ -37,6 +38,8 @@ public class Blackjack : MonoBehaviour {
 
     List<string> strCards;
     List<Texture2D> gfxCards;
+    List<string> strEffects;
+    List<AudioClip> effects;
 
     /// <summary>
     /// Load a graphic for game.
@@ -44,12 +47,25 @@ public class Blackjack : MonoBehaviour {
     /// <param name="filePath">File path to graphic.</param>
     void LoadGraphic(string filePath) {
         byte[] fileData;
-        if (File.Exists(filePath))
-        {
+        if (File.Exists(filePath)) {
             fileData = File.ReadAllBytes(filePath);
             Texture2D graphic = new Texture2D(71, 96);
             graphic.LoadImage(fileData);
             gfxCards.Add(graphic);
+        }
+    }
+
+    /// <summary>
+    /// Load a sound effect for game.
+    /// </summary>
+    /// <param name="filePath">File path to sound effect.</param>
+    void LoadSoundEffect(string filePath) {
+        if (File.Exists(filePath)) {
+            WWW www = new WWW("file://" + filePath);
+            AudioClip audio = www.GetAudioClip(false);
+            audio.name = Path.GetFileName(filePath);
+            Debugger.Emit(DEBUG, String.Format("Loaded sound: {0}", audio.name));
+            effects.Add(audio);
         }
     }
 
@@ -96,6 +112,18 @@ public class Blackjack : MonoBehaviour {
         }
     }
 
+    void InitSoundEffects() {
+        strEffects.Add("dealer");
+        strEffects.Add("hit");
+        strEffects.Add("reveal");
+        strEffects.Add("shuffle");
+        strEffects.Add("shuffle");
+        for (int i = 0; i < strEffects.Count; i++) {
+            Debugger.Emit(DEBUG, "Added sound effect!");
+            LoadSoundEffect(String.Format("Assets/sounds/{0}.ogg", strEffects[i]));
+        }
+    }
+
 	/// <summary>
 	/// Initialize game.
 	/// </summary>
@@ -104,8 +132,11 @@ public class Blackjack : MonoBehaviour {
         playing = false;
         strCards = new List<string>();
         gfxCards = new List<Texture2D>();
-        
+        strEffects = new List<string>();
+        effects = new List<AudioClip>();
         InitCards();
+        InitSoundEffects();
+        soundEffects = new SoundEffects(strEffects, effects);
         screentip = new Screentip(DEBUG, ((SCREEN_WIDTH / 2) - 50), 190);
         instruction = new Score(DEBUG, ((SCREEN_WIDTH / 2) - 155), 440);
         p_score = new Score(DEBUG, 153, 315);
@@ -209,6 +240,7 @@ public class Blackjack : MonoBehaviour {
     /// </summary>
     void Hit() {
         if (player_index < 6) {
+            soundEffects.Play("hit");
             player_cards[player_index] = player.Hit(cards);
             int[] xy = player_cards[player_index].GetXY();
             Debugger.Emit(DEBUG, String.Format("Placed card at {0},{1}", xy[0], xy[1]));
@@ -293,17 +325,18 @@ public class Blackjack : MonoBehaviour {
         dealer_cards = new List<Card>();
 
         player = new Player(DEBUG);
-        dealer = new Dealer(DEBUG, cards);
+        dealer = new Dealer(DEBUG, cards, soundEffects);
         dealer_pile = new Card(cards.GetImage("c"), 10, 10);
 
         if (cards.GetPlayed() == 0 || cards.GetPlayed() >= CARD_LIMIT) {
-            Thread shuffleThread = new Thread(dealer.Shuffle);
+            /*Thread shuffleThread = new Thread(dealer.Shuffle);
             shuffleThread.Name = "shuffleThread";
             shuffleThread.IsBackground = true;
             shuffleThread.Start();
             while (shuffleThread.IsAlive) {
                 Debugger.Emit(DEBUG, "Shuffling...");
-            }
+            }*/
+            dealer.Shuffle();
             playing = true;
         }
         else

@@ -51,7 +51,10 @@ namespace BlackjackXNA
         GraphicsDeviceManager graphics;
         SpriteBatch spriteBatch;
         List<string> strCards;
+        List<string> strEffects;
         List<Texture2D> gfxCards;
+        List<SoundEffect> effects;
+        SoundEffects soundEffects;
  
         /// <summary>
         /// Constructor for Blackjack.
@@ -61,9 +64,8 @@ namespace BlackjackXNA
             ai = false;
             playing = false;
 
-            strCards = new List<string>();
-            strCards.Add("c");
-            strCards.Add("d");
+            strCards = new List<string>() { "c", "d" };
+            strEffects = new List<string>() { "deal", "hit", "reveal", "shuffle" };
 
             for (int i = 1; i <= 13; i++)
             {
@@ -140,11 +142,17 @@ namespace BlackjackXNA
             {
                 gfxCards.Add(this.Content.Load<Texture2D>(strCards[i]));
             }
+            effects = new List<SoundEffect>();
+            for (int i = 0; i < this.strEffects.Count; i++)
+            {
+                effects.Add(this.Content.Load<SoundEffect>(strEffects[i]));
+            }
             screentip = new Screentip(DEBUG, ((SCREEN_WIDTH / 2) - 50), 190, screentipFont);
             instruction = new Score(DEBUG, ((SCREEN_WIDTH / 2) - 155), 450, scoreFont);
             p_score = new Score(DEBUG, 153, 315, scoreFont);
             d_score = new Score(DEBUG, 153, 25, scoreFont);
             cards = new Cards(strCards, gfxCards);
+            soundEffects = new SoundEffects(strEffects, effects);
             NewGame();
         }
 
@@ -289,6 +297,7 @@ namespace BlackjackXNA
         {
             if(player_index < 6)
             {
+                soundEffects.Play("hit");
                 player_cards[player_index] = player.Hit(cards);
                 int[] xy = player_cards[player_index].GetXandY();
                 Debugger.Emit(DEBUG, String.Format("Placed card at {0},{1}", xy[0], xy[1]));
@@ -302,7 +311,7 @@ namespace BlackjackXNA
         private void Stand()
         {
             this.player.Stand();
-            List<Card> received = dealer.Respond(cards);
+            List<Card> received = dealer.Respond(cards, true);
             for(int i = 0; i < received.Count; i++)
             {
                 Vector2 xy = dealer_cards[dealer_index].GetXY();
@@ -387,7 +396,7 @@ namespace BlackjackXNA
             dealer_cards = new List<Card>();
 
             player = new Player(DEBUG);
-            dealer = new Dealer(DEBUG, cards);
+            dealer = new Dealer(DEBUG, cards, soundEffects);
             dealer_pile = new Card(cards.GetImage("c"), 10, 10);
 
             if (cards.GetPlayed() == 0 || cards.GetPlayed() >= CARD_LIMIT)

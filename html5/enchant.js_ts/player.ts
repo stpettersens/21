@@ -27,7 +27,7 @@ class Player {
 	*/
 	constructor(debug: boolean, game: Core) {
 		this.debug = debug;
-		this.game = game;
+        this.game = game;
 		this.index = -1;
 		this.pos = 225;
 		this.cards = new Array<string>();
