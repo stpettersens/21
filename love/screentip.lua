@@ -10,7 +10,7 @@
 require 'debug'
 
 Screentip = {}
-Screentip.__indeposX = Screentip
+Screentip.__index = Screentip
 
 --- Screentip implements a title and message box.
 -- @constructor

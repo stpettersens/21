@@ -9,6 +9,7 @@
 
 require 'helpers'
 require 'card'
+require 'sounds'
 require 'debug'
 
 Dealer = {}
@@ -73,6 +74,7 @@ end
 -- @param [Cards] cards Game cards to shuffle.
 function Dealer:shuffle(cards)
 	if cards:getPlayed() == 0 or cards:getPlayed() >= 45 then
+		SoundEffects.play('shuffle')
 		Debug_emit(self.debug, '-------------------------------------------------------')
 		Debug_emit(self.debug, 'Dealer is shuffling cards...')
 		Debug_emit(self.debug, '-------------------------------------------------------')
@@ -84,6 +86,7 @@ end
 -- @param [Cards] cards Game cards.
 -- @return [{string}] Player's cards.
 function Dealer:deal(cards)
+	SoundEffects.play('deal')
 	local dealt = {}
 	local i = 1
 	Debug_emit(self.debug, '-------------------------------------------------------')

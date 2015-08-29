@@ -1,7 +1,7 @@
 LOVEGAME=blackjack.love
 
 make:
-	7z u $(LOVEGAME) *.lua gfx
+	7z u $(LOVEGAME) *.lua gfx sfx
 
 doc:
 	lunatic doc

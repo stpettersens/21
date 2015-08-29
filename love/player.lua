@@ -30,7 +30,7 @@ end
 --- Calculate the total value of player's held cards.
 -- @param [number] Total value for player's cards.
 function Player:calcTotal()
-	Helper_bubbleSort(self.values, true)
+	Helper.bubbleSort(self.values, true)
 	local total = 0
 	for i = 1, #self.values do
 		local v = self.values[i]

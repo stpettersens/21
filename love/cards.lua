@@ -64,7 +64,7 @@ function Cards:shuffle()
 	played = {}
 	while true do
 		local card = self:_getCard()
-		if not Helper_inTable(card, deck) then
+		if not Helper.inTable(card, deck) then
 			table.insert(deck, card)
 			if #deck == deck_num then
 				break
@@ -96,22 +96,22 @@ function Cards:sort()
 			num = tonumber(rank)	-- 2 to 10
 		end
 		if suit == 'h' then -- Hearts
-			if not Helper_inTable(num, self.sorted_hearts) then
+			if not Helper.inTable(num, self.sorted_hearts) then
 				table.insert(self.sorted_hearts, num)
 			end
 
 		elseif suit == 'd' then -- Diamonds
-			if not Helper_inTable(num, self.sorted_diamonds) then
+			if not Helper.inTable(num, self.sorted_diamonds) then
 				table.insert(self.sorted_diamonds, num)
 			end
 
 		elseif suit == 'c' then -- Clubs
-			if not Helper_inTable(num, self.sorted_clubs) then
+			if not Helper.inTable(num, self.sorted_clubs) then
 				table.insert(self.sorted_clubs, num)
 			end
 
 		elseif suit == 's' then -- Spades
-			if not Helper_inTable(num, self.sorted_spades) then
+			if not Helper.inTable(num, self.sorted_spades) then
 				table.insert(self.sorted_spades, num)
 			end
 		end

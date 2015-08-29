@@ -14,7 +14,7 @@ require 'dealer'
 require 'ai'
 require 'screentip'
 require 'score'
-require 'debug'
+require 'sounds'
 
 -- Window parameters
 TITLE = 'Blackjack'
@@ -23,7 +23,8 @@ SCREEN_HEIGHT = 500
 
 -- Globals
 debug = false
-use_ai = false
+ai = false
+sound = true
 playing = true
 player_index = 3
 player_cards = {}
@@ -44,7 +45,7 @@ function love.load(args)
 		if args[i] == '--debug' or args[i] == '-d' then
 			debug = true
 		elseif args[i] == '--ai' or args[i] == '-a' then
-			use_ai = true
+			ai = true
 		end
 	end
 
@@ -78,7 +79,7 @@ end
 -- @param [number] dt Delta Time.
 function love.update(dt)
 	timer = timer + dt
-	if timer >= 3 and use_ai and not playing then
+	if timer >= 3 and ai and not playing then
 		timer = timer - 3
 		newGame()
 	end
@@ -91,7 +92,7 @@ function love.update(dt)
 
 	if playing then
 		d_score:emit('?')
-		if not use_ai then
+		if not ai then
 			if not isTouchScreenDevice() then
 				instruction:emit('Hit [H key or LMB] or Stand [S key or RMB]?')
 			else
@@ -100,7 +101,7 @@ function love.update(dt)
 		end
 	else
 		d_score:emit(dealer:calcTotal())
-		if not use_ai then
+		if not ai then
 			if not isTouchScreenDevice() then
 				instruction:emit('Play again? Yes [Y key or LMB] or No [N or Escape key].')
 			else
@@ -141,6 +142,11 @@ function isTouchScreenDevice()
 	return touch
 end
 
+--- Toggle sound effects on/off.
+function toggleSound()
+	sound = SoundEffects.toggle()
+end
+
 --- Start a new game.
 function newGame()
 	playing = true
@@ -153,7 +159,7 @@ function newGame()
 	cards = Cards.create()
 
 	-- Use AI or human player depending on configuration.
-	if not use_ai then
+	if not ai then
 		player = Player.create(debug)
 	else
 		player = AI.create(debug)
@@ -170,7 +176,7 @@ function newGame()
 	dealer_cards[4] = Card.create(Card_getImage('d'), 495, 10)
 	dealer_cards[5] = Card.create(Card_getImage('d'), 585, 10)
 
-	if use_ai then
+	if ai then
 		local received = player:respond(cards)
 		if #received > 0 then
 			for i = 1, #received do
@@ -213,6 +219,7 @@ end
 --- Take a hit.
 function hit()
 	if player_index < 6 then
+		SoundEffects.play('hit')
 		player_cards[player_index] = player:hit(cards)
 		player_index = player_index + 1
 	end
@@ -220,7 +227,7 @@ end
 
 --- Take a stand.
 function stand()
-	if not use_ai then
+	if not ai then
 		player:stand()
 	end
 	local received = dealer:respond(cards)
@@ -238,7 +245,7 @@ end
 --- Read keyboard input.
 -- @param [string] key Pressed key on keyboard.
 function love.keypressed(key)
-	if playing and not use_ai then
+	if playing and not ai then
 		if key == 'h' then
 			hit()
 		elseif key == 's' then
@@ -248,16 +255,18 @@ function love.keypressed(key)
 			love.event.quit()
 		end
 
-	elseif not playing and not use_ai then
+	elseif not playing and not ai then
 		if key == 'y' then
 			newGame()
 		elseif key == 'n' or key == 'escape' then
 			love.event.quit()
 		end
-	else
-		if key == 'escape' then
-			love.event.quit()
-		end
+
+	elseif key == 'e' then
+		toggleSound()
+
+	elseif key == 'escape' then
+		love.event.quit()
 	end
 end
 
@@ -266,14 +275,14 @@ end
 -- @param [number] y Y position of mouse cursor.
 -- @param [string] button Pressed mouse button.
 function love.mousepressed(x, y, button)
-	if playing and not use_ai then
+	if playing and not ai then
 		if button == 'l' then
 			hit()
 		elseif button == 'r' then
 			stand()
 		end
 
-	elseif not playing and not use_ai then
+	elseif not playing and not ai then
 		if button == 'l' then
 			newGame()
 		end
@@ -286,14 +295,14 @@ end
 -- @param [number] x X cursor position.
 -- @param [number] y Y cursor position.
 function love.touchpressed(id, x, y)
-	if playing and not use_ai then
+	if playing and not ai then
 		if love.touch.getTouchCount() == 1 then
 			hit()
 		elseif love.touch.getTouchCount() == 2 then
 			stand()
 		end
 
-	elseif not playing and not use_ai then
+	elseif not playing and not ai then
 		if love.touch.getTouchCount() == 1 then
 			newGame()
 		end

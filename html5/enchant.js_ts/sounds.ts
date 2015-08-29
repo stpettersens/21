@@ -2,18 +2,13 @@
 
 /* Sound effects for generated game. */
 var s: string = 'sounds/';
-var sounds: string[] = [
-s + 'shuffle.ogg',
-s + 'deal.ogg',
-s + 'reveal.ogg',
-s + 'hit.ogg'
-];
 
 class SoundEffects {
 	private static soundOn = true;
 
 	/**
 	 * Toggle sound effects on/off.
+	 * @returns {boolean} Are sound effects on?
 	*/
 	public static toggle() {
 		if(SoundEffects.soundOn)

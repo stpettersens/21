@@ -16,7 +16,7 @@ AI.__index = AI
 
 --- AI implements an artifical player (not the dealer).
 -- @constructor
--- @param [boolean] debug Enable debug messages?
+-- @param [boolean] debug Enable Debug. messages?
 function AI.create(debug)
 	local self = setmetatable({}, AI)
 	self.debug = debug
@@ -30,7 +30,7 @@ end
 --- Calculate the total value of AI's held cards.
 -- @return [number] Total value of AI's cards.
 function AI:calcTotal()
-	Helper_bubbleSort(self.values, true)
+	Helper.bubbleSort(self.values, true)
 	local total = 0
 	for i =1, #self.values do
 		local v = self.values[i]
