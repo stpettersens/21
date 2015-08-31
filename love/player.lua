@@ -30,7 +30,7 @@ end
 --- Calculate the total value of player's held cards.
 -- @param [number] Total value for player's cards.
 function Player:calcTotal()
-	Helper.bubbleSort(self.values, true)
+	Helper_bubbleSort(self.values, true)
 	local total = 0
 	for i = 1, #self.values do
 		local v = self.values[i]
@@ -51,7 +51,7 @@ end
 function Player:hasBlackjack()
 	local blackjack = false
 	if self:calcTotal() == 21 then
-		Debug_emit(self.debug, 'Player has Blackjack!')
+		--Debug_emit(self.debug, 'Player has Blackjack!')
 		blackjack = true
 	end
 	return blackjack
@@ -62,7 +62,7 @@ end
 function Player:isBust()
 	local bust = false
 	if self:calcTotal() > 21 then
-		Debug_emit(self.debug, 'Player is bust!')
+		--Debug_emit(self.debug, 'Player is bust!')
 		bust = true
 	end
 	return bust
@@ -79,8 +79,8 @@ function Player:receiveCards(player_cards)
 		table.insert(self.values, tonumber(value))
 	end
 	pc = string.format('%s[%s][%s]', pc, self.cards[1], self.cards[2])
-	Debug_emit(self.debug, '\nPlayer receives their cards:')
-	Debug_emit(self.debug, string.format('%s --> %d', pc, self:calcTotal()))
+	--Debug_emit(self.debug, '\nPlayer receives their cards:')
+	--Debug_emit(self.debug, string.format('%s --> %d', pc, self:calcTotal()))
 
 	self.index = self.index + 1
 	cardA = Card.create(Card_getImage(self.cards[self.index]), self.pos, 310)
@@ -100,17 +100,17 @@ function Player:hit(cards)
 	table.insert(self.values, cards:getValue())
 	self.index = self.index + 1
 	self.pos = self.pos + 90
-	Debug_emit(self.debug, 'Player hits.')
-	Debug_emit(self.debug, 'Player gets ' .. card)
-	Debug_emit(self.debug, 'Player has ' .. tostring(self:calcTotal()))
+	--Debug_emit(self.debug, 'Player hits.')
+	--Debug_emit(self.debug, 'Player gets ' .. card)
+	--Debug_emit(self.debug, 'Player has ' .. tostring(self:calcTotal()))
 
 	return Card.create(Card_getImage(card:match('%[(%w+)%]')), self.pos, 310)
 end
 
 --- Player stands.
 function Player:stand()
-	Debug_emit(self.debug, 'Player stands.')
-	Debug_emit(self.debug, 'Player has ' .. tostring(self:calcTotal()))
+	--Debug_emit(self.debug, 'Player stands.')
+	--Debug_emit(self.debug, 'Player has ' .. tostring(self:calcTotal()))
 end
 
 --- Show player's cards.
@@ -122,8 +122,8 @@ function Player:showCards()
 	for i = 1, #self.cards do
 		cards = string.format('%s[%s]', cards, self.cards[i])
 	end
-	Debug_emit(self.debug, '\nPlayer has:')
-	Debug_emit(self.debug, string.format('%s --> %d', cards, self:calcTotal()))
+	--Debug_emit(self.debug, '\nPlayer has:')
+	--Debug_emit(self.debug, string.format('%s --> %d', cards, self:calcTotal()))
 
 	return self:calcTotal()
 end

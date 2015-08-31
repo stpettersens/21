@@ -58,8 +58,8 @@ function Dealer:_hit(cards)
 	card = cards:draw()
 	table.insert(self.cards, card)
 	table.insert(self.values, cards:getValue())
-	Debug_emit(self.debug, self.debug, 'Dealer hits.')
-	Debug_emit(self.debug, self.debug, 'Dealer gets ' .. card)
+	--Debug_emit(self.debug, self.debug, 'Dealer hits.')
+	--Debug_emit(self.debug, self.debug, 'Dealer gets ' .. card)
 
 	return Card.create(Card_getImage(card), self.pos, 10)
 end
@@ -67,17 +67,17 @@ end
 --- Dealer stands.
 -- @private
 function Dealer:_stand()
-	Debug_emit(self.debug, 'Dealer stands.')
+	--Debug_emit(self.debug, 'Dealer stands.')
 end
 
 --- Dealer shuffles.
 -- @param [Cards] cards Game cards to shuffle.
 function Dealer:shuffle(cards)
 	if cards:getPlayed() == 0 or cards:getPlayed() >= 45 then
-		SoundEffects.play('shuffle')
-		Debug_emit(self.debug, '-------------------------------------------------------')
-		Debug_emit(self.debug, 'Dealer is shuffling cards...')
-		Debug_emit(self.debug, '-------------------------------------------------------')
+		SoundEffects_play('shuffle')
+		--Debug_emit(self.debug, '-------------------------------------------------------')
+		--Debug_emit(self.debug, 'Dealer is shuffling cards...')
+		--Debug_emit(self.debug, '-------------------------------------------------------')
 		return cards:shuffle()
 	end
 end
@@ -86,12 +86,12 @@ end
 -- @param [Cards] cards Game cards.
 -- @return [{string}] Player's cards.
 function Dealer:deal(cards)
-	SoundEffects.play('deal')
+	SoundEffects_play('deal')
 	local dealt = {}
 	local i = 1
-	Debug_emit(self.debug, '-------------------------------------------------------')
-	Debug_emit(self.debug, 'Dealer is dealing cards for a new game...')
-	Debug_emit(self.debug, '-------------------------------------------------------')
+	--Debug_emit(self.debug, '-------------------------------------------------------')
+	--Debug_emit(self.debug, 'Dealer is dealing cards for a new game...')
+	--Debug_emit(self.debug, '-------------------------------------------------------')
 	while i <= (2 * 2) do
 		table.insert(dealt, string.format('%s:%d', cards:draw(), cards:getValue()))
 		i = i + 1
@@ -105,8 +105,8 @@ function Dealer:deal(cards)
 		table.insert(self.values, tonumber(value))
 		i = i + 1
 	end
-	Debug_emit(self.debug, '\nDealer has:')
-	Debug_emit(self.debug, string.format('[**][%s]', self.cards[2]))
+	--Debug_emit(self.debug, '\nDealer has:')
+	--Debug_emit(self.debug, string.format('[**][%s]', self.cards[2]))
 	return {dealt[3], dealt[4]}
 end
 
@@ -115,7 +115,7 @@ end
 function Dealer:hasBlackjack()
 	local blackjack = false
 	if self:calcTotal() == 21 then
-		Debug_emit(self.debug, 'Dealer has Blackjack!')
+		--Debug_emit(self.debug, 'Dealer has Blackjack!')
 		blackjack = true
 	end
 	return blackjack
@@ -126,7 +126,7 @@ end
 function Dealer:isBust()
 	local bust = false
 	if self:calcTotal() > 21 then
-		Debug_emit(self.debug, 'Dealer is bust!')
+		--Debug_emit(self.debug, 'Dealer is bust!')
 		bust = true
 	end
 	return bust
@@ -170,8 +170,8 @@ function Dealer:showCards()
 	for i = 1, #self.cards do
 		cards = string.format('%s[%s]', cards, self.cards[i])
 	end
-	Debug_emit(self.debug, '\nDealer has:')
-	Debug_emit(self.debug, string.format('%s --> %d', cards, self:calcTotal()))
+	--Debug_emit(self.debug, '\nDealer has:')
+	--Debug_emit(self.debug, string.format('%s --> %d', cards, self:calcTotal()))
 
 	return self:calcTotal()
 end
@@ -193,5 +193,6 @@ end
 --- Dealer reveals first card.
 -- @return [Card] Revealed first card.
 function Dealer:revealFirstCard()
+	--SoundEffects_play('reveal')
 	return Card.create(Card_getImage(self.cards[1]), 225, 10)
 end

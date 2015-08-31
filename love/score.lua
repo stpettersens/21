@@ -23,7 +23,7 @@ function Score.create(debug, posX, posY)
 	self.posY = posY
 	self.score = ''
 
-	Debug_emit(debug, string.format("Created score counter at %d,%d", posX, posY)) --!
+	--Debug_emit(debug, string.format("Created score counter at %d,%d", posX, posY)) --!
 	return self
 end
 

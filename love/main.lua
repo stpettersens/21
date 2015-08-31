@@ -213,13 +213,13 @@ function showCards()
 	if cards:getPlayed() == 52 then
 		dealer_pile = Card.create(Card_getImage('d'), 10, 10)
 	end
-	_print('Cards played ' .. tostring(cards:getPlayed()))
+	--Debug_emit(this.debug, 'Cards played ' .. tostring(cards:getPlayed()))
 end
 
 --- Take a hit.
 function hit()
 	if player_index < 6 then
-		SoundEffects.play('hit')
+		SoundEffects_play('hit')
 		player_cards[player_index] = player:hit(cards)
 		player_index = player_index + 1
 	end

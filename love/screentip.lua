@@ -24,7 +24,7 @@ function Screentip.create(debug, posX, posY)
 	self.title = ''
 	self.message = ''
 
-	Debug_emit(debug, string.format("Created screentip at %d,%d", posX, posY)) --!
+	--Debug_emit(debug, string.format("Created screentip at %d,%d", posX, posY)) --!
 	return self
 end
 
