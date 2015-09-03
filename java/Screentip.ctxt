@@ -1,0 +1,14 @@
+#BlueJ class context
+comment0.params=debug\ posX\ posY
+comment0.target=Screentip(boolean,\ int,\ int)
+comment0.text=\r\n\ Screentip\ implements\ a\ title\ and\ message\ box.\r\n\ @param\ debug\ Enable\ debug\ messages?\r\n\ @param\ posX\ X\ position\ for\ screentip.\r\n\ @param\ posY\ Y\ position\ for\ screentip.\r\n
+comment1.params=title\ message
+comment1.target=void\ emit(java.lang.String,\ java.lang.String)
+comment1.text=\r\n\ Emit\ a\ title\ and\ message.\r\n\ @param\ title\ Title\ to\ emit.\r\n\ @param\ message\ Message\ to\ emit.\r\n
+comment2.params=
+comment2.target=void\ clear()
+comment2.text=\r\n\ Clear\ the\ screentip.\r\n
+comment3.params=g
+comment3.target=void\ draw(java.awt.Graphics)
+comment3.text=\r\n\ Draw\ the\ screentip.\r\n\ @param\ g\ Graphics\ object.\r\n
+numComments=4

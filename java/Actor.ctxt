@@ -1,0 +1,10 @@
+#BlueJ class context
+comment0.params=
+comment0.target=int\ calcTotal()
+comment1.params=
+comment1.target=boolean\ hasBlackjack()
+comment2.params=
+comment2.target=boolean\ isBust()
+comment3.params=
+comment3.target=int\ showCards()
+numComments=4

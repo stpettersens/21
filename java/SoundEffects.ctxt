@@ -1,0 +1,8 @@
+#BlueJ class context
+comment0.params=
+comment0.target=SoundEffects()
+comment1.params=
+comment1.target=boolean\ toggle()
+comment2.params=effect
+comment2.target=void\ play(java.lang.String)
+numComments=3
