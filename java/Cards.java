@@ -48,7 +48,7 @@ public class Cards
     */
    private String getRank()
    {
-       int i = (int)Math.random() * ranks.length;
+       int i = (int)Math.floor(Math.random() * ranks.length);
        return ranks[i];
    }
    
@@ -58,7 +58,7 @@ public class Cards
    */
    private String getSuit()
    {
-       int i = (int)Math.random() * suits.length;
+       int i = (int)Math.floor(Math.random() * suits.length);
        return suits[i];
    }
    
@@ -113,9 +113,19 @@ public class Cards
        String[] rs = deck.get(index).split(" ");
        index++;
        int val = 0;
-       if(rs[0] == "A") val = 1;
-       else if(rs[0] == "J" || rs[0] == "Q" || rs[0] == "K") val = 10;
-       else val = Integer.parseInt(rs[0]);
+       if(rs[0].equals("A")) 
+       {
+           val = 1;
+       }
+       else if(rs[0].equals("J") 
+       || rs[0].equals("Q") || rs[0].equals("K"))
+       {
+           val = 10;
+       }
+       else 
+       {
+           val = Integer.parseInt(rs[0]);
+       }
        return val;
    }
    

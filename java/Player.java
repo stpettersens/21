@@ -177,7 +177,7 @@ public class Player implements Actor
         Debugger.emit(debug, "\nPlayer receives their cards:");
         Debugger.emit(debug, String.format("%s --> %d", pc, calcTotal()));
         
-        index++;
+        //index++;
         Card cardA = new Card(cards.getImage(this.cards.get(index)), pos, 310);
         pos += 90;
         index++;

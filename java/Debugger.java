@@ -28,8 +28,11 @@ public class Debugger
         emit(debug, Integer.toString(integer));
     }
     
-    public static void emit(boolean debug, Card[] cards)
+    /*public static void emit(boolean debug, String[] cards)
     {
-        if(debug) System.out.println(cards);
-    }
+        for(int i = 0; i < cards.length; i++)
+        {
+            emit(debug, i + " " + cards[i]);
+        }
+    }*/
 }

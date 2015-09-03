@@ -90,7 +90,6 @@ public class Dealer implements Actor
         Debugger.emit(debug, "Dealer is shuffling cards...");
         Debugger.emit(debug, "----------------------------------------------------");
         gameCards.shuffle();
-        Debug.emit(debug, "Done!");
     }
     
     /**
@@ -224,6 +223,7 @@ public class Dealer implements Actor
         pos += 90;
         Card cardB = new Card(cards.getImage(this.cards.get(1)), pos, 10);
         index += 2;
+      
         return new Card[] { cardA, cardB };
     }
     

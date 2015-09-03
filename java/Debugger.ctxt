@@ -5,6 +5,4 @@ comment0.text=\r\n\ Emit\ a\ debug\ message.\r\n\ @param\ debug\ Enable\ debug?\
 comment1.params=debug\ integer
 comment1.target=void\ emit(boolean,\ int)
 comment1.text=\r\n\ Emit\ a\ debug\ message.\r\n\ @param\ debug\ Enable\ debug?\r\n\ @param\ integer\ Integer\ to\ emit.\r\n
-comment2.params=debug\ cards
-comment2.target=void\ emit(boolean,\ Card[])
-numComments=3
+numComments=2

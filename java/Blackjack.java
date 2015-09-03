@@ -6,9 +6,10 @@
  * Java Swing/AWT implementation.
 */
 
+import java.util.List;
+import java.util.ArrayList;
 import javax.swing.JFrame;
 import javax.swing.JPanel;
-import javax.swing.JLabel;
 import javax.swing.ImageIcon;
 import java.awt.Graphics;
 import java.awt.Color;
@@ -19,9 +20,9 @@ public class Blackjack extends JPanel
     private static boolean ai;
     private static boolean playing;
     private static int player_index;
-    private static Card[] player_cards;
+    private static List<Card> player_cards;
     private static int dealer_index;
-    private static Card[] dealer_cards;
+    private static List<Card> dealer_cards;
     private static Screentip screentip;
     private static Score score;
     private static Score instruction;
@@ -56,13 +57,13 @@ public class Blackjack extends JPanel
     
     public static void main(String[] args)
     {
-        /*Blackjack blackjack = new Blackjack();
+        Blackjack blackjack = new Blackjack();
         JFrame app = new JFrame();
         app.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         app.add(blackjack);
         app.setSize(SCREEN_WIDTH, SCREEN_HEIGHT);
         app.setTitle("Blackjack");
-        app.setVisible(true);*/
+        app.setVisible(true);
         
         screentip = new Screentip(DEBUG, ((SCREEN_WIDTH / 2) - 50), 190);
         instruction = new Score(DEBUG, ((SCREEN_WIDTH / 2) - 155), 450);
@@ -77,9 +78,9 @@ public class Blackjack extends JPanel
     {
         playing = true;
         player_index = 2;
-        player_cards = new Card[5];
+        player_cards = new ArrayList<Card>();
         dealer_index = 2;
-        dealer_cards = new Card[5];
+        dealer_cards = new ArrayList<Card>();
         
         player = new Player(DEBUG);
         dealer = new Dealer(DEBUG, cards);
@@ -91,17 +92,17 @@ public class Blackjack extends JPanel
         }
         
         screentip.clear();
-        player_cards = player.receiveCards(cards, dealer.deal(cards));
-        dealer_cards = dealer.receiveCards(cards);
-        player_cards[2] = new Card(cards.getImage("d"), 405, 310);
-        player_cards[3] = new Card(cards.getImage("d"), 495, 310);
-        player_cards[4] = new Card(cards.getImage("d"), 585, 310);
-        dealer_cards[2] = new Card(cards.getImage("d"), 405, 10);
-        dealer_cards[3] = new Card(cards.getImage("d"), 495, 10);
-        dealer_cards[4] = new Card(cards.getImage("d"), 585, 10);
-        
-        Debugger.emit(DEBUG, player_cards);
-        Debugger.emit(DEBUG, "GOT HERE!");
-        
+        Card[] pc = player.receiveCards(cards, dealer.deal(cards));
+        Card[] dc = dealer.receiveCards(cards);
+        player_cards.add(pc[0]);
+        player_cards.add(pc[1]);
+        dealer_cards.add(dc[0]);
+        dealer_cards.add(dc[1]);
+        player_cards.add(new Card(cards.getImage("d"), 405, 310));
+        player_cards.add(new Card(cards.getImage("d"), 495, 310));
+        player_cards.add(new Card(cards.getImage("d"), 585, 310));
+        dealer_cards.add(new Card(cards.getImage("d"), 405, 10));
+        dealer_cards.add(new Card(cards.getImage("d"), 495, 10));
+        dealer_cards.add(new Card(cards.getImage("d"), 585, 10));    
     }
 }
