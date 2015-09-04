@@ -10,53 +10,21 @@ import java.util.List;
 import java.util.ArrayList;
 import java.util.Collections;
 
-public class Player implements Actor
+public class Player extends Actor
 {
-    private boolean debug;
-    private int index;
-    private int pos;
-    private List<String> cards;
-    private List<Integer> values;
-
     /**
-     * Dealer implements the player for Blackjack.
+     * Player implements the player for Blackjack.
      * @param debug Enable debug messages?
     */
     public Player(boolean debug)
     {
-        this.debug = debug;
-        index = 0;
-        pos = 225;
-        cards = new ArrayList<String>();
-        values = new ArrayList<Integer>();
+        super(debug);
     }
-    
-    /**
-     * Calculate the total value of player's held cards.
-     * @return Total value of player's cards.
-    */
-    public int calcTotal()
-    {
-        Collections.sort(values);
-        int total = 0;
-        for(int i = 0; i < values.size(); i++)
-        {
-            int v = values.get(i);
-            if(v == 1)
-            {
-                if((total + 11) <= 21) v = 11;
-                else if((total + 11) > 21) v = 1;
-            }
-            total += v;    
-        }
-        return total;
-    }
-    
 
     /**
-     * Dealer hits.
+     * Player hits.
      * @param cards Game cards.
-     * @return Dealer's drawn card.
+     * @return Player's drawn card.
     */
     private Card hit(Cards cards)
     {
@@ -72,42 +40,12 @@ public class Player implements Actor
     }
     
     /**
-     * Dealer stands.
+     * Player stands.
     */
-    private void stand()
+    protected void stand()
     {
         Debugger.emit(debug, "Player stands.");
         Debugger.emit(debug, String.format("Player has %d", calcTotal()));
-    }
-    
-    /**
-     * Dealer deals.
-     * @param cards Game cards.
-     * @return Player's cards.
-    */
-    public String[] deal(Cards cards)
-    {
-        List<String> dealt = new ArrayList<String>();
-        int i = 1;
-        Debugger.emit(debug, "----------------------------------------------------");
-        Debugger.emit(debug, "Dealer is dealing cards for a new game...");
-        Debugger.emit(debug, "----------------------------------------------------");
-        while(i <= (2 * 2))
-        {
-            dealt.add(cards.draw() + " " + cards.getValue());
-            i++;
-        }
-        i = 0;
-        while(i < 2)
-        {
-            String[] cv = dealt.get(i).split(" ");
-            this.cards.add(cv[0]);
-            values.add(Integer.parseInt(cv[1]));
-            i++;
-        }
-        Debugger.emit(debug, "\nDealer has:");
-        Debugger.emit(debug, String.format("[**][%s]", this.cards.get(1)));
-        return new String[] { dealt.get(2), dealt.get(3) };
     }
     
     /**
@@ -116,13 +54,8 @@ public class Player implements Actor
     */
     public boolean hasBlackjack()
     {
-        boolean blackjack = false;
-        if(calcTotal() == 21)
-        {
-            Debugger.emit(debug, "Dealer has Blackjack!");
-            blackjack = true;
-        }
-        return blackjack;
+        Debugger.emit(debug, "Player has Blackjack!");
+        return super.hasBlackjack();
     }
     
     /**
@@ -131,13 +64,8 @@ public class Player implements Actor
     */
     public boolean isBust()
     {
-        boolean bust = false;
-        if(calcTotal() > 21)
-        {
-            Debugger.emit(debug, "Dealer is bust!");
-            bust = true;
-        }
-        return bust;
+        Debugger.emit(debug, "Player is bust!");
+        return super.isBust();
     }
     
     /**
@@ -146,16 +74,8 @@ public class Player implements Actor
     */
     public int showCards()
     {
-        index = 0;
-        pos = 225;
-        String cards = "";
-        for(int i = 0; i < this.cards.size(); i++)
-        {
-            cards += String.format("[%s]", this.cards.get(i));
-        }
         Debugger.emit(debug, "\nPlayer has:");
-        Debugger.emit(debug, String.format("%s --> %d", cards, calcTotal())); 
-        return calcTotal();
+        return super.showCards();
     }
     
     /**

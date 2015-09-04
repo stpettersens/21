@@ -10,15 +10,8 @@ import java.util.List;
 import java.util.ArrayList;
 import java.util.Collections;
 
-public class Dealer implements Actor
+public class Dealer extends Actor
 {
-    private boolean debug;
-    private int index;
-    private int pos;
-    private List<String> cards;
-    private List<Integer> values;
-    private Cards gameCards;
-
     /**
      * Dealer implements the dealer for Blackjack.
      * @param debug Enable debug messages?
@@ -26,35 +19,8 @@ public class Dealer implements Actor
     */
     public Dealer(boolean debug, Cards gameCards)
     {
-        this.debug = debug;
-        index = 0;
-        pos = 225;
-        cards = new ArrayList<String>();
-        values = new ArrayList<Integer>();
-        this.gameCards = gameCards;
+        super(debug, gameCards);
     }
-    
-    /**
-     * Calculate the total value of Dealer's held cards.
-     * @return Total value of dealer's cards.
-    */
-    public int calcTotal()
-    {
-        Collections.sort(values);
-        int total = 0;
-        for(int i = 0; i < values.size(); i++)
-        {
-            int v = values.get(i);
-            if(v == 1)
-            {
-                if((total + 11) <= 21) v = 11;
-                else if((total + 11) > 21) v = 1;
-            }
-            total += v;    
-        }
-        return total;
-    }
-    
 
     /**
      * Dealer hits.
@@ -63,20 +29,21 @@ public class Dealer implements Actor
     */
     private Card hit(Cards cards)
     {
-        index++;
-        pos = 90;
         String card = cards.draw();
         this.cards.add(card);
         values.add(cards.getValue());
+        index++;
+        pos = 90;
         Debugger.emit(debug, "Dealer hits.");
         Debugger.emit(debug, "Dealer gets " + card);
+        Debugger.emit(debug, String.format("Dealer has %d", calcTotal()));
         return new Card(cards.getImage(card), pos, 10);
     }
     
     /**
      * Dealer stands.
     */
-    private void stand()
+    protected void stand()
     {
         Debugger.emit(debug, "Dealer stands.");
     }
@@ -128,13 +95,8 @@ public class Dealer implements Actor
     */
     public boolean hasBlackjack()
     {
-        boolean blackjack = false;
-        if(calcTotal() == 21)
-        {
-            Debugger.emit(debug, "Dealer has Blackjack!");
-            blackjack = true;
-        }
-        return blackjack;
+        Debugger.emit(debug, "Dealer has Blackjack!");
+        return super.hasBlackjack();
     }
     
     /**
@@ -143,13 +105,8 @@ public class Dealer implements Actor
     */
     public boolean isBust()
     {
-        boolean bust = false;
-        if(calcTotal() > 21)
-        {
-            Debugger.emit(debug, "Dealer is bust!");
-            bust = true;
-        }
-        return bust;
+        Debugger.emit(debug, "Dealer is bust!");
+        return super.isBust();
     }
     
     /**
@@ -200,16 +157,8 @@ public class Dealer implements Actor
     */
     public int showCards()
     {
-        index = 0;
-        pos = 225;
-        String cards = "";
-        for(int i = 0; i < this.cards.size(); i++)
-        {
-            cards += String.format("[%s]", this.cards.get(i));
-        }
         Debugger.emit(debug, "\nDealer has:");
-        Debugger.emit(debug, String.format("%s --> %d", cards, calcTotal())); 
-        return calcTotal();
+        return super.showCards();
     }
     
     /**
