@@ -53,6 +53,15 @@ public class Blackjack extends JPanel
         int width = getWidth();
         int height = getHeight();
         super.paint(g);
+        dealer_pile.draw(g);
+        for(int i = 0; i < dealer_cards.size(); i++)
+        {
+            dealer_cards.get(i).draw(g);
+        }
+        for(int i = 0; i < player_cards.size(); i++)
+        {
+            player_cards.get(i).draw(g);
+        }
     }
     
     public static void main(String[] args)

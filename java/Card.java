@@ -6,19 +6,22 @@
  * Java Swing/AWT implementation.
 */
 
+import java.awt.Graphics;
+import java.awt.Image;
+
 public class Card
 {
-    private String image;
+    private Image card;
     private int posX;
     private int posY;
 
     /**
      * Card implements a single playing card.
     */
-    public Card(String card, int posX, int posY)
+    public Card(Image card, int posX, int posY)
     {
         // initialise instance variables
-        image = card;
+        this.card = card;
         this.posX = posX;
         this.posY = posY;
     }
@@ -46,8 +49,8 @@ public class Card
     /**
      * Draw the card.
     */
-    public void draw()
+    public void draw(Graphics g)
     {
-        // TODO
+        g.drawImage(card, posX, posY, null);
     }
 }

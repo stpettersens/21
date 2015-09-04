@@ -1,6 +1,6 @@
 #BlueJ class context
 comment0.params=card\ posX\ posY
-comment0.target=Card(java.lang.String,\ int,\ int)
+comment0.target=Card(java.awt.Image,\ int,\ int)
 comment0.text=\r\n\ Card\ implements\ a\ single\ playing\ card.\r\n
 comment1.params=posX\ posY
 comment1.target=void\ setXY(int,\ int)
@@ -8,7 +8,7 @@ comment1.text=\r\n\ Set\ X,\ Y\ position\ for\ card.\r\n\ @param\ posX\ X\ posit
 comment2.params=
 comment2.target=int[]\ getXY()
 comment2.text=\r\n\ Get\ X,\ Y\ positionof\ card\ as\ int[].\r\n\ @return\ X,\ Y\ co-ordinates\ of\ card.\r\n
-comment3.params=
-comment3.target=void\ draw()
+comment3.params=g
+comment3.target=void\ draw(java.awt.Graphics)
 comment3.text=\r\n\ Draw\ the\ card.\r\n
 numComments=4
