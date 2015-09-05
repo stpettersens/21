@@ -95,7 +95,10 @@ public class Dealer extends Actor
     */
     public boolean hasBlackjack()
     {
-        Debugger.emit(debug, "Dealer has Blackjack!");
+        if(super.hasBlackjack())
+        {
+            Debugger.emit(debug, "Dealer has Blackjack!");
+        }
         return super.hasBlackjack();
     }
     
@@ -105,7 +108,10 @@ public class Dealer extends Actor
     */
     public boolean isBust()
     {
-        Debugger.emit(debug, "Dealer is bust!");
+        if(super.isBust())
+        {
+            Debugger.emit(debug, "Dealer is bust!");
+        }
         return super.isBust();
     }
     

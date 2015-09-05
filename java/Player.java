@@ -26,7 +26,7 @@ public class Player extends Actor
      * @param cards Game cards.
      * @return Player's drawn card.
     */
-    private Card hit(Cards cards)
+    public Card hit(Cards cards)
     {
         String card = cards.draw();
         this.cards.add(card);
@@ -54,7 +54,10 @@ public class Player extends Actor
     */
     public boolean hasBlackjack()
     {
-        Debugger.emit(debug, "Player has Blackjack!");
+        if(super.hasBlackjack())
+        {
+            Debugger.emit(debug, "Player has Blackjack!");
+        }
         return super.hasBlackjack();
     }
     
@@ -64,7 +67,10 @@ public class Player extends Actor
     */
     public boolean isBust()
     {
-        Debugger.emit(debug, "Player is bust!");
+        if(super.isBust())
+        {
+            Debugger.emit(debug, "Player is bust!");
+        }
         return super.isBust();
     }
     
