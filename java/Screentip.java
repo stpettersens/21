@@ -10,7 +10,7 @@ import java.awt.Graphics;
 import java.awt.Color;
 import java.awt.Font;
 
-public class Screentip implements UI
+public class Screentip extends UI
 {
     private int posX;
     private int posY;
@@ -58,8 +58,7 @@ public class Screentip implements UI
     */
     public void draw(Graphics g)
     {
-        g.setColor(Color.WHITE);
-        g.setFont(new Font("Verdana", Font.PLAIN, 12));
+        super.draw(g);
         g.drawString(title, posX, posY);
         g.drawString(msg, (posX - 45), (posY + 20));
     }

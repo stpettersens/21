@@ -7,9 +7,23 @@
 */
 
 import java.awt.Graphics;
+import java.awt.Color;
+import java.awt.Font;
 
-public interface UI
-{
-    void clear();
-    void draw(Graphics g);
+public class UI implements IUI
+{   
+    /**
+     *  Clear a UI item.
+    */
+    public void clear() {}
+    
+    /**
+     * Draw a UI item.
+     * @param g Graphics object.
+    */
+    public void draw(Graphics g)
+    {
+        g.setColor(Color.WHITE);
+        g.setFont(new Font("Verdana", Font.PLAIN, 12));
+    }
 }

@@ -10,7 +10,7 @@ import java.awt.Graphics;
 import java.awt.Color;
 import java.awt.Font;
 
-public class Score implements UI
+public class Score extends UI
 {
     private String score;
     private int posX;
@@ -64,8 +64,7 @@ public class Score implements UI
     */
     public void draw(Graphics g)
     {
-        g.setColor(Color.WHITE);
-        g.setFont(new Font("Verdana", Font.PLAIN, 12));
+        super.draw(g);
         g.drawString(score, posX, posY);
     }
 }
