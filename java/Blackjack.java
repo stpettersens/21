@@ -142,11 +142,11 @@ public class Blackjack extends JPanel implements ActionListener
         
         if(cards.getPlayed() >= CARD_LIMIT)
         {
-            instruction.emit("Dealer is shuffling cards... [Press Y key]");
+            instruction.emit("Dealer is shuffling cards...");
         }
         else
         {
-            instruction.emit("Play again? Yes [Y key] or N [N key]");
+            instruction.emit("Play again?");
         }
         
         if(cards.getPlayed() == 52)
@@ -170,7 +170,7 @@ public class Blackjack extends JPanel implements ActionListener
         if(playing)
         {
             d_score.emit("?");
-            instruction.emit("Hit [H key] or Stand [S key]?");
+            instruction.emit("Hit or Stand?");
         }
     }
     
