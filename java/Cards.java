@@ -176,6 +176,10 @@ public class Cards
        return played.size();
    }
    
+   /**
+    * Draw all cards from the deck.
+    * @return All cards from deck.
+   */
    public List<String> drawAll()
    {
        index = 0;

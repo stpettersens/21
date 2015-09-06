@@ -28,4 +28,5 @@ comment8.target=int\ getPlayed()
 comment8.text=\n\ Get\ number\ of\ played\ cards.\n\ @return\ Number\ of\ cards\ played.\n
 comment9.params=
 comment9.target=java.util.List\ drawAll()
+comment9.text=\n\ Draw\ all\ cards\ from\ the\ deck.\n\ @return\ All\ cards\ from\ deck.\n
 numComments=10
