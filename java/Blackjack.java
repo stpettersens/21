@@ -10,14 +10,15 @@ import java.util.List;
 import java.util.ArrayList;
 import javax.swing.JFrame;
 import javax.swing.JPanel;
+import javax.swing.JButton;
 import javax.swing.ImageIcon;
 import java.awt.Graphics;
 import java.awt.Color;
 import java.awt.BorderLayout;
-import java.awt.event.KeyEvent;
-import java.awt.event.KeyListener;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 
-public class Blackjack extends JPanel implements KeyListener
+public class Blackjack extends JPanel implements ActionListener
 {
     private boolean ai;
     private boolean playing;
@@ -35,7 +36,8 @@ public class Blackjack extends JPanel implements KeyListener
     private Player player;
     private Dealer dealer;
     private SoundEffects soundEffects;
-    private boolean loaded;
+    private static JButton hit;
+    private static JButton stand;
     
     private static final int SCREEN_WIDTH = 780;
     private static final int SCREEN_HEIGHT = 500;
@@ -241,6 +243,20 @@ public class Blackjack extends JPanel implements KeyListener
         // TODO.
     }
     
+    public void actionPerformed(ActionEvent e)
+    {
+        Object src = e.getSource();
+        if(src == hit)
+        {
+            if(playing) hit();
+            
+        }
+        else if(src == stand)
+        {
+            if(playing) stand();
+        }
+    }
+    
     /**
      * Draw elements to game window.
     */
@@ -250,7 +266,7 @@ public class Blackjack extends JPanel implements KeyListener
         int height = getHeight();
         super.paint(g);
         dealer_pile.draw(g);
-        screentip.draw(g);
+        //screentip.draw(g);
         instruction.draw(g);
         p_score.draw(g);
         d_score.draw(g);
@@ -261,26 +277,6 @@ public class Blackjack extends JPanel implements KeyListener
         }
     }
     
-    private void updateInput(KeyEvent e, String status)
-    {
-        System.out.println(status);
-    }
-    
-    public void keyTyped(KeyEvent e)
-    {
-        updateInput(e, "TYPED");
-    }
-    
-    public void keyPressed(KeyEvent e)
-    {
-        updateInput(e, "PRESSED");
-    }
-    
-    public void keyReleased(KeyEvent e)
-    {
-        updateInput(e, "RELEASED");
-    }
-    
     /**
      * Entry method for game.
      * @param args Command line arguments.
@@ -288,7 +284,19 @@ public class Blackjack extends JPanel implements KeyListener
     public static void main(String[] args)
     {
         Blackjack blackjack = new Blackjack();
+    
         JFrame app = new JFrame();
+        
+        hit = new JButton("Hit");
+        stand = new JButton("Stand");
+        
+        hit.setBounds(10,320,100,25);
+        stand.setBounds(10,350,100,25);
+        hit.addActionListener(blackjack);
+        stand.addActionListener(blackjack);
+        app.add(hit);
+        app.add(stand);
+        
         app.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         app.add(blackjack);
         app.setSize(SCREEN_WIDTH, SCREEN_HEIGHT);
