@@ -21,6 +21,15 @@ public class Dealer extends Actor
     {
         super(debug, gameCards, soundEffects);
     }
+    
+    /**
+     * Dealer implements the dealer for Blackjack (Applet constructor).
+     * @param debug Enable debug messages??
+     */
+    public Dealer(boolean debug, Cards gameCards)
+    {
+        this(debug, gameCards, null);
+    }
 
     /**
      * Dealer hits.
@@ -53,7 +62,7 @@ public class Dealer extends Actor
     */
     public void shuffle()
     {
-        soundEffects.play("shuffle");
+        playSoundEffect("shuffle");
         Debugger.emit(debug, "----------------------------------------------------");
         Debugger.emit(debug, "Dealer is shuffling cards...");
         Debugger.emit(debug, "----------------------------------------------------");
@@ -67,7 +76,7 @@ public class Dealer extends Actor
     */
     public String[] deal(Cards cards)
     {
-        soundEffects.play("deal");
+        playSoundEffect("deal");
         List<String> dealt = new ArrayList<String>();
         int i = 1;
         Debugger.emit(debug, "----------------------------------------------------");
@@ -191,7 +200,7 @@ public class Dealer extends Actor
     */
     public Card revealFirstCard(Cards cards)
     {
-        soundEffects.play("reveal");
+        playSoundEffect("reveal");
         return new Card(cards.getImage(this.cards.get(0)), 225, 10);
     }
 }

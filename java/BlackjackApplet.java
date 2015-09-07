@@ -33,7 +33,6 @@ public class BlackjackApplet extends JApplet implements ActionListener
     private Cards cards;
     private Player player;
     private Dealer dealer;
-    private SoundEffects soundEffects;
     private JButton hit;
     private JButton stand;
     
@@ -64,7 +63,6 @@ public class BlackjackApplet extends JApplet implements ActionListener
         p_score = new Score(DEBUG, 153, 315);
         d_score = new Score(DEBUG, 153, 25);
         cards = new Cards();
-        soundEffects = new SoundEffects();
         dealer_pile = new Card(cards.getImage("c"), 10, 10);
         hit = new JButton("Hit");
         stand = new JButton("Stand");
@@ -110,7 +108,7 @@ public class BlackjackApplet extends JApplet implements ActionListener
         dealer_cards = new ArrayList<Card>();
         
         player = new Player(DEBUG);
-        dealer = new Dealer(DEBUG, cards, soundEffects);
+        dealer = new Dealer(DEBUG, cards);
         
         if(cards.getPlayed() == 0 || cards.getPlayed() >= CARD_LIMIT)
         {
@@ -246,7 +244,6 @@ public class BlackjackApplet extends JApplet implements ActionListener
     {
         if(player_index < 6)
         {
-            //soundEffects.play("hit");
             player_cards.set(player_index, player.hit(cards));
             int[] xy = player_cards.get(player_index).getXY();
             Debugger.emit(DEBUG, String.format("Placed card at %d,%d", xy[0], xy[1]));

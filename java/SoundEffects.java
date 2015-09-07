@@ -12,7 +12,7 @@ import java.util.ArrayList;
 import java.io.IOException;
 import org.newdawn.easyogg.OggClip;
 
-public class SoundEffects
+public class SoundEffects implements ISoundEffects
 {
     private List<String> strEffects;
     private List<OggClip> effects;

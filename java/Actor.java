@@ -19,8 +19,8 @@ public class Actor implements IActor
     protected List<String> cards;
     protected List<Integer> values;
     protected Cards gameCards;
-    protected SoundEffects soundEffects;
-
+    protected SoundEffects soundEffects = null;
+    
     /**
      * Actor implements the common player/dealer for Blackjack.
      * @param debug Enable debug messages?
@@ -116,5 +116,17 @@ public class Actor implements IActor
         }
         Debugger.emit(debug, String.format("%s --> %d", cards, calcTotal())); 
         return calcTotal();
+    }
+    
+    /**
+     * Play sound effect.
+     * @param Name of sound effect to play.
+    */
+    protected void playSoundEffect(String effect)
+    {
+        if(soundEffects != null) 
+        {
+            soundEffects.play(effect);
+        }
     }
 }

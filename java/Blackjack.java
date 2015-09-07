@@ -212,7 +212,7 @@ public class Blackjack extends JPanel implements ActionListener
     */
     private void hit()
     {
-        if(player_index <= 5)
+        if(player_index < 6)
         {
             soundEffects.play("hit");
             player_cards.set(player_index, player.hit(cards));
