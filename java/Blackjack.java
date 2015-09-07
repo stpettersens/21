@@ -42,7 +42,7 @@ public class Blackjack extends JPanel implements ActionListener
     private static final int SCREEN_WIDTH = 780;
     private static final int SCREEN_HEIGHT = 500;
     private final int CARD_LIMIT = 42;
-    private final boolean DEBUG = true;
+    private final boolean DEBUG = false;
      
     /**
      * Blackjack implements the game itself.
@@ -68,6 +68,8 @@ public class Blackjack extends JPanel implements ActionListener
     */
     public void newGame() 
     {
+        hit.setText("Hit");
+        stand.setVisible(true);
         playing = true;
         player_index = 2;
         player_cards = new ArrayList<Card>();
@@ -103,6 +105,8 @@ public class Blackjack extends JPanel implements ActionListener
     */
     private void showCards()
     {
+        hit.setText("Play");
+        stand.setVisible(false);
         playing = false;
         dealer_cards.set(0, dealer.revealFirstCard(cards));
         int ds = dealer.showCards();
@@ -172,6 +176,7 @@ public class Blackjack extends JPanel implements ActionListener
             d_score.emit("?");
             instruction.emit("Hit or Stand?");
         }
+        repaint();
     }
     
     /**
@@ -214,7 +219,9 @@ public class Blackjack extends JPanel implements ActionListener
             int[] xy = player_cards.get(player_index).getXY();
             Debugger.emit(DEBUG, String.format("Placed card at %d,%d", xy[0], xy[1]));
             player_index++;
+            repaint();
         }
+        else stand();
     }
     
     /**
@@ -233,14 +240,7 @@ public class Blackjack extends JPanel implements ActionListener
             Debugger.emit(DEBUG, dealer_index);
         }
         showCards();
-    }
-    
-    /**
-     * Bring up project's repository on GitHub.
-    */
-    private void viewGitHubRepo()
-    {
-        // TODO.
+        repaint();
     }
     
     public void actionPerformed(ActionEvent e)
@@ -249,12 +249,14 @@ public class Blackjack extends JPanel implements ActionListener
         if(src == hit)
         {
             if(playing) hit();
+            else newGame();
             
         }
         else if(src == stand)
         {
-            if(playing) stand();
+            if(playing) stand();      
         }
+        update();
     }
     
     /**
@@ -266,7 +268,7 @@ public class Blackjack extends JPanel implements ActionListener
         int height = getHeight();
         super.paint(g);
         dealer_pile.draw(g);
-        //screentip.draw(g);
+        screentip.draw(g);
         instruction.draw(g);
         p_score.draw(g);
         d_score.draw(g);

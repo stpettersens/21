@@ -9,6 +9,7 @@
 import java.util.List;
 import java.util.ArrayList;
 import java.util.Collections;
+import java.util.Comparator;
 
 public class Actor implements IActor
 {
@@ -49,7 +50,8 @@ public class Actor implements IActor
     */
     public int calcTotal()
     {
-        Collections.sort(values);
+        Comparator cmp = Collections.reverseOrder();
+        Collections.sort(values, cmp);
         int total = 0;
         for(int i = 0; i < values.size(); i++)
         {
