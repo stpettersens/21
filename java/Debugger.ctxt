@@ -1,8 +1,8 @@
 #BlueJ class context
 comment0.params=debug\ message
 comment0.target=void\ emit(boolean,\ java.lang.String)
-comment0.text=\n\ Emit\ a\ debug\ message.\n\ @param\ debug\ Enable\ debug?\n\ @param\ message\ String\ to\ emit.\n
+comment0.text=\r\n\ Emit\ a\ debug\ message.\r\n\ @param\ debug\ Enable\ debug?\r\n\ @param\ message\ String\ to\ emit.\r\n
 comment1.params=debug\ integer
 comment1.target=void\ emit(boolean,\ int)
-comment1.text=\n\ Emit\ a\ debug\ message.\n\ @param\ debug\ Enable\ debug?\n\ @param\ integer\ Integer\ to\ emit.\n
+comment1.text=\r\n\ Emit\ a\ debug\ message.\r\n\ @param\ debug\ Enable\ debug?\r\n\ @param\ integer\ Integer\ to\ emit.\r\n
 numComments=2
