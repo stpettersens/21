@@ -8,13 +8,15 @@
 
 import java.util.List;
 import java.util.ArrayList;
-import java.awt.Graphics;
-import java.awt.Color;
 import javax.swing.JApplet;
 import javax.swing.JButton;
 import javax.swing.JRootPane;
+import java.awt.Graphics;
+import java.awt.Color;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 
-public class BlackjackApplet extends JApplet
+public class BlackjackApplet extends JApplet implements ActionListener
 {
     private boolean ai;
     private boolean playing;
@@ -64,16 +66,12 @@ public class BlackjackApplet extends JApplet
         cards = new Cards();
         soundEffects = new SoundEffects();
         dealer_pile = new Card(cards.getImage("c"), 10, 10);
-        
         hit = new JButton("Hit");
         stand = new JButton("Stand");
-        
-        //hit.setBounds(10,320,100,25);
-        //stand.setBounds(10,350,100,25);
-        
-        //this.add(hit);
-        //this.add(stand);
-        
+        hit.addActionListener(this);
+        stand.addActionListener(this);
+        this.add(hit);
+        this.add(stand);
         Debugger.emit(DEBUG, "Initialized Blackjack Applet (Java Swing/AWT).");
     }
 
@@ -112,7 +110,7 @@ public class BlackjackApplet extends JApplet
         dealer_cards = new ArrayList<Card>();
         
         player = new Player(DEBUG);
-        dealer = new Dealer(DEBUG, cards);
+        dealer = new Dealer(DEBUG, cards, soundEffects);
         
         if(cards.getPlayed() == 0 || cards.getPlayed() >= CARD_LIMIT)
         {
@@ -134,10 +132,170 @@ public class BlackjackApplet extends JApplet
         dealer_cards.add(new Card(cards.getImage("d"), 585, 10));
         update();
     }
+    
+    /**
+     * Show cards at end of game.
+    */
+    private void showCards()
+    {
+        playing = false;
+        dealer_cards.set(0, dealer.revealFirstCard(cards));
+        int ds = dealer.showCards();
+        int ps = player.showCards();
+        
+        if(ps == 21 && ds != 21)
+        {
+            screentip.emit("PLAYER BLACKJACK!", "Player has 21. That's a Blackjack!");
+        }
+        else if(ds == 21 && ps != 21)
+        {
+            screentip.emit("DEALER BLACKJACK!", "Dealer has 21. That's a Blackjack!");
+        }
+        else if((ps == ds) || (ps > 21 && ds > 21))
+        {
+            screentip.emit("PUSH", "Neither dealer nor player won.");
+        }
+        else if(ps <= 21 && ps > ds)
+        {
+            screentip.emit("PLAYER WINS", String.format("Player wins with %d. Well done.", ps));
+        }
+        else if(ds <= 21 && ds > ps)
+        {
+            screentip.emit("DEALER WINS", String.format("Dealer wins with %d. Too bad.", ds));
+        }
+        else if(ps > 21 && ds <= 21)
+        {
+            screentip.emit("DEALER WINS", "Dealer wins. Player bust.");
+        }
+        else if(ds > 21 && ps <= 21)
+        {
+            screentip.emit("PLAYER WINS", "Player wins. Dealer bust.");
+        }
+        
+        d_score.emit(dealer.calcTotal());
+        Debugger.emit(DEBUG, String.format("Cards played %d", cards.getPlayed()));
+        
+        if(cards.getPlayed() >= CARD_LIMIT)
+        {
+            instruction.emit("Dealer is shuffling cards...");
+        }
+        else
+        {
+            instruction.emit("Play again? Press Hit or Stand.");
+        }
+        
+        if(cards.getPlayed() == 52)
+        {
+            dealer_pile = new Card(cards.getImage("d"), 10, 10);
+        }
+        repaint();
+    }
+    
+    /**
+     * Update logic.
+    */
+    private void update()
+    {
+        // Determine if a Blackjack or bust has occurred?
+        if(hasBlackjack() || isBust())
+        {
+            showCards();
+        }
+        p_score.emit(player.calcTotal());
+        
+        if(playing)
+        {
+            d_score.emit("?");
+            instruction.emit("Hit or Stand?");
+        }
+        repaint();
+    }
+    
+    /**
+     * Determine if a Blackjack has occurred.
+     * @return Has a Blackjack occurred?
+    */
+    private boolean hasBlackjack()
+    {
+        boolean blackjack = false;
+        if(player.hasBlackjack() || dealer.hasBlackjack())
+        {
+            blackjack = true;
+        }
+        return blackjack;
+    }
+    
+    /**
+     * Determine if a bust has occurred.
+     * @return Has a bust occurred?
+    */
+    private boolean isBust()
+    {
+        boolean bust = false;
+        if(player.isBust() || dealer.isBust())
+        {
+            bust = true;
+        }
+        return bust;
+    }
+    
+    /**
+     * Take a hit.
+    */
+    private void hit()
+    {
+        if(player_index < 6)
+        {
+            //soundEffects.play("hit");
+            player_cards.set(player_index, player.hit(cards));
+            int[] xy = player_cards.get(player_index).getXY();
+            Debugger.emit(DEBUG, String.format("Placed card at %d,%d", xy[0], xy[1]));
+            player_index++;
+            repaint();
+        }
+    }
+   
+    /**
+     * Take a stand.
+    */
+    private void stand() 
+    {
+        player.stand();
+        List<Card> received = dealer.respond(cards);
+        for(int i = 0; i < received.size(); i++)
+        {
+            int[] xy = dealer_cards.get(dealer_index).getXY();
+            dealer_cards.set(dealer_index, received.get(i));
+            dealer_cards.get(dealer_index).setXY(xy[0], xy[1]);
+            Debugger.emit(DEBUG, String.format("Placed card at %d,%d", xy[0], xy[1]));
+            Debugger.emit(DEBUG, dealer_index);
+            dealer_index++;
+        }
+        showCards();
+        repaint();
+    }
+    
+    /**
+     * Event handler for hit or stand buttons.
+    */
+    public void actionPerformed(ActionEvent e)
+    {
+        Object src = e.getSource();
+        if(src == hit)
+        {
+            if(playing) hit();
+            else newGame();
+        }
+        else if(src == stand)
+        {
+            if(playing) stand();
+            else newGame();
+        }
+        update();
+    }
 
     /**
      * Paint method for applet.
-     * 
      * @param  g   the Graphics object for this applet
      */
     public void paint(Graphics g)
@@ -154,28 +312,12 @@ public class BlackjackApplet extends JApplet
             dealer_cards.get(i).draw(g);
             player_cards.get(i).draw(g);
         }
+        hit.setLocation(10, 320);
+        hit.setSize(100, 25);
+        stand.setLocation(10, 350);
+        stand.setSize(100, 25);
     }
     
-    /**
-     * Update logic.
-    */
-   private void update()
-   {
-       // Determine if a Blackjack or bust has occurred?
-       /*if(hasBlackjack() || isBust())
-       {
-           showCards();
-       }*/
-       p_score.emit(player.calcTotal());
-       
-       if(playing)
-       {
-           d_score.emit("?");
-           instruction.emit("Hit or Stand?");
-        }
-        repaint();
-    }
-
     /**
      * Called by the browser or applet viewer to inform this JApplet that it
      * is being reclaimed and that it should destroy any resources that it
@@ -215,9 +357,7 @@ public class BlackjackApplet extends JApplet
     {
         // provide parameter information about the applet
         String paramInfo[][] = {
-                 {"firstParameter",    "1-10",    "description of first parameter"},
-                 {"status", "boolean", "description of second parameter"},
-                 {"images",   "url",     "description of third parameter"}
+                 {"ai",    "boolean",    "false"}
         };
         return paramInfo;
     }

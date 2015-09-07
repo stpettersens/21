@@ -58,6 +58,10 @@ public class Screentip extends UI
     */
     public void draw(Graphics g)
     {
+        if(title == null || msg == null) 
+        {
+            clear();
+        }
         super.draw(g);
         g.drawString(title, posX, posY);
         g.drawString(msg, (posX - 45), (posY + 20));

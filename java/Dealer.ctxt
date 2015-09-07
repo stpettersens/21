@@ -1,6 +1,6 @@
 #BlueJ class context
-comment0.params=debug\ gameCards
-comment0.target=Dealer(boolean,\ Cards)
+comment0.params=debug\ gameCards\ soundEffects
+comment0.target=Dealer(boolean,\ Cards,\ SoundEffects)
 comment0.text=\r\n\ Dealer\ implements\ the\ dealer\ for\ Blackjack.\r\n\ @param\ debug\ Enable\ debug\ messages?\r\n\ @param\ gameCards\ Game\ cards.\r\n
 comment1.params=cards
 comment1.target=Card\ hit(Cards)

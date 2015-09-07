@@ -19,13 +19,14 @@ public class Actor implements IActor
     protected List<String> cards;
     protected List<Integer> values;
     protected Cards gameCards;
+    protected SoundEffects soundEffects;
 
     /**
      * Actor implements the common player/dealer for Blackjack.
      * @param debug Enable debug messages?
      * @param gameCards Game cards.
     */
-    public Actor(boolean debug, Cards gameCards)
+    public Actor(boolean debug, Cards gameCards, SoundEffects soundEffects)
     {
         this.debug = debug;
         index = 0;
@@ -33,6 +34,7 @@ public class Actor implements IActor
         cards = new ArrayList<String>();
         values = new ArrayList<Integer>();
         this.gameCards = gameCards;
+        this.soundEffects = soundEffects;
     }
     
     /**
@@ -41,7 +43,7 @@ public class Actor implements IActor
     */
     public Actor(boolean debug)
     {
-        this(debug, null);
+        this(debug, null, null);
     }
     
     /**

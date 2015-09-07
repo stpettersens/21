@@ -77,7 +77,7 @@ public class Blackjack extends JPanel implements ActionListener
         dealer_cards = new ArrayList<Card>();
         
         player = new Player(DEBUG);
-        dealer = new Dealer(DEBUG, cards);
+        dealer = new Dealer(DEBUG, cards, soundEffects);
         
         if(cards.getPlayed() == 0 || cards.getPlayed() >= CARD_LIMIT)
         {
@@ -212,7 +212,7 @@ public class Blackjack extends JPanel implements ActionListener
     */
     private void hit()
     {
-        if(player_index < 6)
+        if(player_index <= 5)
         {
             soundEffects.play("hit");
             player_cards.set(player_index, player.hit(cards));
@@ -221,7 +221,6 @@ public class Blackjack extends JPanel implements ActionListener
             player_index++;
             repaint();
         }
-        else stand();
     }
     
     /**
@@ -236,13 +235,17 @@ public class Blackjack extends JPanel implements ActionListener
             int[] xy = dealer_cards.get(dealer_index).getXY();
             dealer_cards.set(dealer_index, received.get(i));
             dealer_cards.get(dealer_index).setXY(xy[0], xy[1]);
-            Debugger.emit(DEBUG, String.format("Added image at %d,%d", xy[0], xy[1]));
+            Debugger.emit(DEBUG, String.format("Placed card at %d,%d", xy[0], xy[1]));
             Debugger.emit(DEBUG, dealer_index);
+            dealer_index++;
         }
         showCards();
         repaint();
     }
     
+    /**
+     * Event handler for hit or stand buttons.
+    */
     public void actionPerformed(ActionEvent e)
     {
         Object src = e.getSource();
@@ -261,6 +264,7 @@ public class Blackjack extends JPanel implements ActionListener
     
     /**
      * Draw elements to game window.
+     * @param g Graphics object.
     */
     public void paint(Graphics g)
     {

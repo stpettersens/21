@@ -17,9 +17,9 @@ public class Dealer extends Actor
      * @param debug Enable debug messages?
      * @param gameCards Game cards.
     */
-    public Dealer(boolean debug, Cards gameCards)
+    public Dealer(boolean debug, Cards gameCards, SoundEffects soundEffects)
     {
-        super(debug, gameCards);
+        super(debug, gameCards, soundEffects);
     }
 
     /**
@@ -53,6 +53,7 @@ public class Dealer extends Actor
     */
     public void shuffle()
     {
+        soundEffects.play("shuffle");
         Debugger.emit(debug, "----------------------------------------------------");
         Debugger.emit(debug, "Dealer is shuffling cards...");
         Debugger.emit(debug, "----------------------------------------------------");
@@ -66,6 +67,7 @@ public class Dealer extends Actor
     */
     public String[] deal(Cards cards)
     {
+        soundEffects.play("deal");
         List<String> dealt = new ArrayList<String>();
         int i = 1;
         Debugger.emit(debug, "----------------------------------------------------");
@@ -189,6 +191,7 @@ public class Dealer extends Actor
     */
     public Card revealFirstCard(Cards cards)
     {
+        soundEffects.play("reveal");
         return new Card(cards.getImage(this.cards.get(0)), 225, 10);
     }
 }

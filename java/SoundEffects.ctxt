@@ -1,8 +1,11 @@
 #BlueJ class context
 comment0.params=
 comment0.target=SoundEffects()
+comment0.text=\r\n\ SoundEffects\ implements\ playing\ game\ sound\ effects.\r\n
 comment1.params=
 comment1.target=boolean\ toggle()
+comment1.text=\r\n\ Toggle\ sound\ effects\ on/off.\r\n\ @return\ Are\ sound\ effects\ on?\r\n
 comment2.params=effect
 comment2.target=void\ play(java.lang.String)
+comment2.text=\r\n\ Play\ a\ sound\ effect.\r\n\ @param\ effect\ Name\ of\ sound\ effect\ to\ play.\r\n
 numComments=3
