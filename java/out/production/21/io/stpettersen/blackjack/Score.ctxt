@@ -1,0 +1,17 @@
+#BlueJ class context
+comment0.params=debug\ posX\ posY
+comment0.target=Score(boolean,\ int,\ int)
+comment0.text=\r\n\ Score\ implements\ a\ score\ or\ information\ box.\r\n\ @param\ debug\ Enable\ debug\ messages?\r\n\ @param\ posX\ X\ position\ for\ score\ box.\r\n\ @param\ posY\ Y\ position\ for\ score\ box.\r\n
+comment1.params=message
+comment1.target=void\ emit(java.lang.String)
+comment1.text=\r\n\ Emit\ a\ score\ or\ similar\ message.\r\n\ @param\ message\ Score\ or\ similar\ message\ to\ emit.\r\n
+comment2.params=score
+comment2.target=void\ emit(int)
+comment2.text=\r\n\ Emit\ a\ score\ or\ other\ integer\ value.\r\n\ @param\ score\ Score\ to\ emit.\r\n
+comment3.params=
+comment3.target=void\ clear()
+comment3.text=\r\n\ Clear\ the\ score\ box.\r\n
+comment4.params=g
+comment4.target=void\ draw(java.awt.Graphics)
+comment4.text=\r\n\ Draw\ the\ score\ box.\r\n\ @param\ g\ Graphics\ object.\r\n
+numComments=5

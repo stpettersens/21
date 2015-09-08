@@ -1,0 +1,26 @@
+#BlueJ class context
+comment0.params=debug\ gameCards\ soundEffects
+comment0.target=Actor(boolean,\ Cards,\ SoundEffects)
+comment0.text=\r\n\ Actor\ implements\ the\ common\ player/dealer\ for\ Blackjack.\r\n\ @param\ debug\ Enable\ debug\ messages?\r\n\ @param\ gameCards\ Game\ cards.\r\n
+comment1.params=debug
+comment1.target=Actor(boolean)
+comment1.text=\r\n\ Actor\ implements\ the\ common\ player/dealer\ for\ Blackjack.\r\n\ @param\ debug\ Enable\ debug\ messages?\r\n
+comment2.params=
+comment2.target=int\ calcTotal()
+comment2.text=\r\n\ Calculate\ the\ total\ value\ of\ actor's\ held\ cards.\r\n\ @return\ Total\ value\ of\ actor's\ cards.\r\n
+comment3.params=
+comment3.target=void\ stand()
+comment3.text=\r\n\ Actor\ stands.\r\n
+comment4.params=
+comment4.target=boolean\ hasBlackjack()
+comment4.text=\r\n\ Determine\ if\ actor\ has\ Blackjack.\r\n\ @return\ Does\ actor\ have\ Blackjack?\r\n
+comment5.params=
+comment5.target=boolean\ isBust()
+comment5.text=\r\n\ Determine\ if\ actor\ is\ bust.\r\n\ @return\ Is\ actor\ bust?\r\n
+comment6.params=
+comment6.target=int\ showCards()
+comment6.text=\r\n\ Show\ actor's\ cards.\r\n\ @return\ Total\ value\ of\ actor's\ cards.\r\n
+comment7.params=effect
+comment7.target=void\ playSoundEffect(java.lang.String)
+comment7.text=\r\n\ Play\ sound\ effect.\r\n\ @param\ Name\ of\ sound\ effect\ to\ play.\r\n
+numComments=8
