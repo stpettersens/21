@@ -7,12 +7,12 @@
  */
 
 package io.stpettersen.blackjack
+import java.util.{List => JList, ArrayList => JArrayList}
 import java.awt.Image
 import java.awt.image.BufferedImage
 import java.io.{File, IOException}
+import java.util
 import javax.imageio.ImageIO
-
-import scala.collection.mutable.MutableList
 
 /**
  * Card implements a collection of playing cards
@@ -22,28 +22,29 @@ class Cards {
 
   private var index: Int = -1
   private val deck_num: Int = 52
-  private var deck: MutableList[String] = MutableList()
-  private var played: MutableList[String] = MutableList()
-  private val ranks: List[String]
-  = List("A", "2", "3", "4", "5", "6", "7", "8", "9", "10", "J", "Q", "K")
-  private val suits: List[String] = List("h", "d", "c", "s")
-  private var str_images: MutableList[String] = MutableList("c", "d")
-  private var images: MutableList[Image] = MutableList()
+  private var deck: JList[String] = new JArrayList[String]()
+  private var played: JList[String] = new JArrayList[String]()
+  private val ranks: Array[String] = Array("A", "2", "3", "4", "5", "6", "7", "8", "9", "10", "J", "Q", "K")
+  private val suits: Array[String] = Array("h", "d", "c", "s")
+  private val str_images: JList[String] = new JArrayList[String]()
+  private val images: JList[Image] = new JArrayList[Image]()
 
+  str_images.add("c")
+  str_images.add("d")
   var i: Int = 0
-  for(i <- 0 to ranks.length) {
-    str_images += suits(0) + ranks(i)
-    str_images += suits(1) + ranks(i)
-    str_images += suits(2) + ranks(i)
-    str_images += suits(3) + ranks(i)
+  for(i <- 0 to ranks.length - 1) {
+    str_images.add(suits(0) + ranks(i))
+    str_images.add(suits(1) + ranks(i))
+    str_images.add(suits(2) + ranks(i))
+    str_images.add(suits(3) + ranks(i))
   }
 
   i = 0
-  for(i <- 0 to str_images.length) {
+  for(i <- 0 to str_images.size() - 1) {
     var img: BufferedImage = null
     try {
-      img = ImageIO.read(new File(String.format("graphics/%s.png", str_images(i))))
-      images += img
+      img = ImageIO.read(new File(String.format("graphics/%s.png", str_images.get(i))))
+      images.add(img)
     }
     catch {
       case ioe: IOException => println(ioe)
@@ -62,7 +63,7 @@ class Cards {
     }
     val pos: Int = str_images.indexOf(pattern)
     var img: Image = null
-    if(pos != -1) img = images(pos)
+    if(pos != -1) img = images.get(pos)
     img
   }
 
@@ -95,16 +96,16 @@ class Cards {
   /**
    * Shuffle cards.
    */
-  def shuffle: Unit = {
+  def shuffle(): Unit = {
     index = -1
-    deck = MutableList()
-    played = MutableList()
+    deck = new JArrayList[String]()
+    played = new JArrayList[String]()
     var shuffling = true
     while(shuffling) {
       val card: String = getCard
       if(!deck.contains(card)) {
-        deck += card
-        if(deck.length == deck_num)
+        deck.add(card)
+        if(deck.size() == deck_num)
           shuffling = false
       }
     }
@@ -114,12 +115,12 @@ class Cards {
    * Draw a card.
    * @return Drawn card.
    */
-  def draw(): String = {
-    if(played.length == deck_num || index == -1)
+  def draw: String = {
+    if(played.size() == deck_num || index == -1)
       index = 0
 
-    val card: String = deck(index).replace(" ", "")
-    played += card
+    val card: String = deck.get(index).replace(" ", "")
+    played.add(card)
     card
   }
 
@@ -128,7 +129,7 @@ class Cards {
    * @return Card's value.
    */
   def getValue: Int = {
-    val rs: Array[String] = deck(index).split(" ")
+    val rs: Array[String] = deck.get(index).split(" ")
     index += 1
     var value: Int = 0
     if(rs(0).equals("A"))
@@ -143,21 +144,21 @@ class Cards {
    * Get number of played cards.
    * @return Number of cards played.
    */
-  def getPlayed(): Int = {
-    played.length
+  def getPlayed: Int = {
+    played.size()
   }
 
   /**
    * Draw all cards from the deck.
    * @return All cards from deck.
    */
-  def drawAll(): MutableList[String] = {
+  def drawAll: JList[String] = {
     index = 0
-    var draws: MutableList[String] = MutableList()
+    val draws: JList[String] = new JArrayList[String]()
     var i: Int = 0
     for(i <- 0 to deck_num) {
-      draws += draw()
-      index++
+      draws.add(draw)
+      index += 1
     }
     index = -1
     draws

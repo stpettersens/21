@@ -16,6 +16,7 @@ public class Dealer extends Actor
      * Dealer implements the dealer for Blackjack.
      * @param debug Enable debug messages?
      * @param gameCards Game cards.
+     * @param soundEffects Sound effects.
     */
     public Dealer(boolean debug, Cards gameCards, SoundEffects soundEffects)
     {
@@ -114,7 +115,7 @@ public class Dealer extends Actor
     }
     
     /**
-     * Determine if Dealer is bust.
+     * Determine if dealer is bust.
      * @return Is dealer bust?
     */
     public boolean isBust()
@@ -169,7 +170,7 @@ public class Dealer extends Actor
     }
     
     /**
-     * Show Dealer's cards.
+     * Show dealer's cards.
      * @return Total value of dealer's cards.
     */
     public int showCards()
@@ -189,7 +190,6 @@ public class Dealer extends Actor
         pos += 90;
         Card cardB = new Card(cards.getImage(this.cards.get(1)), pos, 10);
         index += 2;
-      
         return new Card[] { cardA, cardB };
     }
     

@@ -7,7 +7,7 @@
  */
 
 package io.stpettersen.blackjack
-import java.awt.{Graphics,Color,Font}
+import java.awt.Graphics
 
 /**
  * Score implements a score or information box.
@@ -20,14 +20,14 @@ class Score(debug: Boolean, x: Int, y: Int) extends UI {
   private var score: String = ""
   private val posX: Int = x
   private val posY: Int = y
-  Debugger.emit(debug, String.format("Creared score counter at %d,%d", posX, posY))
+  Debugger.emit(debug, s"Created score counter at $posX,$posY")
 
   /**
    * Emit a score or similar message.
    * @param message Score or similar message to emit.
    */
   def emit(message: String): Unit = {
-    clear()
+    clear
     score = message
   }
 

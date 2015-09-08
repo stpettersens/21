@@ -7,7 +7,7 @@
  */
 
 package io.stpettersen.blackjack
-import scala.collection.mutable.MutableList
+import java.util.{Comparator, Collections, List => JList, ArrayList => JArrayList}
 
 /**
  * Actor implements the common player/dealer for Blackjack.
@@ -19,8 +19,8 @@ class Actor(debug: Boolean, gameCards: Cards, soundEffects: SoundEffects) extend
   protected var this.debug: Boolean = debug
   protected var index: Int = 0
   protected var pos: Int = 225
-  protected var cards: MutableList[String] = MutableList()
-  protected var values: MutableList[Int] = MutableList()
+  protected var cards: JList[String] = new JArrayList[String]()
+  protected var values: JList[Int] = new JArrayList[Int]()
   protected var this.gameCards: Cards = gameCards
   protected var this.soundEffects: SoundEffects = soundEffects
 
@@ -30,12 +30,13 @@ class Actor(debug: Boolean, gameCards: Cards, soundEffects: SoundEffects) extend
    * Calculate the total value of actor's held cards.
    * @return Total value of actor's cards.
    */
-  def calcTotal(): Int = {
-    values.sortWith(_ < _)
+  def calcTotal: Int = {
+    val cmp: Comparator[Int] = Collections.reverseOrder()
+    Collections.sort(values, cmp)
     var total: Int = 0
     var i: Int = 0
-    for(i <- 0 to values.length) {
-      var v: Int = values(i)
+    for(i <- 0 to values.size() - 1) {
+      var v: Int = values.get(i)
       if(v == 1) {
         if((total + 11) <= 21) v = 11
         else if((total + 11) > 21) v = 1
@@ -48,7 +49,7 @@ class Actor(debug: Boolean, gameCards: Cards, soundEffects: SoundEffects) extend
   /**
    * Actor stands.
    */
-  protected def stand: Unit = {}
+  protected def stand(): Unit = {}
 
   /**
    * Determine if actor has Blackjack.
@@ -56,7 +57,7 @@ class Actor(debug: Boolean, gameCards: Cards, soundEffects: SoundEffects) extend
    */
   def hasBlackjack: Boolean = {
     var blackjack: Boolean = false
-    if(calcTotal() == 21) {
+    if(calcTotal == 21) {
       blackjack = true
     }
     blackjack
@@ -68,7 +69,7 @@ class Actor(debug: Boolean, gameCards: Cards, soundEffects: SoundEffects) extend
    */
   def isBust: Boolean = {
     var bust: Boolean = false
-    if(calcTotal() > 21) {
+    if(calcTotal > 21) {
       bust = true
     }
     bust
@@ -78,16 +79,16 @@ class Actor(debug: Boolean, gameCards: Cards, soundEffects: SoundEffects) extend
    * Show actor's cards
    * @return Total value of actor's cards.
    */
-  def showCards(): Int = {
+  def showCards: Int = {
     index = 0
     pos = 225
     var cards: String = ""
     var i: Int = 0
-    for(i <- 0 to this.cards.length) {
-      cards += String.format("[%s]", this.cards(i))
+    for(i <- 0 to this.cards.size()) {
+      cards += String.format("[%s]", this.cards.get(i))
     }
-    Debugger.emit(debug, String.format("%s --> %d", cards, calcTotal()))
-    calcTotal()
+    //Debugger.emit(debug, String.format("%s --> %d", cards, calcTotal))
+    calcTotal
   }
 
   /**

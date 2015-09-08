@@ -7,7 +7,7 @@
 */
 
 package io.stpettersen.blackjack
-import scala.collection.mutable.MutableList
+import java.util.{List => JList, ArrayList => JArrayList}
 import java.io.IOException
 import org.newdawn.easyogg.OggClip
 
@@ -16,15 +16,13 @@ import org.newdawn.easyogg.OggClip
  */
 class SoundEffects extends ISoundEffects {
 
-  private val strEffects: List[String] = List("deal", "shuffle", "hit", "reveal")
-  private var effects: MutableList[OggClip] = MutableList()
+  private val strEffects: Array[String] = Array("deal", "shuffle", "hit", "reveal")
+  private val effects: JList[OggClip] = new JArrayList[OggClip]()
   private var soundOn: Boolean = true
-  private val s: String = "sounds/"
-
-  var i: Int = 0;
-  for(i <- 0 to strEffects.length) {
+  var i: Int = 0
+  for(i <- 0 to strEffects.length - 1) {
     try {
-      effects += new OggClip(String.format("%s.%s.ogg", s, strEffects(i)))
+      effects.add((null)) //new OggClip(String.format("sounds/%s.ogg", strEffects(i))))
     }
     catch {
       case ioe: IOException => ioe.printStackTrace()
@@ -47,7 +45,7 @@ class SoundEffects extends ISoundEffects {
    */
   def play(effect: String): Unit = {
     if(soundOn) {
-      effects(strEffects.indexOf(effect)).play()
+      //effects.get(strEffects.indexOf(effect)).play()
     }
   }
 }

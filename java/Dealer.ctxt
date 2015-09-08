@@ -1,7 +1,7 @@
 #BlueJ class context
 comment0.params=debug\ gameCards\ soundEffects
 comment0.target=Dealer(boolean,\ Cards,\ SoundEffects)
-comment0.text=\r\n\ Dealer\ implements\ the\ dealer\ for\ Blackjack.\r\n\ @param\ debug\ Enable\ debug\ messages?\r\n\ @param\ gameCards\ Game\ cards.\r\n
+comment0.text=\r\n\ Dealer\ implements\ the\ dealer\ for\ Blackjack.\r\n\ @param\ debug\ Enable\ debug\ messages?\r\n\ @param\ gameCards\ Game\ cards.\r\n\ @param\ soundEffects\ Sound\ effects.\r\n
 comment1.params=debug\ gameCards
 comment1.target=Dealer(boolean,\ Cards)
 comment1.text=\r\n\ Dealer\ implements\ the\ dealer\ for\ Blackjack\ (Applet\ constructor).\r\n\ @param\ debug\ Enable\ debug\ messages??\r\n
@@ -28,11 +28,11 @@ comment6.target=boolean\ hasBlackjack()
 comment6.text=\r\n\ Determine\ if\ dealer\ has\ Blackjack.\r\n\ @return\ Does\ dealer\ have\ Blackjack?\r\n
 comment7.params=
 comment7.target=boolean\ isBust()
-comment7.text=\r\n\ Determine\ if\ Dealer\ is\ bust.\r\n\ @return\ Is\ dealer\ bust?\r\n
+comment7.text=\r\n\ Determine\ if\ dealer\ is\ bust.\r\n\ @return\ Is\ dealer\ bust?\r\n
 comment8.params=cards
 comment8.target=java.util.List\ respond(Cards)
 comment8.text=\r\n\ Dealer\ responds\ to\ player\ action\ (e.g.\ a\ hit\ or\ stand).\r\n\ @param\ cards\ Game\ cards.\r\n\ @return\ Cards\ returned.\r\n
 comment9.params=
 comment9.target=int\ showCards()
-comment9.text=\r\n\ Show\ Dealer's\ cards.\r\n\ @return\ Total\ value\ of\ dealer's\ cards.\r\n
+comment9.text=\r\n\ Show\ dealer's\ cards.\r\n\ @return\ Total\ value\ of\ dealer's\ cards.\r\n
 numComments=12

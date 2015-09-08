@@ -245,6 +245,7 @@ public class Blackjack extends JPanel implements ActionListener
     
     /**
      * Event handler for hit or stand buttons.
+     * @param e ActionEvent
     */
     public void actionPerformed(ActionEvent e)
     {

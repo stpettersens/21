@@ -75,7 +75,7 @@ public class Player extends Actor
     }
     
     /**
-     * Show Player's cards.
+     * Show player's cards.
      * @return Total value of player's cards.
     */
     public int showCards()

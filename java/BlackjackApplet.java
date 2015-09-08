@@ -39,7 +39,7 @@ public class BlackjackApplet extends JApplet implements ActionListener
     private final int SCREEN_WIDTH = 780;
     private final int SCREEN_HEIGHT = 500;
     private final int CARD_LIMIT = 42;
-    private final boolean DEBUG = true;
+    private final boolean DEBUG = false;
 
     /**
      * Called by the browser or applet viewer to inform this JApplet that it
@@ -97,10 +97,11 @@ public class BlackjackApplet extends JApplet implements ActionListener
         // is replaced by another page or before JApplet is destroyed 
     }
     
+    /**
+     * Start a new game.
+     */
     private void newGame()
     {
-        hit.setText("Hit");
-        stand.setVisible(true);
         playing = true;
         player_index = 2;
         player_cards = new ArrayList<Card>();
@@ -274,6 +275,7 @@ public class BlackjackApplet extends JApplet implements ActionListener
     
     /**
      * Event handler for hit or stand buttons.
+     * @param e ActionEvent.
     */
     public void actionPerformed(ActionEvent e)
     {
@@ -293,7 +295,7 @@ public class BlackjackApplet extends JApplet implements ActionListener
 
     /**
      * Paint method for applet.
-     * @param  g   the Graphics object for this applet
+     * @param g Graphics object for this applet
      */
     public void paint(Graphics g)
     {
@@ -325,13 +327,12 @@ public class BlackjackApplet extends JApplet implements ActionListener
         // provide code to be run when JApplet is about to be destroyed.
     }
 
-
     /**
      * Returns information about this applet. 
      * An applet should override this method to return a String containing 
      * information about the author, version, and copyright of the JApplet.
      *
-     * @return a String representation of information about this JApplet
+     * @return A String representation of information about this JApplet
      */
     public String getAppletInfo()
     {
@@ -339,16 +340,15 @@ public class BlackjackApplet extends JApplet implements ActionListener
         return "Blackjack\nCopyright 2015 Sam Saint-Pettersen";
     }
 
-
     /**
      * Returns parameter information about this JApplet. 
-     * Returns information about the parameters than are understood by this JApplet.
+     * Returns information about the parameters that are understood by this JApplet.
      * An applet should override this method to return an array of Strings 
      * describing these parameters. 
      * Each element of the array should be a set of three Strings containing 
      * the name, the type, and a description.
      *
-     * @return a String[] representation of parameter information about this JApplet
+     * @return A String[] representation of parameter information about this JApplet
      */
     public String[][] getParameterInfo()
     {
