@@ -55,6 +55,7 @@ class Blackjack extends JPanel with ActionListener {
   def newGame(): Unit = {
     btnHit.setText("Hit")
     btnStand.setVisible(true)
+    playing = true
     player_index = 2
     player_cards = new JArrayList[PlayingCard]()
     dealer_index = 2
