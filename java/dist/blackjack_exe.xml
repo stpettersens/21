@@ -1,0 +1,40 @@
+<launch4jConfig>
+  <dontWrapJar>false</dontWrapJar>
+  <headerType>gui</headerType>
+  <jar>Blackjack.jar</jar>
+  <outfile>blackjack.exe</outfile>
+  <errTitle>blackjack.exe</errTitle>
+  <cmdLine></cmdLine>
+  <chdir></chdir>
+  <priority>normal</priority>
+  <downloadUrl>http://java.com/download</downloadUrl>
+  <supportUrl>https://github.com/stpettersens/21</supportUrl>
+  <customProcName>true</customProcName>
+  <stayAlive>false</stayAlive>
+  <manifest></manifest>
+  <icon></icon>
+  <classPath>
+    <mainClass>io.stpettersen.blackjack.Blackjack</mainClass>
+    <cp>lib/easyogg.jar</cp>
+    <cp>lib/jogg-0.0.7.jar</cp>
+    <cp>lib/jorbis-0.0.15.jar</cp>
+  </classPath>
+  <jre>
+    <path></path>
+    <minVersion>1.7.0</minVersion>
+    <maxVersion></maxVersion>
+    <jdkPreference>preferJre</jdkPreference>
+  </jre>
+  <versionInfo>
+    <fileVersion>0.1.0.0</fileVersion>
+    <txtFileVersion>0.1.0.0</txtFileVersion>
+    <fileDescription>Player vs dealer Blackjack</fileDescription>
+    <copyright>(c) 2015 Sam Saint-Pettersen</copyright>
+    <productVersion>0.1.0.0</productVersion>
+    <txtProductVersion>0.1.0.0</txtProductVersion>
+    <productName>Blackjack</productName>
+    <companyName>Sam Saint-Pettersen</companyName>
+    <internalName>blackjack</internalName>
+    <originalFilename>blackjack.exe</originalFilename>
+  </versionInfo>
+</launch4jConfig>

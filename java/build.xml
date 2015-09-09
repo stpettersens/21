@@ -1,0 +1,117 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- Apache Ant buildfile to build Blackjack. -->
+<project name="Blackjack" default="build" basedir=".">
+    <description>Blackjack buildfile for Ant</description>
+
+    <!-- Targets. -->
+    <target name="build" depends="package" description="Build complete project"/>
+
+    <!-- Clean task. -->
+    <target name="clean" depends="init" description="Clean up any built files">
+        <delete dir="${build.dir}" includeemptydirs="true" quiet="true"/>
+        <delete file="${target.jar}" quiet="true"/>
+        <delete file="${target.cjar}" quiet="true"/>
+        <delete file="${dist.dir}/Blackjack.jar" quiet="true"/>
+        <delete file="${dist.dir}/blackjack.exe" quiet="true"/>
+    </target>
+
+    <!-- Initialize task. -->
+    <target name="init">
+        <!-- Variables for paths and files. -->
+        <property name="pkg.dir" location="${basedir}/src/io/stpettersen/blackjack"/>
+        <property name="src.dir" location="${basedir}"/>
+        <property name="lib.dir" location="${basedir}/lib"/>
+        <property name="build.dir" location="${basedir}/ant_build"/>
+        <property name="dist.dir" location="${basedir}/dist"/>
+        <property name="easyogg" location="${lib.dir}/easyogg.jar"/>
+        <property name="jogg" location="jogg-0.0.7.jar"/>
+        <property name="jobris" location="jorbis-0.0.15.jar"/>
+
+        <!-- Variables for target. -->
+        <property name="target.abs" value="Blackjack"/>
+        <property name="target.mf" location="${basedir}/Manifest.mf"/>
+        <property name="target.jar" location="${basedir}/${target.abs}.jar"/>
+        <property name="target.cjar" location="${target.abs}.jar"/>
+        <property name="cjar.mf" value="io.stpettersen.blackjack.Blackjack"/>
+        <property name="exe.mf" value="${dist.dir}/blackjack_exe.xml"/>
+
+        <!-- Add libraries used by project to classpath. -->
+        <path id="project.cp">
+            <pathelement location="${easyogg}"/>
+            <pathelement location="${jogg}"/>
+            <pathelement location="${jorbis}"/>
+        </path>
+
+        <!-- Print where this project will get One-Jar Ant task JAR from. -->
+        <echo message="Using One-Jar Ant task JAR => ${env.ONEJAR_TOOL}"/>
+
+        <!-- Scan folders for changes since last build and score status in variable. -->
+        <uptodate property="build.uptodate" targetfile="${build.dir}/build.done">
+            <srcfiles dir="${src.dir}" includes="*"/>
+        </uptodate>
+    </target>
+
+    <!-- Compile classes. -->
+    <target name="compile" description="Compile source code to classes" depends="init" 
+        unless="build.uptodate">
+        <echo message="Compiling Blackjack..."/>
+        <mkdir dir="${build.dir}"/>
+        <javac includeantruntime="false" classpath="${toString:project.cp}" 
+            srcdir="${src.dir}" destdir="${build.dir}"/>
+    </target>
+
+    <!-- Package classes into a JAR. -->
+    <target name="package" description="Package the classes into a JAR" depends="compile"
+        unless="build.uptodate">
+        <echo message="Packaging Blackjack (std. JAR)..."/>
+        <jar manifest="${target.mf}" destfile="${target.jar}">
+            <fileset dir="${build.dir}"/>
+        </jar>
+        <!-- Mark build as up-to-date. -->
+        <touch file="${build.dir}/build.done"/>
+    </target>
+
+    <!-- Create self-contained JAR. -->
+    <target name="cjar" description="Create self-contained JAR" depends="package">
+        <echo message="Packkaging Blackjack (self-contained JAR)..."/>
+        <fail unless="env.ONEJAR_TOOL" message="Missing ONEJAR_TOOL variable in OS environment variables."/>
+        <!-- Load One-Jar task -->
+        <taskdef resource="antlib.xml">
+            <classpath>
+                <pathelement location="${env.ONEJAR_TOOL}"/>
+            </classpath>
+        </taskdef>
+        <one-jar destfile="${target.cjar}">
+            <manifest>
+                <attribute name="One-Jar-Main-Class" value="${cjar.mf}"/>
+            </manifest>
+            <main jar="${target.jar}"/>
+            <lib>
+                <fileset dir="${lib.dir}">
+                    <exclude name=".dummy"/>
+                </fileset>
+            </lib>
+        </one-jar>
+        <uptodate property="buildcpkg.uptodate" targetfile="${build.dir}/buildcpkg.done">
+            <srcfiles dir="${src.dir}" includes="**"/>
+        </uptodate>
+        <!-- Mark that cpackage has been built. -->
+        <touch file="${build.dir}/buildcpkg.done"/>
+    </target>
+
+    <!-- Create Windows executable. -->
+    <target name="exe" description="Create Windows executable" depends="package"
+        unless="buildcpkg.uptodate">
+        <echo message="Generating Windows exectable..."/>
+        <copy file="${target.jar}" todir="${dist.dir}"/>
+        <condition property="l4j" value="launch4jc">
+            <os family="windows"/>
+        </condition>
+        <condition property="l4j" value="launch4j">
+            <os family="unix"/>
+        </condition>
+        <fail unless="l4j" message="Problem invoking launch4j program."/>
+        <exec executable="${l4j}"><arg value="${exe.mf}"/></exec>
+    </target>
+
+</project>

@@ -1,5 +1,9 @@
 doc/
 out/
+ant_build/
+dist/lib/
+dist/graphics/
+dist/sounds/
 *.class
 *.jar
-
+*.exe

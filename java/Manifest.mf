@@ -1,0 +1,2 @@
+Main-Class: io.stpettersen.blackjack.Blackjack
+Class-Path: lib/easyogg.jar lib/jogg-0.0.7.jar lib/jorbis-0.0.15.jar
