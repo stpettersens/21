@@ -197,7 +197,7 @@ public class BlackjackApplet extends JApplet implements ActionListener
     private void update()
     {
         // Determine if a Blackjack or bust has occurred?
-        if(hasBlackjack() || isBust())
+        if(hasBlackjack() || isBust() || player_index == 5)
         {
             showCards();
         }
