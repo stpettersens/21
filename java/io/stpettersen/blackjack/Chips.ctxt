@@ -1,0 +1,17 @@
+#BlueJ class context
+comment0.params=
+comment0.target=Chips()
+comment0.text=\r\n\ Chip\ represents\ a\ collection\ of\ betting\ chips.\r\n
+comment1.params=color
+comment1.target=int\ getChip(ChipColor)
+comment1.text=\r\n\ Get\ chip\ currency\ value\ from\ color.\r\n\ @param\ color\ Color\ of\ the\ chip.\r\n\ @return\ Chip\ value.\r\n
+comment2.params=balance
+comment2.target=void\ deal(int)
+comment2.text=\r\n\ Deal\ chips\ for\ a\ given\ betting\ balance.\r\n\ @param\ [number]\ balance\ Currency\ amount\ available\ to\ bet.\r\n
+comment3.params=color\ balance
+comment3.target=int[]\ draw(ChipColor,\ int)
+comment3.text=\r\n\ Draw\ a\ chip.\r\n\ @param\ color\ Color\ of\ chosen\ chip.\r\n\ @param\ balance\ Currency\ amount\ available\ to\ bet.\r\n\ @return\ Chosen\ color,\ new\ balance\ as\ String.\r\n
+comment4.params=
+comment4.target=int[]\ getNums()
+comment4.text=\r\n\ Get\ number\ of\ available\ chips.\r\n\ @return\ Numbers\ of\ each\ color\ chip.\r\n
+numComments=5

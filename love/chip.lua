@@ -4,7 +4,7 @@
 --
 -- Powered by the LÖVE Game Engine
 
---- Chip class for Blacjack (currently unused).
+--- Chip class for Blackjack (currently unused).
 -- @copyright 2015 Sam Saint-Pettersen
 
 Chip = {}
@@ -24,7 +24,7 @@ end
 -- @param [number] posY Y position for chip.
 function Chip.create(chip, posX, posY)
 	local self = setmetatable({}, Chip)
-	self.src = chip
+	self.chip = chip
 	self.image = love.graphics.newImage(chip)
 	self.posX = posX
 	self.posY = posY
@@ -49,7 +49,7 @@ end
 --- Get source for image.
 -- @return [string] Image source (path).
 function Chip:getImageSrc()
-	return self.src
+	return self.chip
 end
 
 --- Draw the chip.

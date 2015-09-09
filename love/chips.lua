@@ -22,7 +22,7 @@ function Chips.create()
 	local self = setmetatable({}, Chips)
 	
 	self.colors = { 'white', 'red', 'blue', 'green', 'black' }
-	self.dollars = { 1, 5, 10, 25, 100 }
+	self.amounts = { 1, 5, 10, 25, 100 }
 
 	return self
 end
@@ -30,18 +30,19 @@ end
 --- Get chip currency value from color.
 -- @private
 -- @param [string] color Color of the chip.
+-- @return [number] Chip value.
 function Chips:_getChip(color)
 	local value = 0
 	if color == 'white' then
-		value = self.dollars[1]
+		value = self.amounts[1]
 	elseif color == 'red' then
-		value = self.dollars[2]
+		value = self.amounts[2]
 	elseif color == 'blue' then
-		value = self.dollars[3]
+		value = self.amounts[3]
 	elseif color == 'green' then
-		value = self.dollars[4]
+		value = self.amounts[4]
 	elseif color == 'black' then
-		value = self.dollars[5]
+		value = self.amounts[5]
 	end
 	return value
 end
@@ -80,6 +81,7 @@ end
 --- Draw a chip.
 -- @param [string] color Color of chosen chip.
 -- @param [number] balance Currency amount available to bet.
+-- @return [string, number] Chosen color, new balance.
 function Chips:draw(color, balance)
 	if balance > 0 then
 		local bet = 0
@@ -101,7 +103,7 @@ function Chips:draw(color, balance)
 end
 
 --- Get number of available chips.
--- @return [number] Number of chips.
+-- @return [number] Number of each color chip.
 function Chips:getNums()
 	return deck_white, deck_red, deck_blue, deck_green, deck_black
 end
