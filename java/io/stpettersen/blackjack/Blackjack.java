@@ -164,7 +164,7 @@ public class Blackjack extends JPanel implements ActionListener
     private void update()
     {
         // Determine if a Blackjack or bust has occurred?
-        if(hasBlackjack() || isBust())
+        if(hasBlackjack() || isBust() || player_index == 5)
         {
             showCards();
         }
@@ -220,6 +220,7 @@ public class Blackjack extends JPanel implements ActionListener
             player_index++;
             repaint();
         }
+        else stand();
     }
     
     /**
