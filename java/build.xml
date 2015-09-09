@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!-- Apache Ant buildfile to build Blackjack. -->
 <project name="Blackjack" default="build" basedir=".">
+    
     <description>Blackjack buildfile for Ant</description>
 
     <!-- Targets. -->
