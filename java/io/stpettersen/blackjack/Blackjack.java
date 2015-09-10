@@ -20,6 +20,7 @@ import java.awt.event.ActionListener;
 public class Blackjack extends JPanel implements ActionListener
 {
     private boolean ai;
+    private boolean sound;
     private boolean playing;
     private int player_index;
     private List<Card> player_cards;
@@ -34,14 +35,14 @@ public class Blackjack extends JPanel implements ActionListener
     private Cards cards;
     private Player player;
     private Dealer dealer;
-    private SoundEffects soundEffects;
+    private static JButton toggle_sound;
     private static JButton hit;
     private static JButton stand;
     
-    private static final int SCREEN_WIDTH = 780;
+    private static final int SCREEN_WIDTH = 785;
     private static final int SCREEN_HEIGHT = 500;
     private final int CARD_LIMIT = 42;
-    private final boolean DEBUG = true;
+    private final boolean DEBUG = false;
      
     /**
      * Blackjack implements the game itself.
@@ -51,15 +52,28 @@ public class Blackjack extends JPanel implements ActionListener
         super(); 
         setBackground(new Color(0, 153, 0));
         ai = false;
+        sound = true;
         playing = false;
         screentip = new Screentip(DEBUG, ((SCREEN_WIDTH / 2) - 50), 190);
         instruction = new Score(DEBUG, ((SCREEN_WIDTH / 2) - 155), 450);
         p_score = new Score(DEBUG, 153, 315);
         d_score = new Score(DEBUG, 153, 25);
         cards = new Cards();
-        soundEffects = new SoundEffects();
         dealer_pile = new Card(cards.getImage("c"), 10, 10);
+        SoundEffects.init();
         Debugger.emit(DEBUG, "Initialized Blackjack (Java Swing/AWT).");
+    }
+    
+    /**
+     * Toggle sound effects on/off. 
+    */
+    private void toggleSound()
+    {
+        sound = SoundEffects.toggle();
+        Debugger.emit(DEBUG, "----------------------------------------------------");
+        Debugger.emit(DEBUG, String.format("Sound effects on: %b", sound));
+        Debugger.emit(DEBUG, "----------------------------------------------------");
+        update();
     }
     
     /**
@@ -76,7 +90,7 @@ public class Blackjack extends JPanel implements ActionListener
         dealer_cards = new ArrayList<Card>();
         
         player = new Player(DEBUG);
-        dealer = new Dealer(DEBUG, cards, soundEffects);
+        dealer = new Dealer(DEBUG, cards);
         
         if(cards.getPlayed() == 0 || cards.getPlayed() >= CARD_LIMIT)
         {
@@ -163,11 +177,16 @@ public class Blackjack extends JPanel implements ActionListener
     */
     private void update()
     {
+        // Display status of sound (i.e. sound on/off).
+        if(sound)
+            toggle_sound.setText("Sound off");
+        else
+            toggle_sound.setText("Sound on");
+        
         // Determine if a Blackjack or bust has occurred?
         if(hasBlackjack() || isBust() || player_index == 5)
-        {
             showCards();
-        }
+        
         p_score.emit(player.calcTotal());
         
         if(playing)
@@ -213,7 +232,7 @@ public class Blackjack extends JPanel implements ActionListener
     {
         if(player_index < 6)
         {
-            soundEffects.play("hit");
+            SoundEffects.play("hit");
             player_cards.set(player_index, player.hit(cards));
             int[] xy = player_cards.get(player_index).getXY();
             Debugger.emit(DEBUG, String.format("Placed card at %d,%d", xy[0], xy[1]));
@@ -250,7 +269,11 @@ public class Blackjack extends JPanel implements ActionListener
     public void actionPerformed(ActionEvent e)
     {
         Object src = e.getSource();
-        if(src == hit)
+        if(src == toggle_sound)
+        {
+            toggleSound();
+        }
+        else if(src == hit)
         {
             if(playing) hit();
             else newGame();
@@ -258,7 +281,7 @@ public class Blackjack extends JPanel implements ActionListener
         }
         else if(src == stand)
         {
-            if(playing) stand();      
+            if(playing) stand();
         }
         update();
     }
@@ -291,18 +314,20 @@ public class Blackjack extends JPanel implements ActionListener
     public static void main(String[] args)
     {
         Blackjack blackjack = new Blackjack();
-    
         JFrame app = new JFrame();
-        
         hit = new JButton("Hit");
         stand = new JButton("Stand");
+        toggle_sound = new JButton();
         
         hit.setBounds(10,320,100,25);
         stand.setBounds(10,350,100,25);
+        toggle_sound.setBounds(675,5,100,25);
         hit.addActionListener(blackjack);
         stand.addActionListener(blackjack);
+        toggle_sound.addActionListener(blackjack);
         app.add(hit);
         app.add(stand);
+        app.add(toggle_sound);
         
         app.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         app.add(blackjack);

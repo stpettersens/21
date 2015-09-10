@@ -17,20 +17,10 @@ public class Dealer extends Actor
      * Dealer implements the dealer for Blackjack.
      * @param debug Enable debug messages?
      * @param gameCards Game cards.
-     * @param soundEffects Sound effects.
     */
-    public Dealer(boolean debug, Cards gameCards, SoundEffects soundEffects)
-    {
-        super(debug, gameCards, soundEffects);
-    }
-    
-    /**
-     * Dealer implements the dealer for Blackjack (Applet constructor).
-     * @param debug Enable debug messages??
-     */
     public Dealer(boolean debug, Cards gameCards)
     {
-        this(debug, gameCards, null);
+        super(debug, gameCards);
     }
 
     /**

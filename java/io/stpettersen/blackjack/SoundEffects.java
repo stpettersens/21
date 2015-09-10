@@ -13,16 +13,16 @@ import java.util.ArrayList;
 import java.io.IOException;
 import org.newdawn.easyogg.OggClip;
 
-public class SoundEffects implements ISoundEffects
+public class SoundEffects
 {
-    private List<String> strEffects;
-    private List<OggClip> effects;
-    private boolean soundOn;
+    private static List<String> strEffects;
+    private static List<OggClip> effects;
+    private static boolean soundOn;
     
     /**
      * SoundEffects implements playing game sound effects.
     */
-    public SoundEffects()
+    public static void init()
     {
         String s = "sounds/";
         String[] names = { "deal", "shuffle", "hit", "reveal" };
@@ -46,7 +46,7 @@ public class SoundEffects implements ISoundEffects
      * Toggle sound effects on/off.
      * @return Are sound effects on?
     */
-    public boolean toggle()
+    public static boolean toggle()
     {
         if(soundOn) soundOn = false;
         else soundOn = true;
@@ -57,7 +57,7 @@ public class SoundEffects implements ISoundEffects
      * Play a sound effect.
      * @param effect Name of sound effect to play.
     */
-    public void play(String effect)
+    public static void play(String effect)
     {
         if(soundOn)
         {

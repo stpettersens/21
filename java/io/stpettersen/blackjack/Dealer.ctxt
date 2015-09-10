@@ -1,7 +1,7 @@
 #BlueJ class context
 comment0.params=debug\ gameCards
 comment0.target=Dealer(boolean,\ Cards)
-comment0.text=\r\n\ Dealer\ implements\ the\ dealer\ for\ Blackjack\ (Applet\ constructor).\r\n\ @param\ debug\ Enable\ debug\ messages??\r\n
+comment0.text=\r\n\ Dealer\ implements\ the\ dealer\ for\ Blackjack.\r\n\ @param\ debug\ Enable\ debug\ messages?\r\n\ @param\ gameCards\ Game\ cards.\r\n
 comment1.params=cards
 comment1.target=Card\ hit(Cards)
 comment1.text=\r\n\ Dealer\ hits.\r\n\ @param\ cards\ Game\ cards.\r\n\ @return\ Dealer's\ drawn\ card.\r\n
