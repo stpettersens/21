@@ -7,7 +7,6 @@
  */
 
 package io.stpettersen.blackjack
-
 import java.util.{List => JList, ArrayList => JArrayList}
 import javax.swing.{JFrame, JPanel, JButton}
 import java.awt.{Graphics, Color}
@@ -16,16 +15,16 @@ import java.awt.event.{ActionEvent, ActionListener}
 /**
  * Blackjack implements the game itself.
  */
-class Blackjack extends JPanel with ActionListener {
+class Blackjack extends JPanel {
 
   private val ai: Boolean = false
+  private var sound: Boolean = true
   private var playing: Boolean = false
   private var player_index: Int = 2
   private var player_cards: JArrayList[PlayingCard] = new JArrayList[PlayingCard]()
   private var dealer_index: Int = 2
   private var dealer_cards: JArrayList[PlayingCard] = new JArrayList[PlayingCard]()
   private var screentip: Screentip = null
-  private var score: Score = null
   private var instruction: Score = null
   private var p_score: Score = null
   private var d_score: Score = null
@@ -33,9 +32,6 @@ class Blackjack extends JPanel with ActionListener {
   private var cards: Cards = null
   private var player: Player = null
   private var dealer: Dealer = null
-  private var soundEffects: SoundEffects = null
-  def btnHit: JButton = new JButton("Hit")
-  def btnStand: JButton = new JButton("Stand")
 
   final def SCREEN_WIDTH: Int = 780
   final def SCREEN_HEIGHT: Int = 500
@@ -48,13 +44,34 @@ class Blackjack extends JPanel with ActionListener {
   p_score = new Score(DEBUG, 153, 315)
   d_score = new Score(DEBUG, 153, 25)
   cards = new Cards()
-  soundEffects = new SoundEffects()
   dealer_pile = new PlayingCard(cards.getImage("c"), 10, 10)
+  SoundEffects.init()
   Debugger.emit(DEBUG, "Initialized Blackjack (Scala Swing/AWT).")
 
+  /**
+   * Is the game in progress?
+   * @return Playing?
+   */
+  def isPlaying: Boolean = {
+    playing
+  }
+
+  /**
+   * Toggle sound effects on/off.
+   */
+  def toggleSound(): Unit = {
+    sound = SoundEffects.toggle
+    Debugger.emit(DEBUG, "----------------------------------------------------")
+    Debugger.emit(DEBUG, s"Sound effects on: $sound")
+    Debugger.emit(DEBUG, "----------------------------------------------------")
+    update()
+  }
+
+  /**
+   * Start a new game.
+   */
   def newGame(): Unit = {
-    btnHit.setText("Hit")
-    btnStand.setVisible(true)
+    Game.setAction(true);
     playing = true
     player_index = 2
     player_cards = new JArrayList[PlayingCard]()
@@ -62,7 +79,7 @@ class Blackjack extends JPanel with ActionListener {
     dealer_cards = new JArrayList[PlayingCard]()
 
     player = new Player(DEBUG)
-    dealer = new Dealer(DEBUG, cards, soundEffects)
+    dealer = new Dealer(DEBUG, cards)
 
     if(cards.getPlayed == 0 || cards.getPlayed >= CARD_LIMIT) {
       dealer.shuffle()
@@ -88,8 +105,7 @@ class Blackjack extends JPanel with ActionListener {
    * Show cards at end of game.
    */
   private def showCards(): Unit = {
-    btnHit.setText("Play")
-    btnStand.setVisible(false)
+    Game.setAction(false);
     playing = false
     dealer_cards.set(0, dealer.revealFirstCard(cards))
     val ds: Int = dealer.showCards
@@ -145,10 +161,16 @@ class Blackjack extends JPanel with ActionListener {
   /**
    * Update logic.
    */
-  private def update(): Unit = {
+  def update(): Unit = {
+
+    // Display status of sound (ie. sound on/off).
+    //if(sound)
+      //btnToggleSound.setText("Sound off")
+    //else
+      //btnToggleSound.setText("Sound on")
 
     // Determine if a Blackjack or bust has occurred?
-    if(hasBlackjack || isBust) {
+    if(hasBlackjack || isBust || player_index == 5) {
       showCards()
     }
     p_score.emit(player.calcTotal)
@@ -187,21 +209,22 @@ class Blackjack extends JPanel with ActionListener {
   /**
    * Take a hit.
    */
-  private def hit(): Unit = {
+  def hit(): Unit = {
     if(player_index < 6) {
-      soundEffects.play("hit")
+      SoundEffects.play("hit")
       player_cards.set(player_index, player.hit(cards))
       val xy: Array[Int] = player_cards.get(player_index).getXY
       Debugger.emit(DEBUG, s"Placed card at $xy(0),$xy(1)")
       player_index += 1
       repaint()
     }
+    else stand()
   }
 
   /**
    * Take a stand.
    */
-  private def stand(): Unit = {
+  def stand(): Unit = {
     player.stand()
     val received: JList[PlayingCard] = dealer.respond(cards)
     var i: Int = 0
@@ -217,28 +240,10 @@ class Blackjack extends JPanel with ActionListener {
   }
 
   /**
-   * Event handler for hit or stand buttons.
-   * @param e ActionEvent
-   */
-  def actionPerformed(e: ActionEvent): Unit = {
-    val src: Object = e.getSource
-    if(src == btnHit) {
-      if(playing) hit()
-      else newGame()
-    }
-    else if(src == btnStand) {
-      if(playing) stand()
-    }
-    update()
-  }
-
-  /**
    * Draw elements to game window.
    * @param g Graphics object.
    */
   override def paint(g: Graphics): Unit = {
-    val width: Int = getWidth
-    val height: Int = getWidth
     super.paint(g)
     dealer_pile.draw(g)
     screentip.draw(g)
@@ -253,7 +258,43 @@ class Blackjack extends JPanel with ActionListener {
   }
 }
 
-object Game {
+object Game extends ActionListener {
+
+  private val blackjack = new Blackjack()
+  private val btnHit: JButton = new JButton("Hit")
+  private val btnStand: JButton = new JButton("Stand")
+  private val btnToggleSound: JButton = new JButton()
+
+  /**
+   * Set action caption for Hit/Play button
+   * @param isHit Should caption be "Hit"?
+   */
+  def setAction(isHit: Boolean): Unit = {
+    if(isHit) {
+      btnHit.setText("Hit")
+      btnStand.setVisible(true)
+    }
+    else {
+      btnHit.setText("Play")
+      btnStand.setVisible(false)
+    }
+  }
+
+  /**
+   * Event handler for hit or stand buttons.
+   * @param e ActionEvent
+   */
+  def actionPerformed(e: ActionEvent): Unit = {
+    val src: Object = e.getSource
+    if(src == btnHit) {
+      if(blackjack.isPlaying) blackjack.hit()
+      else blackjack.newGame()
+    }
+    else if(src == btnStand) {
+      if(blackjack.isPlaying) blackjack.stand()
+    }
+    blackjack.update()
+  }
 
   /**
    * Entry method for game.
@@ -261,8 +302,11 @@ object Game {
    */
   def main(args: Array[String]): Unit = {
 
-    val blackjack = new Blackjack()
     val app = new JFrame()
+
+    btnHit.setBounds(10,320,100,25)
+    btnHit.addActionListener(this)
+    app.add(btnHit)
 
     app.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE)
     app.add(blackjack)

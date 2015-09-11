@@ -27,7 +27,6 @@ public class Blackjack extends JPanel implements ActionListener
     private int dealer_index;
     private List<Card> dealer_cards;
     private Screentip screentip;
-    private Score score;
     private Score instruction;
     private Score p_score;
     private Score d_score;

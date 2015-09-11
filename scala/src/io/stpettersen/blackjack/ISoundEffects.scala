@@ -9,6 +9,7 @@
 package io.stpettersen.blackjack
 
 trait ISoundEffects {
+  def init(): Unit
   def toggle: Boolean
   def play(effect: String): Unit
 }

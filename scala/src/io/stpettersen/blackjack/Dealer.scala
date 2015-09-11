@@ -13,12 +13,8 @@ import java.util.{List => JList, ArrayList => JArrayList}
  * Dealer implements the dealer for Blackjack.
  * @param debug Enable debug messages?
  * @param gameCards Game cards.
- * @param soundEffects Sound effects.
  */
-class Dealer(debug: Boolean, gameCards: Cards, soundEffects: SoundEffects) extends
-Actor(debug, gameCards, soundEffects) {
-
-  def this(debug: Boolean, gameCards: Cards) = this(debug, gameCards, null)
+class Dealer(debug: Boolean, gameCards: Cards) extends Actor(debug, gameCards) {
 
   /**
    * Dealer hits.
@@ -62,7 +58,7 @@ Actor(debug, gameCards, soundEffects) {
    */
   def deal(cards: Cards): Array[String] = {
     playSoundEffect("deal")
-    var dealt: JList[String] = new JArrayList[String]()
+    val dealt: JList[String] = new JArrayList[String]()
     var i: Int = 1
     Debugger.emit(debug, "----------------------------------------------------")
     Debugger.emit(debug, "Dealer is dealing cards for a new game...")

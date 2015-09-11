@@ -14,7 +14,7 @@ import java.util.{Comparator, Collections, List => JList, ArrayList => JArrayLis
  * @param debug Enable debug messages?
  * @param gameCards Game cards.
  */
-class Actor(debug: Boolean, gameCards: Cards, soundEffects: SoundEffects) extends IActor {
+class Actor(debug: Boolean, gameCards: Cards) extends IActor {
 
   protected var this.debug: Boolean = debug
   protected var index: Int = 0
@@ -22,9 +22,8 @@ class Actor(debug: Boolean, gameCards: Cards, soundEffects: SoundEffects) extend
   protected var cards: JList[String] = new JArrayList[String]()
   protected var values: JList[Int] = new JArrayList[Int]()
   protected var this.gameCards: Cards = gameCards
-  protected var this.soundEffects: SoundEffects = soundEffects
 
-  def this(debug: Boolean) = this(debug, null, null)
+  def this(debug: Boolean) = this(debug, null)
 
   /**
    * Calculate the total value of actor's held cards.
@@ -85,9 +84,9 @@ class Actor(debug: Boolean, gameCards: Cards, soundEffects: SoundEffects) extend
     var cards: String = ""
     var i: Int = 0
     for(i <- 0 to this.cards.size()) {
-      cards += String.format("[%s]", this.cards.get(i))
+      cards += s"[$this.cars.get(i)]"
     }
-    //Debugger.emit(debug, String.format("%s --> %d", cards, calcTotal))
+    Debugger.emit(debug, s"$cards --> $calcTotal")
     calcTotal
   }
 
@@ -96,8 +95,6 @@ class Actor(debug: Boolean, gameCards: Cards, soundEffects: SoundEffects) extend
    * @param effect Name of sound effect to play.
    */
   protected def playSoundEffect(effect: String): Unit = {
-    if(soundEffects != null) {
-      soundEffects.play(effect)
-    }
+      SoundEffects.play(effect)
   }
 }

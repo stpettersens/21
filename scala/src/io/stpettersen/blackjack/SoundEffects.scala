@@ -14,18 +14,21 @@ import org.newdawn.easyogg.OggClip
 /**
  * SoundEffects implements playing game sound effects.
  */
-class SoundEffects extends ISoundEffects {
+object SoundEffects extends ISoundEffects {
 
   private val strEffects: Array[String] = Array("deal", "shuffle", "hit", "reveal")
   private val effects: JList[OggClip] = new JArrayList[OggClip]()
   private var soundOn: Boolean = true
-  var i: Int = 0
-  for(i <- 0 to strEffects.length - 1) {
-    try {
-      effects.add((null)) //new OggClip(String.format("sounds/%s.ogg", strEffects(i))))
-    }
-    catch {
-      case ioe: IOException => ioe.printStackTrace()
+
+  def init(): Unit = {
+    var i: Int = 0
+    for(i <- 0 to strEffects.length - 1) {
+      try {
+        effects.add((null)) //new OggClip(String.format("sounds/%s.ogg", strEffects(i))))
+      }
+      catch {
+        case ioe: IOException => ioe.printStackTrace()
+      }
     }
   }
 
