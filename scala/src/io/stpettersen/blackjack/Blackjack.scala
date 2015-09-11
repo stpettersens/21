@@ -162,12 +162,12 @@ class Blackjack extends JPanel {
    * Update logic.
    */
   def update(): Unit = {
-
     // Display status of sound (ie. sound on/off).
-    //if(sound)
-      //btnToggleSound.setText("Sound off")
-    //else
-      //btnToggleSound.setText("Sound on")
+    /*if(sound)
+      btnToggleSound.setText("Sound off")
+    else
+      btnToggleSound.setText("Sound on")
+    */
 
     // Determine if a Blackjack or bust has occurred?
     if(hasBlackjack || isBust || player_index == 5) {

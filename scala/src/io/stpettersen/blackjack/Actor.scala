@@ -95,6 +95,6 @@ class Actor(debug: Boolean, gameCards: Cards) extends IActor {
    * @param effect Name of sound effect to play.
    */
   protected def playSoundEffect(effect: String): Unit = {
-      SoundEffects.play(effect)
+    SoundEffects.play(effect)
   }
 }

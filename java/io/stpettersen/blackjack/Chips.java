@@ -41,19 +41,19 @@ public class Chips
         switch(color)
         {
             case WHITE:
-                value = amounts[1];
+                value = amounts[0];
                 break;
             case RED:
-                value = amounts[2];
+                value = amounts[1];
                 break;   
             case BLUE:
-                value = amounts[3];
+                value = amounts[2];
                 break;
             case GREEN:
-                value = amounts[4];
+                value = amounts[3];
                 break;
             case BLACK:
-                value = amounts[5];
+                value = amounts[4];
                 break;
         }
         return value;
@@ -92,7 +92,7 @@ public class Chips
      * Draw a chip.
      * @param color Color of chosen chip.
      * @param balance Currency amount available to bet.
-     * @return Chosen color, new balance as String.
+     * @return Chosen color, new balance.
     */
     public int[] draw(ChipColor color, int balance)
     {
