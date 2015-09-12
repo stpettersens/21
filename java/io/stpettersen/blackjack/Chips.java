@@ -109,7 +109,7 @@ public class Chips
             else if(color == ChipColor.BLACK && balance >= 100)
                 bet = getChip(ChipColor.BLACK);
                
-            balance = balance - bet;
+            balance -= bet;
             return new int[] { color.ordinal(), balance };
         }
         return new int[] { -1, 0 };

@@ -12,7 +12,7 @@ import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Comparator;
 
-public class Actor implements IActor
+public abstract class Actor implements IActor
 {
     protected boolean debug;
     protected int index;
@@ -70,7 +70,7 @@ public class Actor implements IActor
     /**
      * Actor stands.
     */
-    protected void stand() {}
+    protected abstract void stand();
     
     /**
      * Determine if actor has Blackjack.

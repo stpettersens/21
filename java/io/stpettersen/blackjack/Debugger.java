@@ -29,11 +29,13 @@ public class Debugger
         emit(debug, Integer.toString(integer));
     }
     
-    /*public static void emit(boolean debug, String[] cards)
+    /**
+     * Emit a debug message.
+     * @param debug Enabele debug?
+     * @param e Exception to emit.
+    */
+    public static void emit(boolean debug, Exception e)
     {
-        for(int i = 0; i < cards.length; i++)
-        {
-            emit(debug, i + " " + cards[i]);
-        }
-    }*/
+        emit(debug, String.format("EXCEPTION: %s", e.getMessage()));
+    }
 }

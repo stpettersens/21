@@ -1,8 +1,8 @@
 #BlueJ class context
 comment0.params=
 comment0.target=void\ clear()
-comment0.text=\r\n\ \ Clear\ a\ UI\ item.\r\n
+comment0.text=\n\ \ Clear\ a\ UI\ item.\n
 comment1.params=g
 comment1.target=void\ draw(java.awt.Graphics)
-comment1.text=\r\n\ Draw\ a\ UI\ item.\r\n\ @param\ g\ Graphics\ object.\r\n
+comment1.text=\n\ Draw\ a\ UI\ item.\n\ @param\ g\ Graphics\ object.\n
 numComments=2

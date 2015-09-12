@@ -1,5 +1,5 @@
 #BlueJ class context
 comment0.params=chip\ posX\ posY
 comment0.target=Chip(java.lang.String,\ int,\ int)
-comment0.text=\r\n\ Chip\ represents\ a\ single\ betting\ chip.\r\n\ @param\ chip\ Path\ to\ chip\ graphic.\r\n\ @param\ posX\ X\ position\ for\ chip.\r\n\ @param\ posY\ Y\ position\ for\ chip.\r\n
+comment0.text=\n\ Chip\ represents\ a\ single\ betting\ chip.\n\ @param\ chip\ Path\ to\ chip\ graphic.\n\ @param\ posX\ X\ position\ for\ chip.\n\ @param\ posY\ Y\ position\ for\ chip.\n
 numComments=1

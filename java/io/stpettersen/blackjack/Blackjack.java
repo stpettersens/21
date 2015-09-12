@@ -12,6 +12,7 @@ import java.util.ArrayList;
 import javax.swing.JFrame;
 import javax.swing.JPanel;
 import javax.swing.JButton;
+import javax.swing.JOptionPane;
 import java.awt.Graphics;
 import java.awt.Color;
 import java.awt.event.ActionEvent;
@@ -42,14 +43,16 @@ public class Blackjack extends JPanel implements ActionListener
     private Dealer dealer;
     private Chips chips;
     private int balance;
-    private static JButton toggle_sound;
+    private int bet;
+    private static JButton toggleSound;
     private static JButton hit;
     private static JButton stand;
     
-    private final static int SCREEN_WIDTH = 785;
-    private final static int SCREEN_HEIGHT = 500;
+    private final static String TITLE = "Blackjack";
+    private final static int SCREEN_WIDTH = 820;
+    private final static int SCREEN_HEIGHT = 560;
     private final int CARD_LIMIT = 42;
-    private final boolean DEBUG = true;
+    private final boolean DEBUG = false;
      
     /**
      * Blackjack implements the game itself.
@@ -62,16 +65,17 @@ public class Blackjack extends JPanel implements ActionListener
         sound = true;
         playing = false;
         balance = 1000;
+        bet = 0;
         screentip = new Screentip(DEBUG, ((SCREEN_WIDTH / 2) - 50), 190);
         instruction = new Score(DEBUG, ((SCREEN_WIDTH / 2) - 155), 450);
         pScore = new Score(DEBUG, 153, 315);
         dScore = new Score(DEBUG, 153, 25);
-        pBalance = new Score(DEBUG, 10, 400);
-        wChips = new Score(DEBUG, 10, 410);
-        rChips = new Score(DEBUG, 10, 420);
-        bChips = new Score(DEBUG, 10, 430);
-        gChips = new Score(DEBUG, 10, 440);
-        blChips = new Score(DEBUG, 10, 450);
+        pBalance = new Score(DEBUG, 10, 410);
+        wChips = new Score(DEBUG, 10, 430);
+        rChips = new Score(DEBUG, 10, 450);
+        bChips = new Score(DEBUG, 10, 470);
+        gChips = new Score(DEBUG, 10, 490);
+        blChips = new Score(DEBUG, 10, 510);
         chips = new Chips();
         cards = new Cards();
         dealer_pile = new Card(cards.getImage("c"), 10, 10);
@@ -92,14 +96,45 @@ public class Blackjack extends JPanel implements ActionListener
     }
     
     /**
+     * Place a bet.
+    */
+    private void placeBet()
+    {
+        JFrame frame = new JFrame();
+        String response = (String)JOptionPane.showInputDialog(frame, "Place bet ($):");
+        try {
+            bet = Integer.parseInt(response);
+            if(bet > 0 && bet <= balance)
+            {
+                balance -= bet;
+                Debugger.emit(DEBUG, String.format("Placed bid of $%d", bet));
+                //chips.deal(balance);
+                newGame();
+            }
+            else
+            {
+                JOptionPane.showMessageDialog(frame, 
+                String.format("Bet must be between $1 and $%d.", balance), TITLE,
+                JOptionPane.WARNING_MESSAGE);
+                placeBet();
+            }
+        }
+        catch(NumberFormatException e) 
+        {
+            JOptionPane.showMessageDialog(frame,
+            "Bet must be numeric value", TITLE,
+            JOptionPane.WARNING_MESSAGE);
+            Debugger.emit(DEBUG, e);
+            placeBet();
+        }
+    }
+    
+    /**
      * Start a new game.
     */
-    public void newGame() 
-    {
-        // --
+    private void newGame() 
+    {   
         chips.deal(balance);
-        // --
-        
         hit.setText("Hit");
         stand.setVisible(true);
         playing = true;
@@ -143,10 +178,13 @@ public class Blackjack extends JPanel implements ActionListener
         dealer_cards.set(0, dealer.revealFirstCard(cards));
         int ds = dealer.showCards();
         int ps = player.showCards();
+        boolean betWon = false;
+        boolean refundBet = false;
         
         if(ps == 21 && ds != 21)
         {
             screentip.emit("PLAYER BLACKJACK!", "Player has 21. That's a Blackjack!");
+            betWon = true;
         }
         else if(ds == 21 && ps != 21)
         {
@@ -155,10 +193,12 @@ public class Blackjack extends JPanel implements ActionListener
         else if((ps == ds) || (ps > 21 && ds > 21))
         {
             screentip.emit("PUSH", "Neither dealer nor player won.");
+            refundBet = true;
         }
         else if(ps <= 21 && ps > ds)
         {
             screentip.emit("PLAYER WINS", String.format("Player wins with %d. Well done.", ps));
+            betWon = true;
         }
         else if(ds <= 21 && ds > ps)
         {
@@ -171,6 +211,7 @@ public class Blackjack extends JPanel implements ActionListener
         else if(ds > 21 && ps <= 21)
         {
             screentip.emit("PLAYER WINS", "Player wins. Dealer bust.");
+            betWon = true;
         }
         
         dScore.emit(dealer.calcTotal());
@@ -189,6 +230,17 @@ public class Blackjack extends JPanel implements ActionListener
         {
             dealer_pile = new Card(cards.getImage("d"), 10, 10);
         }
+        
+        if(betWon)
+        {
+            balance += bet * 2; // Player wins bet; receives their bet + dealer's.
+        }
+        else if(refundBet)
+        {
+            balance += bet; // Player's bet is refunded on a push.
+        }
+        chips.deal(balance);
+        repaint();
     }
     
     /**
@@ -198,9 +250,9 @@ public class Blackjack extends JPanel implements ActionListener
     {
         // Display status of sound (i.e. sound on/off).
         if(sound)
-            toggle_sound.setText("Sound off");
+            toggleSound.setText("Sound off");
         else
-            toggle_sound.setText("Sound on");
+            toggleSound.setText("Sound on");
         
         // Determine if a Blackjack or bust has occurred?
         if(hasBlackjack() || isBust() || player_index == 5)
@@ -297,14 +349,14 @@ public class Blackjack extends JPanel implements ActionListener
     public void actionPerformed(ActionEvent e)
     {
         Object src = e.getSource();
-        if(src == toggle_sound)
+        if(src == toggleSound)
         {
             toggleSound();
         }
         else if(src == hit)
         {
             if(playing) hit();
-            else newGame();
+            else placeBet();
             
         }
         else if(src == stand)
@@ -349,24 +401,25 @@ public class Blackjack extends JPanel implements ActionListener
     {
         Blackjack blackjack = new Blackjack();
         JFrame app = new JFrame();
-        hit = new JButton("Hit");
+        hit = new JButton("Bet");
         stand = new JButton("Stand");
-        toggle_sound = new JButton();
+        stand.setVisible(false);
+        toggleSound = new JButton();
         
         hit.setBounds(10,320,100,25);
         stand.setBounds(10,350,100,25);
-        toggle_sound.setBounds(675,5,100,25);
+        toggleSound.setBounds(675,5,130,25);
         hit.addActionListener(blackjack);
         stand.addActionListener(blackjack);
-        toggle_sound.addActionListener(blackjack);
+        toggleSound.addActionListener(blackjack);
         app.add(hit);
         app.add(stand);
-        app.add(toggle_sound);
+        app.add(toggleSound);
         
         app.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         app.add(blackjack);
         app.setSize(SCREEN_WIDTH, SCREEN_HEIGHT);
-        app.setTitle("Blackjack");
+        app.setTitle(TITLE);
         app.setVisible(true);
         app.setResizable(false);
         

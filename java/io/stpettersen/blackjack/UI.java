@@ -11,7 +11,7 @@ import java.awt.Graphics;
 import java.awt.Color;
 import java.awt.Font;
 
-public class UI implements IUI
+public abstract class UI implements IUI
 {   
     /**
      *  Clear a UI item.

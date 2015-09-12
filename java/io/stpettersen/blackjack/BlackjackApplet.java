@@ -37,8 +37,8 @@ public class BlackjackApplet extends JApplet implements ActionListener
     private JButton hit;
     private JButton stand;
     
-    private final int SCREEN_WIDTH = 780;
-    private final int SCREEN_HEIGHT = 500;
+    private final int SCREEN_WIDTH = 820;
+    private final int SCREEN_HEIGHT = 560;
     private final int CARD_LIMIT = 42;
     private final boolean DEBUG = false;
 
