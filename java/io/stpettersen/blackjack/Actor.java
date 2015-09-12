@@ -116,13 +116,4 @@ public class Actor implements IActor
         Debugger.emit(debug, String.format("%s --> %d", cards, calcTotal())); 
         return calcTotal();
     }
-    
-    /**
-     * Play sound effect.
-     * @param Name of sound effect to play.
-    */
-    protected void playSoundEffect(String effect)
-    {
-        SoundEffects.play(effect);
-    }
 }

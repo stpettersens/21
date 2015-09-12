@@ -28,35 +28,51 @@ public class Blackjack extends JPanel implements ActionListener
     private List<Card> dealer_cards;
     private Screentip screentip;
     private Score instruction;
-    private Score p_score;
-    private Score d_score;
+    private Score pScore;
+    private Score dScore;
+    private Score pBalance;
+    private Score wChips;
+    private Score rChips;
+    private Score bChips; 
+    private Score gChips;
+    private Score blChips;
     private Card dealer_pile;
     private Cards cards;
     private Player player;
     private Dealer dealer;
+    private Chips chips;
+    private int balance;
     private static JButton toggle_sound;
     private static JButton hit;
     private static JButton stand;
     
-    private static final int SCREEN_WIDTH = 785;
-    private static final int SCREEN_HEIGHT = 500;
+    private final static int SCREEN_WIDTH = 785;
+    private final static int SCREEN_HEIGHT = 500;
     private final int CARD_LIMIT = 42;
-    private final boolean DEBUG = false;
+    private final boolean DEBUG = true;
      
     /**
      * Blackjack implements the game itself.
     */
     public Blackjack() 
     {
-        super(); 
+        super();
         setBackground(new Color(0, 153, 0));
         ai = false;
         sound = true;
         playing = false;
+        balance = 1000;
         screentip = new Screentip(DEBUG, ((SCREEN_WIDTH / 2) - 50), 190);
         instruction = new Score(DEBUG, ((SCREEN_WIDTH / 2) - 155), 450);
-        p_score = new Score(DEBUG, 153, 315);
-        d_score = new Score(DEBUG, 153, 25);
+        pScore = new Score(DEBUG, 153, 315);
+        dScore = new Score(DEBUG, 153, 25);
+        pBalance = new Score(DEBUG, 10, 400);
+        wChips = new Score(DEBUG, 10, 410);
+        rChips = new Score(DEBUG, 10, 420);
+        bChips = new Score(DEBUG, 10, 430);
+        gChips = new Score(DEBUG, 10, 440);
+        blChips = new Score(DEBUG, 10, 450);
+        chips = new Chips();
         cards = new Cards();
         dealer_pile = new Card(cards.getImage("c"), 10, 10);
         SoundEffects.init();
@@ -80,6 +96,10 @@ public class Blackjack extends JPanel implements ActionListener
     */
     public void newGame() 
     {
+        // --
+        chips.deal(balance);
+        // --
+        
         hit.setText("Hit");
         stand.setVisible(true);
         playing = true;
@@ -153,7 +173,7 @@ public class Blackjack extends JPanel implements ActionListener
             screentip.emit("PLAYER WINS", "Player wins. Dealer bust.");
         }
         
-        d_score.emit(dealer.calcTotal());
+        dScore.emit(dealer.calcTotal());
         Debugger.emit(DEBUG, String.format("Cards played %d", cards.getPlayed()));
         
         if(cards.getPlayed() >= CARD_LIMIT)
@@ -186,11 +206,20 @@ public class Blackjack extends JPanel implements ActionListener
         if(hasBlackjack() || isBust() || player_index == 5)
             showCards();
         
-        p_score.emit(player.calcTotal());
+        pScore.emit(player.calcTotal());
+        pBalance.emit(String.format("Balance: $%d", balance));
+        
+        int[] chipVals = chips.getValues();
+        int[] chipNums = chips.getNums();
+        wChips.emit(String.format("White chips ($%d): %d", chipVals[0], chipNums[0]));
+        rChips.emit(String.format("Red chips ($%d): %d", chipVals[1], chipNums[1]));
+        bChips.emit(String.format("Blue chips ($%d): %d", chipVals[2], chipNums[2]));
+        gChips.emit(String.format("Green chips ($%d): %d", chipVals[3], chipNums[3]));
+        blChips.emit(String.format("Black chips ($%d): %d", chipVals[4], chipNums[4]));
         
         if(playing)
         {
-            d_score.emit("?");
+            dScore.emit("?");
             instruction.emit("Hit or Stand?");
         }
         repaint();
@@ -297,8 +326,14 @@ public class Blackjack extends JPanel implements ActionListener
         dealer_pile.draw(g);
         screentip.draw(g);
         instruction.draw(g);
-        p_score.draw(g);
-        d_score.draw(g);
+        pScore.draw(g);
+        dScore.draw(g);
+        pBalance.draw(g);
+        wChips.draw(g);
+        rChips.draw(g);
+        bChips.draw(g);
+        gChips.draw(g);
+        blChips.draw(g);
         for(int i = 0; i < dealer_cards.size(); i++)
         {
             dealer_cards.get(i).draw(g);

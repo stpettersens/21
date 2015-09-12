@@ -15,7 +15,7 @@ public class Chips
     private int deck_blue;
     private int deck_green;
     private int deck_black;
-    private int[] amounts;
+    private int[] values;
     
     /**
      * Chip represents a collection of betting chips.
@@ -27,7 +27,7 @@ public class Chips
         deck_blue = 0;
         deck_green = 0;
         deck_black = 0;
-        amounts = new int[] { 1, 5, 10, 25, 100 };
+        values = new int[] { 1, 5, 10, 25, 100 };
     }
     
     /**
@@ -41,19 +41,19 @@ public class Chips
         switch(color)
         {
             case WHITE:
-                value = amounts[0];
+                value = values[0];
                 break;
             case RED:
-                value = amounts[1];
+                value = values[1];
                 break;   
             case BLUE:
-                value = amounts[2];
+                value = values[2];
                 break;
             case GREEN:
-                value = amounts[3];
+                value = values[3];
                 break;
             case BLACK:
-                value = amounts[4];
+                value = values[4];
                 break;
         }
         return value;
@@ -70,7 +70,6 @@ public class Chips
         deck_blue = 0;
         deck_green = 0;
         deck_black = 0;
-        Debugger.emit(true, String.format("Balance is $%d", balance));
         // Deal out white chips.
         for(int i = 0; i < Math.floor(balance / 1); i++) 
             deck_white++;
@@ -114,6 +113,15 @@ public class Chips
             return new int[] { color.ordinal(), balance };
         }
         return new int[] { -1, 0 };
+    }
+    
+    /**
+     * Get values for chips.
+     * @return Values for each color chip.
+    */
+    public int[] getValues()
+    {
+        return values;
     }
     
     /**

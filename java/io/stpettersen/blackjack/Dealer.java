@@ -54,7 +54,7 @@ public class Dealer extends Actor
     */
     public void shuffle()
     {
-        playSoundEffect("shuffle");
+        SoundEffects.play("shuffle");
         Debugger.emit(debug, "----------------------------------------------------");
         Debugger.emit(debug, "Dealer is shuffling cards...");
         Debugger.emit(debug, "----------------------------------------------------");
@@ -68,7 +68,7 @@ public class Dealer extends Actor
     */
     public String[] deal(Cards cards)
     {
-        playSoundEffect("deal");
+        SoundEffects.play("deal");
         List<String> dealt = new ArrayList<String>();
         int i = 1;
         Debugger.emit(debug, "----------------------------------------------------");
@@ -191,7 +191,7 @@ public class Dealer extends Actor
     */
     public Card revealFirstCard(Cards cards)
     {
-        playSoundEffect("reveal");
+        SoundEffects.play("reveal");
         return new Card(cards.getImage(this.cards.get(0)), 225, 10);
     }
 }
