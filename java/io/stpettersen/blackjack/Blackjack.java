@@ -23,10 +23,10 @@ public class Blackjack extends JPanel implements ActionListener
     private boolean ai;
     private boolean sound;
     private boolean playing;
-    private int player_index;
-    private List<Card> player_cards;
-    private int dealer_index;
-    private List<Card> dealer_cards;
+    private int playerIndex;
+    private List<Card> playerCards;
+    private int dealerIndex;
+    private List<Card> dealerCards;
     private Screentip screentip;
     private Score instruction;
     private Score pScore;
@@ -37,7 +37,7 @@ public class Blackjack extends JPanel implements ActionListener
     private Score bChips; 
     private Score gChips;
     private Score blChips;
-    private Card dealer_pile;
+    private Card dealerPile;
     private Cards cards;
     private Player player;
     private Dealer dealer;
@@ -78,7 +78,7 @@ public class Blackjack extends JPanel implements ActionListener
         blChips = new Score(DEBUG, 10, 510);
         chips = new Chips();
         cards = new Cards();
-        dealer_pile = new Card(cards.getImage("c"), 10, 10);
+        dealerPile = new Card(cards.getImage("c"), 10, 10);
         SoundEffects.init();
         Debugger.emit(DEBUG, "Initialized Blackjack (Java Swing/AWT).");
     }
@@ -115,7 +115,8 @@ public class Blackjack extends JPanel implements ActionListener
                 System.exit(0);
         }
         String response = (String)JOptionPane.showInputDialog(frame, "Place bet ($):");
-        try {
+        try 
+        {
             bet = Integer.parseInt(response);
             if(bet > 0 && bet <= balance)
             {
@@ -126,8 +127,8 @@ public class Blackjack extends JPanel implements ActionListener
             else
             {
                 JOptionPane.showMessageDialog(frame, 
-                String.format("Bet must be between $1 and $%d.", balance), TITLE,
-                JOptionPane.WARNING_MESSAGE);
+                String.format("Bet must be between $1 and $%d.", balance), 
+                TITLE, JOptionPane.WARNING_MESSAGE);
                 placeBet();
             }
         }
@@ -149,14 +150,13 @@ public class Blackjack extends JPanel implements ActionListener
         hit.setText("Play");
         stand.setVisible(false);
         playing = false;
-        player_cards = new ArrayList<Card>();
-        dealer_cards = new ArrayList<Card>();
+        playerCards = new ArrayList<Card>();
+        dealerCards = new ArrayList<Card>();
         
         player = new Player(DEBUG);
         dealer = new Dealer(DEBUG, cards);
         
         screentip.clear();
-        pScore.emit("");
         instruction.emit("Click Play to start a new game.");
         chips.deal(balance);
         update();
@@ -171,10 +171,10 @@ public class Blackjack extends JPanel implements ActionListener
         hit.setText("Hit");
         stand.setVisible(true);
         playing = true;
-        player_index = 2;
-        player_cards = new ArrayList<Card>();
-        dealer_index = 2;
-        dealer_cards = new ArrayList<Card>();
+        playerIndex = 2;
+        playerCards = new ArrayList<Card>();
+        dealerIndex = 2;
+        dealerCards = new ArrayList<Card>();
         
         player = new Player(DEBUG);
         dealer = new Dealer(DEBUG, cards);
@@ -187,16 +187,16 @@ public class Blackjack extends JPanel implements ActionListener
         screentip.clear();
         Card[] pc = player.receiveCards(cards, dealer.deal(cards));
         Card[] dc = dealer.receiveCards(cards);
-        player_cards.add(pc[0]);
-        player_cards.add(pc[1]);
-        dealer_cards.add(dc[0]);
-        dealer_cards.add(dc[1]);
-        player_cards.add(new Card(cards.getImage("d"), 405, 310));
-        player_cards.add(new Card(cards.getImage("d"), 495, 310));
-        player_cards.add(new Card(cards.getImage("d"), 585, 310));
-        dealer_cards.add(new Card(cards.getImage("d"), 405, 10));
-        dealer_cards.add(new Card(cards.getImage("d"), 495, 10));
-        dealer_cards.add(new Card(cards.getImage("d"), 585, 10));
+        playerCards.add(pc[0]);
+        playerCards.add(pc[1]);
+        dealerCards.add(dc[0]);
+        dealerCards.add(dc[1]);
+        playerCards.add(new Card(cards.getImage("d"), 405, 310));
+        playerCards.add(new Card(cards.getImage("d"), 495, 310));
+        playerCards.add(new Card(cards.getImage("d"), 585, 310));
+        dealerCards.add(new Card(cards.getImage("d"), 405, 10));
+        dealerCards.add(new Card(cards.getImage("d"), 495, 10));
+        dealerCards.add(new Card(cards.getImage("d"), 585, 10));
         update();
     }
     
@@ -208,7 +208,7 @@ public class Blackjack extends JPanel implements ActionListener
         hit.setText("Play");
         stand.setVisible(false);
         playing = false;
-        dealer_cards.set(0, dealer.revealFirstCard(cards));
+        dealerCards.set(0, dealer.revealFirstCard(cards));
         int ds = dealer.showCards();
         int ps = player.showCards();
         boolean betWon = false;
@@ -261,7 +261,7 @@ public class Blackjack extends JPanel implements ActionListener
         
         if(cards.getPlayed() == 52)
         {
-            dealer_pile = new Card(cards.getImage("d"), 10, 10);
+            dealerPile = new Card(cards.getImage("d"), 10, 10);
         }
         
         if(betWon)
@@ -288,7 +288,7 @@ public class Blackjack extends JPanel implements ActionListener
             toggleSound.setText("Sound on");
         
         // Determine if a Blackjack or bust has occurred?
-        if(hasBlackjack() || isBust() || player_index == 5)
+        if(hasBlackjack() || isBust() || playerIndex == 5)
             showCards();
         
         int score = player.calcTotal();
@@ -344,13 +344,13 @@ public class Blackjack extends JPanel implements ActionListener
     */
     private void hit()
     {
-        if(player_index < 6)
+        if(playerIndex < 6)
         {
             SoundEffects.play("hit");
-            player_cards.set(player_index, player.hit(cards));
-            int[] xy = player_cards.get(player_index).getXY();
+            playerCards.set(playerIndex, player.hit(cards));
+            int[] xy = playerCards.get(playerIndex).getXY();
             Debugger.emit(DEBUG, String.format("Placed card at %d,%d", xy[0], xy[1]));
-            player_index++;
+            playerIndex++;
             repaint();
         }
         else stand();
@@ -365,12 +365,12 @@ public class Blackjack extends JPanel implements ActionListener
         List<Card> received = dealer.respond(cards);
         for(int i = 0; i < received.size(); i++)
         {
-            int[] xy = dealer_cards.get(dealer_index).getXY();
-            dealer_cards.set(dealer_index, received.get(i));
-            dealer_cards.get(dealer_index).setXY(xy[0], xy[1]);
+            int[] xy = dealerCards.get(dealerIndex).getXY();
+            dealerCards.set(dealerIndex, received.get(i));
+            dealerCards.get(dealerIndex).setXY(xy[0], xy[1]);
             Debugger.emit(DEBUG, String.format("Placed card at %d,%d", xy[0], xy[1]));
-            Debugger.emit(DEBUG, dealer_index);
-            dealer_index++;
+            Debugger.emit(DEBUG, dealerIndex);
+            dealerIndex++;
         }
         showCards();
         repaint();
@@ -409,7 +409,7 @@ public class Blackjack extends JPanel implements ActionListener
         int width = getWidth();
         int height = getHeight();
         super.paint(g);
-        dealer_pile.draw(g);
+        dealerPile.draw(g);
         screentip.draw(g);
         instruction.draw(g);
         pScore.draw(g);
@@ -420,10 +420,10 @@ public class Blackjack extends JPanel implements ActionListener
         bChips.draw(g);
         gChips.draw(g);
         blChips.draw(g);
-        for(int i = 0; i < dealer_cards.size(); i++)
+        for(int i = 0; i < dealerCards.size(); i++)
         {
-            dealer_cards.get(i).draw(g);
-            player_cards.get(i).draw(g);
+            dealerCards.get(i).draw(g);
+            playerCards.get(i).draw(g);
         }
     }
     
@@ -435,7 +435,7 @@ public class Blackjack extends JPanel implements ActionListener
     {
         Blackjack blackjack = new Blackjack();
         JFrame app = new JFrame();
-        hit = new JButton("Bet");
+        hit = new JButton();
         stand = new JButton("Stand");
         stand.setVisible(false);
         toggleSound = new JButton();

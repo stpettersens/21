@@ -10,7 +10,9 @@ package io.stpettersen.blackjack;
 import java.util.List;
 import java.util.ArrayList;
 import javax.swing.JApplet;
+import javax.swing.JFrame;
 import javax.swing.JButton;
+import javax.swing.JOptionPane;
 import javax.swing.JRootPane;
 import java.awt.Graphics;
 import java.awt.Color;
@@ -21,22 +23,31 @@ public class BlackjackApplet extends JApplet implements ActionListener
 {
     private boolean ai;
     private boolean playing;
-    private int player_index;
-    private List<Card> player_cards;
-    private int dealer_index;
-    private List<Card> dealer_cards;
+    private int playerIndex;
+    private List<Card> playerCards;
+    private int dealerIndex;
+    private List<Card> dealerCards;
     private Screentip screentip;
-    private Score score;
     private Score instruction;
-    private Score p_score;
-    private Score d_score;
-    private Card dealer_pile;
+    private Score pScore;
+    private Score dScore;
+    private Score pBalance;
+    private Score wChips;
+    private Score rChips;
+    private Score bChips;
+    private Score gChips;
+    private Score blChips;
+    private Card dealerPile;
     private Cards cards;
     private Player player;
     private Dealer dealer;
+    private Chips chips;
+    private int balance;
+    private int bet;
     private JButton hit;
     private JButton stand;
     
+    private final String TITLE = "Blackjack";
     private final int SCREEN_WIDTH = 820;
     private final int SCREEN_HEIGHT = 560;
     private final int CARD_LIMIT = 42;
@@ -59,13 +70,22 @@ public class BlackjackApplet extends JApplet implements ActionListener
         // provide any initialisation necessary for your JApplet
         ai = false;
         playing = false;
+        balance = 1000;
+        bet = 0;
         screentip = new Screentip(DEBUG, ((SCREEN_WIDTH / 2) - 50), 190);
         instruction = new Score(DEBUG, ((SCREEN_WIDTH / 2) - 155), 450);
-        p_score = new Score(DEBUG, 153, 315);
-        d_score = new Score(DEBUG, 153, 25);
+        pScore = new Score(DEBUG, 153, 315);
+        dScore = new Score(DEBUG, 153, 25);
+        pBalance = new Score(DEBUG, 10, 410);
+        wChips = new Score(DEBUG, 10, 430);
+        rChips = new Score(DEBUG, 10, 450);
+        bChips = new Score(DEBUG, 10, 470);
+        gChips = new Score(DEBUG, 10, 490);
+        blChips = new Score(DEBUG, 10, 510);
+        chips = new Chips();
         cards = new Cards();
-        dealer_pile = new Card(cards.getImage("c"), 10, 10);
-        hit = new JButton("Hit");
+        dealerPile = new Card(cards.getImage("c"), 10, 10);
+        hit = new JButton();
         stand = new JButton("Stand");
         hit.addActionListener(this);
         stand.addActionListener(this);
@@ -83,7 +103,7 @@ public class BlackjackApplet extends JApplet implements ActionListener
     {
         // provide any code requred to run each time 
         // web page is visited
-        newGame();
+        startFirstGame();
     }
 
     /** 
@@ -99,15 +119,84 @@ public class BlackjackApplet extends JApplet implements ActionListener
     }
     
     /**
+     * Place a bet.
+    */
+    private void placeBet()
+    {
+        JFrame frame = new JFrame();
+        if(balance == 0)
+        {
+            balance = 1000;
+            int response = JOptionPane.showConfirmDialog(frame,
+            "Out of chips. Play again?",
+            TITLE,
+            JOptionPane.YES_NO_OPTION);
+            if(response == 0)
+                JOptionPane.showMessageDialog(frame,
+                String.format("Received $%d in chips.", balance));
+        }
+        String response = (String)JOptionPane.showInputDialog(frame,
+        "Place bet ($):");
+        try
+        {
+            bet = Integer.parseInt(response);
+            if(bet > 0 && bet <= balance)
+            {
+                balance -= bet;
+                Debugger.emit(DEBUG, 
+                String.format("Placed bid of $%d", bet));
+                newGame();
+            }
+            else 
+            {
+                JOptionPane.showMessageDialog(frame,
+                String.format("Bet must be between $1 and $%d", balance),
+                TITLE, JOptionPane.WARNING_MESSAGE);
+                placeBet();
+            }
+        }
+        catch(NumberFormatException e)
+        {
+            JOptionPane.showMessageDialog(frame,
+            "Bet must be numeric value.", TITLE,
+            JOptionPane.WARNING_MESSAGE);
+            Debugger.emit(DEBUG, e);
+            placeBet();
+        }
+    }
+    
+    /**
+     * Start the first game.
+    */
+    private void startFirstGame()
+    {
+        hit.setText("Play");
+        stand.setVisible(false);
+        playing = false;
+        playerCards = new ArrayList<Card>();
+        dealerCards = new ArrayList<Card>();
+        
+        player = new Player(DEBUG);
+        dealer = new Dealer(DEBUG, cards);
+        
+        screentip.clear();
+        instruction.emit("Click Play to start a new game.");
+        chips.deal(balance);
+        update();
+    }
+    
+    /**
      * Start a new game.
-     */
+    */
     private void newGame()
     {
+        hit.setText("Hit");
+        stand.setVisible(true);
         playing = true;
-        player_index = 2;
-        player_cards = new ArrayList<Card>();
-        dealer_index = 2;
-        dealer_cards = new ArrayList<Card>();
+        playerIndex = 2;
+        playerCards = new ArrayList<Card>();
+        dealerIndex = 2;
+        dealerCards = new ArrayList<Card>();
         
         player = new Player(DEBUG);
         dealer = new Dealer(DEBUG, cards);
@@ -120,16 +209,16 @@ public class BlackjackApplet extends JApplet implements ActionListener
         screentip.clear();
         Card[] pc = player.receiveCards(cards, dealer.deal(cards));
         Card[] dc = dealer.receiveCards(cards);
-        player_cards.add(pc[0]);
-        player_cards.add(pc[1]);
-        dealer_cards.add(dc[0]);
-        dealer_cards.add(dc[1]);
-        player_cards.add(new Card(cards.getImage("d"), 405, 310));
-        player_cards.add(new Card(cards.getImage("d"), 495, 310));
-        player_cards.add(new Card(cards.getImage("d"), 585, 310));
-        dealer_cards.add(new Card(cards.getImage("d"), 405, 10));
-        dealer_cards.add(new Card(cards.getImage("d"), 495, 10));
-        dealer_cards.add(new Card(cards.getImage("d"), 585, 10));
+        playerCards.add(pc[0]);
+        playerCards.add(pc[1]);
+        dealerCards.add(dc[0]);
+        dealerCards.add(dc[1]);
+        playerCards.add(new Card(cards.getImage("d"), 405, 310));
+        playerCards.add(new Card(cards.getImage("d"), 495, 310));
+        playerCards.add(new Card(cards.getImage("d"), 585, 310));
+        dealerCards.add(new Card(cards.getImage("d"), 405, 10));
+        dealerCards.add(new Card(cards.getImage("d"), 495, 10));
+        dealerCards.add(new Card(cards.getImage("d"), 585, 10));
         update();
     }
     
@@ -138,14 +227,19 @@ public class BlackjackApplet extends JApplet implements ActionListener
     */
     private void showCards()
     {
+        hit.setText("Play");
+        stand.setVisible(false);
         playing = false;
-        dealer_cards.set(0, dealer.revealFirstCard(cards));
+        dealerCards.set(0, dealer.revealFirstCard(cards));
         int ds = dealer.showCards();
         int ps = player.showCards();
+        boolean betWon = false;
+        boolean refundBet = false;
         
         if(ps == 21 && ds != 21)
         {
             screentip.emit("PLAYER BLACKJACK!", "Player has 21. That's a Blackjack!");
+            betWon = true;
         }
         else if(ds == 21 && ps != 21)
         {
@@ -154,10 +248,12 @@ public class BlackjackApplet extends JApplet implements ActionListener
         else if((ps == ds) || (ps > 21 && ds > 21))
         {
             screentip.emit("PUSH", "Neither dealer nor player won.");
+            refundBet = true;
         }
         else if(ps <= 21 && ps > ds)
         {
             screentip.emit("PLAYER WINS", String.format("Player wins with %d. Well done.", ps));
+            betWon = true;
         }
         else if(ds <= 21 && ds > ps)
         {
@@ -170,9 +266,10 @@ public class BlackjackApplet extends JApplet implements ActionListener
         else if(ds > 21 && ps <= 21)
         {
             screentip.emit("PLAYER WINS", "Player wins. Dealer bust.");
+            betWon = true;
         }
         
-        d_score.emit(dealer.calcTotal());
+        dScore.emit(dealer.calcTotal());
         Debugger.emit(DEBUG, String.format("Cards played %d", cards.getPlayed()));
         
         if(cards.getPlayed() >= CARD_LIMIT)
@@ -181,13 +278,23 @@ public class BlackjackApplet extends JApplet implements ActionListener
         }
         else
         {
-            instruction.emit("Play again? Press Hit or Stand.");
+            instruction.emit("Play again?");
         }
         
         if(cards.getPlayed() == 52)
         {
-            dealer_pile = new Card(cards.getImage("d"), 10, 10);
+            dealerPile = new Card(cards.getImage("d"), 10, 10);
         }
+        
+        if(betWon)
+        {
+            balance += (bet * 2); // Player wins bet; receive bet + dealer's.
+        }
+        else if(refundBet)
+        {
+            balance += bet; // Player's bet is refunded on a push.
+        }
+        chips.deal(balance);
         repaint();
     }
     
@@ -197,15 +304,29 @@ public class BlackjackApplet extends JApplet implements ActionListener
     private void update()
     {
         // Determine if a Blackjack or bust has occurred?
-        if(hasBlackjack() || isBust() || player_index == 5)
-        {
+        if(hasBlackjack() || isBust() || playerIndex == 5)
             showCards();
-        }
-        p_score.emit(player.calcTotal());
+        
+        int score = player.calcTotal();
+        if(score > 0) pScore.emit(score);
+        pBalance.emit(String.format("Balance: $%d", balance));
+        
+        int[] chipVals = chips.getValues();
+        int[] chipNums = chips.getNums();
+        wChips.emit(String.format("White chips ($%d): %d", 
+        chipVals[0], chipNums[0]));
+        rChips.emit(String.format("Red chips ($%d): %d",
+        chipVals[1], chipNums[1]));
+        bChips.emit(String.format("Blue chips ($%d): %d",
+        chipVals[2], chipNums[2]));
+        gChips.emit(String.format("Green chips ($%d): %d",
+        chipVals[3], chipNums[3]));
+        blChips.emit(String.format("Black chips ($%d): %d",
+        chipVals[4], chipNums[4]));
         
         if(playing)
         {
-            d_score.emit("?");
+            dScore.emit("?");
             instruction.emit("Hit or Stand?");
         }
         repaint();
@@ -244,14 +365,15 @@ public class BlackjackApplet extends JApplet implements ActionListener
     */
     private void hit()
     {
-        if(player_index < 6)
+        if(playerIndex < 6)
         {
-            player_cards.set(player_index, player.hit(cards));
-            int[] xy = player_cards.get(player_index).getXY();
+            playerCards.set(playerIndex, player.hit(cards));
+            int[] xy = playerCards.get(playerIndex).getXY();
             Debugger.emit(DEBUG, String.format("Placed card at %d,%d", xy[0], xy[1]));
-            player_index++;
+            playerIndex++;
             repaint();
         }
+        else stand();
     }
    
     /**
@@ -263,12 +385,12 @@ public class BlackjackApplet extends JApplet implements ActionListener
         List<Card> received = dealer.respond(cards);
         for(int i = 0; i < received.size(); i++)
         {
-            int[] xy = dealer_cards.get(dealer_index).getXY();
-            dealer_cards.set(dealer_index, received.get(i));
-            dealer_cards.get(dealer_index).setXY(xy[0], xy[1]);
+            int[] xy = dealerCards.get(dealerIndex).getXY();
+            dealerCards.set(dealerIndex, received.get(i));
+            dealerCards.get(dealerIndex).setXY(xy[0], xy[1]);
             Debugger.emit(DEBUG, String.format("Placed card at %d,%d", xy[0], xy[1]));
-            Debugger.emit(DEBUG, dealer_index);
-            dealer_index++;
+            Debugger.emit(DEBUG, dealerIndex);
+            dealerIndex++;
         }
         showCards();
         repaint();
@@ -284,33 +406,39 @@ public class BlackjackApplet extends JApplet implements ActionListener
         if(src == hit)
         {
             if(playing) hit();
-            else newGame();
+            else placeBet();
         }
         else if(src == stand)
         {
             if(playing) stand();
-            else newGame();
+            else placeBet();
         }
         update();
     }
 
     /**
      * Paint method for applet.
-     * @param g Graphics object for this applet
+     * @param g Graphics object for this applet.
      */
     public void paint(Graphics g)
     {
         g.setColor(new Color(0, 153, 0));
         g.fillRect(0, 0, SCREEN_WIDTH, SCREEN_HEIGHT);
-        dealer_pile.draw(g);
+        dealerPile.draw(g);
         screentip.draw(g);
         instruction.draw(g);
-        p_score.draw(g);
-        d_score.draw(g);
-        for(int i = 0; i < dealer_cards.size(); i++)
+        pScore.draw(g);
+        dScore.draw(g);
+        pBalance.draw(g);
+        wChips.draw(g);
+        rChips.draw(g);
+        bChips.draw(g);
+        gChips.draw(g);
+        blChips.draw(g);
+        for(int i = 0; i < dealerCards.size(); i++)
         {
-            dealer_cards.get(i).draw(g);
-            player_cards.get(i).draw(g);
+            dealerCards.get(i).draw(g);
+            playerCards.get(i).draw(g);
         }
         hit.setLocation(10, 320);
         hit.setSize(100, 25);
