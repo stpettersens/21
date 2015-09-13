@@ -103,9 +103,16 @@ public class Blackjack extends JPanel implements ActionListener
         JFrame frame = new JFrame();
         if(balance == 0) 
         {
-            JOptionPane.showMessageDialog(frame, "Out of chips.");
             balance = 1000;
-            placeBet();
+            int response = JOptionPane.showConfirmDialog(frame,
+            "Out of chips. Play again?",
+            TITLE,
+            JOptionPane.YES_NO_OPTION);
+            if(response == 0)
+                JOptionPane.showMessageDialog(frame,
+                String.format("Received $%d in chips.", balance));
+            else
+                System.exit(0);
         }
         String response = (String)JOptionPane.showInputDialog(frame, "Place bet ($):");
         try {
@@ -127,11 +134,32 @@ public class Blackjack extends JPanel implements ActionListener
         catch(NumberFormatException e) 
         {
             JOptionPane.showMessageDialog(frame,
-            "Bet must be numeric value", TITLE,
+            "Bet must be numeric value.", TITLE,
             JOptionPane.WARNING_MESSAGE);
             Debugger.emit(DEBUG, e);
             placeBet();
         }
+    }
+    
+    /**
+     * Start the first game.
+    */
+    private void startFirstGame()
+    {
+        hit.setText("Play");
+        stand.setVisible(false);
+        playing = false;
+        player_cards = new ArrayList<Card>();
+        dealer_cards = new ArrayList<Card>();
+        
+        player = new Player(DEBUG);
+        dealer = new Dealer(DEBUG, cards);
+        
+        screentip.clear();
+        pScore.emit("");
+        instruction.emit("Click Play to start a new game.");
+        chips.deal(balance);
+        update();
     }
     
     /**
@@ -238,7 +266,7 @@ public class Blackjack extends JPanel implements ActionListener
         
         if(betWon)
         {
-            balance += bet * 2; // Player wins bet; receives their bet + dealer's.
+            balance += (bet * 2); // Player wins bet; receives their bet + dealer's.
         }
         else if(refundBet)
         {
@@ -263,7 +291,8 @@ public class Blackjack extends JPanel implements ActionListener
         if(hasBlackjack() || isBust() || player_index == 5)
             showCards();
         
-        pScore.emit(player.calcTotal());
+        int score = player.calcTotal();
+        if(score > 0) pScore.emit(score);
         pBalance.emit(String.format("Balance: $%d", balance));
         
         int[] chipVals = chips.getValues();
@@ -428,6 +457,6 @@ public class Blackjack extends JPanel implements ActionListener
         app.setVisible(true);
         app.setResizable(false);
         
-        blackjack.newGame();
+        blackjack.startFirstGame();
     }
 }
