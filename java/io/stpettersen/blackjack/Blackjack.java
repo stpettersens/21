@@ -99,8 +99,14 @@ public class Blackjack extends JPanel implements ActionListener
      * Place a bet.
     */
     private void placeBet()
-    {
+    { 
         JFrame frame = new JFrame();
+        if(balance == 0) 
+        {
+            JOptionPane.showMessageDialog(frame, "Out of chips.");
+            balance = 1000;
+            placeBet();
+        }
         String response = (String)JOptionPane.showInputDialog(frame, "Place bet ($):");
         try {
             bet = Integer.parseInt(response);
@@ -108,7 +114,6 @@ public class Blackjack extends JPanel implements ActionListener
             {
                 balance -= bet;
                 Debugger.emit(DEBUG, String.format("Placed bid of $%d", bet));
-                //chips.deal(balance);
                 newGame();
             }
             else
