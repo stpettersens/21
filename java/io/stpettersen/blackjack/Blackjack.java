@@ -216,12 +216,12 @@ public class Blackjack extends JPanel implements ActionListener
         
         if(ps == 21 && ds != 21 && playerIndex == 2)
         {
-            screentip.emit("PLAYER BLACKJACK!", "Player has 21. That's a Blackjack!");
+            screentip.emit("PLAYER BLACKJACK!", "Player has 21 with 2 cards. That's a Blackjack!");
             betWon = true;
         }
         else if(ds == 21 && ps != 21 && dealerIndex == 2)
         {
-            screentip.emit("DEALER BLACKJACK!", "Dealer has 21. That's a Blackjack!");
+            screentip.emit("DEALER BLACKJACK!", "Dealer has 21 with 2 cards. That's a Blackjack!");
         }
         else if((ps == ds) || (ps > 21 && ds > 21))
         {
