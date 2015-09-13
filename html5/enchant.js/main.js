@@ -11,27 +11,36 @@
  * @copyright 2015 Sam Saint-Pettersen
 */
 
-var debug = false;
 var ai = false;
 var sound = true;
 var playing = true;
-var player_index = 2;
-var player_cards = [];
-var dealer_index = 2;
-var dealer_cards = [];
+var playerIndex = 2;
+var playerCards = [];
+var dealerIndex = 2;
+var dealerCards = [];
 var screentip = null;
 var instruction = null;
-var p_score = null;
-var d_score = null;
-var dealer_pile = null;
+var pScore = null;
+var dScore = null;
+var pBalance = null;
+var wChips = null;
+var rChips = null;
+var bChips = null;
+var gChips = null;
+var blChips = null;
+var dealerPile = null;
 var cards = null;
 var player = null;
 var dealer = null;
+var chips = null;
 var toggle_sound = null;
+var balance = 1000;
+var bet = 0;
 var timer = 0;
 
-var SCREEN_WIDTH = 780;
-var SCREEN_HEIGHT = 500;
+var SCREEN_WIDTH = 820; // 780
+var SCREEN_HEIGHT = 560; // 560
+var DEBUG = true;
 
 /**
  * @function Main function.
@@ -51,10 +60,17 @@ window.onload = function() {
 		var scene = new Scene();
 		scene.backgroundColor = 'rgb(0, 153, 0)';
 
-		screentip = new Screentip(debug, ((SCREEN_WIDTH / 2) - 60), 190);
-		instruction = new Score(debug, ((SCREEN_WIDTH / 2) - 200), 450);
-		p_score = new Score(debug, 153, 315);
-		d_score = new Score(debug, 153, 25);
+		screentip = new Screentip(DEBUG, ((SCREEN_WIDTH / 2) - 60), 190);
+		instruction = new Score(DEBUG, ((SCREEN_WIDTH / 2) - 200), 450);
+		pScore = new Score(DEBUG, 153, 315);
+		dScore = new Score(DEBUG, 153, 25);
+		pBalance = new Score(DEBUG, 10, 410);
+		wChips = new Score(DEBUG, 10, 430);
+		rChips = new Score(DEBUG, 10, 450);
+		bChips = new Score(DEBUG, 10, 470);
+		gChips = new Score(DEBUG, 10, 490);
+		blChips = new Score(DEBUG, 10, 510);
+		chips = new Chips();
 		cards = new Cards();
 		game.sfx = enchantSFXSupported();
 		toggle_sound = new Score(debug, 600, 15);
@@ -78,6 +94,9 @@ window.onload = function() {
 		*/
 		function toggleSound() {
 			sound = SoundEffects.toggle();
+			Debug.emit(DEBUG, "----------------------------------------------------");
+			Debug.emit(DEBUG, "Sound effects on: " + sound);
+			Debug.emit(DEBUG, "----------------------------------------------------");
 			update();
 		}
 
@@ -99,14 +118,14 @@ window.onload = function() {
 		*/
 		function showCards() {
 			playing = false;
-			dealer_cards[0] = dealer.revealFirstCard();
+			dealerCards[0] = dealer.revealFirstCard();
 			var ds = dealer.showCards();
 			var ps = player.showCards();
 
-			if(ps === 21 && player_index === 2 && ds !== 21)
+			if(ps === 21 && playerIndex === 2 && ds !== 21)
 				screentip.emit('PLAYER BLACKJACK!', 'Player has 21. That\'s a Blackjack!');
 
-			else if(ds === 21 && dealer_index === 2 && ps !== 21)
+			else if(ds === 21 && dealerIndex === 2 && ps !== 21)
 				screentip.emit('DEALER BLACKJACK!', 'Dealer has 21. That\'s a Blackjack!');
 
 			else if((ps == ds) || (ps > 21 && ds > 21))
@@ -125,10 +144,10 @@ window.onload = function() {
 				screentip.emit('PLAYER WINS', 'Player wins. Dealer bust.');
 
 			if(cards.getPlayed() == 52)
-				dealer_pile = new Card(Card.getImage('d'), 10, 10, game);
+				dealerPile = new Card(Card.getImage('d'), 10, 10, game);
 
 			Debug.emit(debug, 'Cards played ' + cards.getPlayed().toString());
-			d_score.emit(dealer.calcTotal());
+			dScore.emit(dealer.calcTotal());
 			if(!isTouchScreenDevice())
 				instruction.emit('Play again? Yes [Y key or LMB] or No [N key or Escape key].');
 
@@ -144,23 +163,23 @@ window.onload = function() {
 		function newGame() {
 			clear();
 			playing = true;
-			player_index = 2;
-			player_cards = new Array(5);
-			dealer_index = 2;
-			dealer_cards = new Array(5);
-			dealer_pile = new Card(Card.getImage('c'), 10, 10, game);
+			playerIndex = 2;
+			playerCards = new Array(5);
+			dealerIndex = 2;
+			dealerCards = new Array(5);
+			dealerPile = new Card(Card.getImage('c'), 10, 10, game);
 			screentip.clear();
 			player = new Player(debug, game);
 			dealer = new Dealer(debug, game);
 			dealer.shuffle(cards);
-			player_cards = player.receiveCards(dealer.deal(cards));
-			dealer_cards = dealer.receiveCards();
-			player_cards[2] = new Card(Card.getImage('d'), 405, 310, game);
-			player_cards[3] = new Card(Card.getImage('d'), 495, 310, game);
-			player_cards[4] = new Card(Card.getImage('d'), 585, 310, game);
-			dealer_cards[2] = new Card(Card.getImage('d'), 405, 10, game);
-			dealer_cards[3] = new Card(Card.getImage('d'), 495, 10, game);
-			dealer_cards[4] = new Card(Card.getImage('d'), 585, 10, game);
+			playerCards = player.receiveCards(dealer.deal(cards));
+			dealerCards = dealer.receiveCards();
+			playerCards[2] = new Card(Card.getImage('d'), 405, 310, game);
+			playerCards[3] = new Card(Card.getImage('d'), 495, 310, game);
+			playerCards[4] = new Card(Card.getImage('d'), 585, 310, game);
+			dealerCards[2] = new Card(Card.getImage('d'), 405, 10, game);
+			dealerCards[3] = new Card(Card.getImage('d'), 495, 10, game);
+			dealerCards[4] = new Card(Card.getImage('d'), 585, 10, game);
  			update();
 			draw();
 		}
@@ -177,10 +196,10 @@ window.onload = function() {
 			if(hasBlackjack() || isBust())
 				showCards();
 
-			p_score.emit(player.calcTotal());
+			pScore.emit(player.calcTotal());
 
 			if(playing) {
-				d_score.emit('?');
+				dScore.emit('?');
 				instruction.emit('Hit [H key or LMB] or Stand [S key or RMB]?');
 			}
 		}
@@ -190,17 +209,17 @@ window.onload = function() {
 		*/
 		function draw() {
 			scene.addChild(toggle_sound.draw());
-			scene.addChild(dealer_pile.draw());
+			scene.addChild(dealerPile.draw());
 			scene.addChild(screentip.draw()[0]);
 			scene.addChild(screentip.draw()[1]);
 			scene.addChild(instruction.draw());
-			scene.addChild(p_score.draw());
-			scene.addChild(d_score.draw());
-			for(var i = 0; i < player_cards.length; i++) {
-				scene.addChild(player_cards[i].draw());
+			scene.addChild(pScore.draw());
+			scene.addChild(dScore.draw());
+			for(var i = 0; i < playerCards.length; i++) {
+				scene.addChild(playerCards[i].draw());
 			}
-			for(var i = 0; i < dealer_cards.length; i++) {
-				scene.addChild(dealer_cards[i].draw());
+			for(var i = 0; i < dealerCards.length; i++) {
+				scene.addChild(dealerCards[i].draw());
 			}
 			game.pushScene(scene);
 		}
@@ -212,13 +231,13 @@ window.onload = function() {
 			scene.removeChild(screentip.draw()[0]);
 			scene.removeChild(screentip.draw()[1]);
 			scene.removeChild(instruction.draw());
-			scene.removeChild(p_score.draw());
-			scene.removeChild(d_score.draw());
-			for(var i = 0; i < player_cards.length; i++) {
-				scene.removeChild(player_cards[i].draw());
+			scene.removeChild(pScore.draw());
+			scene.removeChild(dScore.draw());
+			for(var i = 0; i < playerCards.length; i++) {
+				scene.removeChild(playerCards[i].draw());
 			}
-			for(var i = 0; i < dealer_cards.length; i++) {
-				scene.removeChild(dealer_cards[i].draw());
+			for(var i = 0; i < dealerCards.length; i++) {
+				scene.removeChild(dealerCards[i].draw());
 			}
 		}
 
@@ -250,10 +269,10 @@ window.onload = function() {
 		 * Take a hit.
 		*/
 		function hit() {
-			if(player_index < 6) {
+			if(playerIndex < 6) {
 				SoundEffects.play(game, 'hit');
-				player_cards[player_index] = player.hit(cards);
-				player_index++;
+				playerCards[playerIndex] = player.hit(cards);
+				playerIndex++;
 				update();
 			}
 			draw();
@@ -266,12 +285,12 @@ window.onload = function() {
 			player.stand();
 			var received = dealer.respond(cards);
 			for(var i = 0; i < received.length; i++) {
-				var xy = dealer_cards[dealer_index].getXY();
-				dealer_cards[dealer_index] = received[i];
-				dealer_cards[dealer_index].setXY(xy[0], xy[1]);
+				var xy = dealerCards[dealerIndex].getXY();
+				dealerCards[dealerIndex] = received[i];
+				dealerCards[dealerIndex].setXY(xy[0], xy[1]);
 				Debug.emit(debug, 'Added image at ' + xy[0].toString() + ',' + xy[1].toString());
-				Debug.emit(debug, dealer_index);
-				dealer_index++;
+				Debug.emit(debug, dealerIndex);
+				dealerIndex++;
 			}
 			showCards();
 		}
