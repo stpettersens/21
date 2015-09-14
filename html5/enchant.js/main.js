@@ -74,7 +74,7 @@ window.onload = function() {
 		cards = new Cards();
 		game.sfx = enchantSFXSupported();
 		toggle_sound = new Score(debug, 600, 15);
-		newGame();
+		startFirstGame();
 
 		/**
 		 * Is the game running on a touch screen device?
@@ -114,6 +114,53 @@ window.onload = function() {
 		}
 
 		/**
+		 * Place a bet.
+		*/
+		function placeBet() {
+			if(balance == 0) {
+				balance = 1000;
+				var response = confirm('Out of chips. Play again?');
+				if(response) {
+					alert('Received $' + balance + ' in chips.');
+				}
+			}
+			var response = prompt('Place bet ($):', '0');
+			if(!isNaN(response)) {
+				bet = parseInt(response);
+				if(bet > 0 && bet <= balance) {
+					balance -= bet;
+					Debug.emit(DEBUG, "Placed bid of $" + bet);
+					newGame();
+				}
+				else {
+					alert('Bet must between $1 and $' + balance);
+					placeBet();
+				}
+			}
+			else {
+				alert('Bet must be numeric value.');
+				placeBet();
+			}
+		}
+
+		/**
+		 * Start the first game.
+		*/
+		function startFirstGame() {
+			playing = false;
+			playerCards = new Array(5);
+			dealerCards = new Array(5);
+
+			player = new Player(DEBUG);
+			dealer = new Dealer(DEBUG);
+
+			screentip.clear();
+			instruction.emit('Press P key  or left click to start a new game.');
+			chips.deal(balance);
+			update();
+		}
+
+		/**
 		 * Show cards at end of game.
 		*/
 		function showCards() {
@@ -121,9 +168,13 @@ window.onload = function() {
 			dealerCards[0] = dealer.revealFirstCard();
 			var ds = dealer.showCards();
 			var ps = player.showCards();
+			var betWon = false;
+			var refundBet = false;
 
-			if(ps === 21 && playerIndex === 2 && ds !== 21)
+			if(ps === 21 && playerIndex === 2 && ds !== 21) {
 				screentip.emit('PLAYER BLACKJACK!', 'Player has 21. That\'s a Blackjack!');
+				betWon = true;
+			}
 
 			else if(ds === 21 && dealerIndex === 2 && ps !== 21)
 				screentip.emit('DEALER BLACKJACK!', 'Dealer has 21. That\'s a Blackjack!');
@@ -131,8 +182,10 @@ window.onload = function() {
 			else if((ps == ds) || (ps > 21 && ds > 21))
 				screentip.emit('PUSH', 'Neither dealer nor player won.');
 
-			else if(ps <= 21 && ps > ds)
+			else if(ps <= 21 && ps > ds) {
 				screentip.emit('PLAYER WINS', 'Player wins with ' + ps.toString() + '. Well done.');
+				refundBet = true;
+			}
 
 			else if(ds <= 21 && ds > ps)
 				screentip.emit('DEALER WINS', 'Dealer wins with ' + ds.toString() + '. Too bad.');
@@ -140,8 +193,10 @@ window.onload = function() {
 			else if(ps > 21 && ds <= 21)
 				screentip.emit('DEALER WINS', 'Dealer wins. Player bust.');
 
-			else if(ds > 21 && ps <= 21)
+			else if(ds > 21 && ps <= 21) {
 				screentip.emit('PLAYER WINS', 'Player wins. Dealer bust.');
+				betWon = true;
+			}
 
 			if(cards.getPlayed() == 52)
 				dealerPile = new Card(Card.getImage('d'), 10, 10, game);
@@ -154,6 +209,12 @@ window.onload = function() {
 			else
 				instruction.emit('Play again? Long tap screen to continue.');
 
+			if(betWon)
+				balance += (bet * 2); // Player wins bet; receives their bet + dealer's.
+			else if(refundBet)
+				balance += bet; // Player's bet is refunded on a push.
+
+			chips.deal(balance);
 			draw();
 		}
 
@@ -215,6 +276,12 @@ window.onload = function() {
 			scene.addChild(instruction.draw());
 			scene.addChild(pScore.draw());
 			scene.addChild(dScore.draw());
+			scene.addChild(pBalance.draw());
+			scene.addChild(wChips.draw());
+			scene.addChild(rChips.draw());
+			scene.addChild(bChips.draw());
+			scene.addChild(gChips.draw());
+			scene.addChild(blChips.draw());
 			for(var i = 0; i < playerCards.length; i++) {
 				scene.addChild(playerCards[i].draw());
 			}
@@ -344,7 +411,7 @@ window.onload = function() {
 			else if(playing && event.keyCode === 83)
 				stand();
 
-			else if(!playing && event.keyCode === 89)
+			else if(!playing && (event.keyCode === 89 || event.keyCode == 80))
 				newGame();
 
 			else if(!playing && event.keyCode === 78)
