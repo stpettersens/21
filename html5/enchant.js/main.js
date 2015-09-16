@@ -53,8 +53,8 @@ window.onload = function() {
 	enchant();
 	var game = new Core(SCREEN_WIDTH, SCREEN_HEIGHT);
 	var content = graphics.concat(sounds);
-	Debug.emit(debug, 'Loading assets:');
-	Debug.emit(debug, content);
+	Debug.emit(DEBUG, 'Loading assets:');
+	Debug.emit(DEBUG, content);
 	game.preload(content);
 	game.onload = function() {
 		var scene = new Scene();
@@ -73,8 +73,8 @@ window.onload = function() {
 		chips = new Chips();
 		cards = new Cards();
 		game.sfx = enchantSFXSupported();
-		toggle_sound = new Score(debug, 600, 15);
-		startFirstGame();
+		toggle_sound = new Score(DEBUG, 600, 15);
+		placeBet();
 
 		/**
 		 * Is the game running on a touch screen device?
@@ -201,7 +201,7 @@ window.onload = function() {
 			if(cards.getPlayed() == 52)
 				dealerPile = new Card(Card.getImage('d'), 10, 10, game);
 
-			Debug.emit(debug, 'Cards played ' + cards.getPlayed().toString());
+			Debug.emit(DEBUG, 'Cards played ' + cards.getPlayed().toString());
 			dScore.emit(dealer.calcTotal());
 			if(!isTouchScreenDevice())
 				instruction.emit('Play again? Yes [Y key or LMB] or No [N key or Escape key].');
@@ -230,8 +230,8 @@ window.onload = function() {
 			dealerCards = new Array(5);
 			dealerPile = new Card(Card.getImage('c'), 10, 10, game);
 			screentip.clear();
-			player = new Player(debug, game);
-			dealer = new Dealer(debug, game);
+			player = new Player(DEBUG, game);
+			dealer = new Dealer(DEBUG, game);
 			dealer.shuffle(cards);
 			playerCards = player.receiveCards(dealer.deal(cards));
 			dealerCards = dealer.receiveCards();
@@ -254,10 +254,20 @@ window.onload = function() {
 			else
 				toggle_sound.emit('Turn sound on [E key]');
 	
-			if(hasBlackjack() || isBust())
+			if(hasBlackjack() || isBust() || playerIndex == 5)
 				showCards();
 
-			pScore.emit(player.calcTotal());
+			var score = player.calcTotal();
+			if(score > 0) pScore.emit(score);
+			pScore.emit('Balance: $' + balance);
+
+			var chipVals = chips.getValues();
+			var chipNums = chips.getNums();
+			wChips.emit('White chips ($' + chipVals[0] + '): ' + chipNums[0]);
+			rChips.emit('Red chips ($' + chipVals[1] + '): ' + chipNums[1]);
+			bChips.emit('Blue chips ($' + chipVals[2] + '): ' + chipNums[2]);
+			gChips.emit('Green chips ($' + chipVals[3] + '): ' + chipNums[3]);
+			blChips.emit('Black chips ($' + chipVals[4] + '): ' + chipNums[4]);
 
 			if(playing) {
 				dScore.emit('?');
@@ -274,14 +284,14 @@ window.onload = function() {
 			scene.addChild(screentip.draw()[0]);
 			scene.addChild(screentip.draw()[1]);
 			scene.addChild(instruction.draw());
-			scene.addChild(pScore.draw());
+			/*scene.addChild(pScore.draw());
 			scene.addChild(dScore.draw());
 			scene.addChild(pBalance.draw());
 			scene.addChild(wChips.draw());
 			scene.addChild(rChips.draw());
 			scene.addChild(bChips.draw());
 			scene.addChild(gChips.draw());
-			scene.addChild(blChips.draw());
+			scene.addChild(blChips.draw());*/
 			for(var i = 0; i < playerCards.length; i++) {
 				scene.addChild(playerCards[i].draw());
 			}
@@ -300,6 +310,12 @@ window.onload = function() {
 			scene.removeChild(instruction.draw());
 			scene.removeChild(pScore.draw());
 			scene.removeChild(dScore.draw());
+			/*scene.removeChild(pBalance.draw());
+			scene.removeChild(wChips.draw());
+			scene.removeChild(rChips.draw());
+			scene.removeChild(bChips.draw());
+			scene.removeChild(gChips.draw());
+			scene.removeChild(blChips.draw());*/
 			for(var i = 0; i < playerCards.length; i++) {
 				scene.removeChild(playerCards[i].draw());
 			}
@@ -342,6 +358,7 @@ window.onload = function() {
 				playerIndex++;
 				update();
 			}
+			else stand();
 			draw();
 		}
 
@@ -355,8 +372,8 @@ window.onload = function() {
 				var xy = dealerCards[dealerIndex].getXY();
 				dealerCards[dealerIndex] = received[i];
 				dealerCards[dealerIndex].setXY(xy[0], xy[1]);
-				Debug.emit(debug, 'Added image at ' + xy[0].toString() + ',' + xy[1].toString());
-				Debug.emit(debug, dealerIndex);
+				Debug.emit(DEBUG, 'Added image at ' + xy[0].toString() + ',' + xy[1].toString());
+				Debug.emit(DEBUG, dealerIndex);
 				dealerIndex++;
 			}
 			showCards();
@@ -424,6 +441,6 @@ window.onload = function() {
 				toggleSound();
 		});
 	};
-	Debug.emit(debug, 'Initialized HTML5 Blackjack (enchant.js build).');
+	Debug.emit(DEBUG, 'Initialized HTML5 Blackjack (enchant.js build).');
 	game.start();
 };

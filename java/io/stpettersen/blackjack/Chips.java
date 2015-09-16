@@ -74,16 +74,16 @@ public class Chips
         for(int i = 0; i < Math.floor(balance / values[0]); i++) 
             deckWhite++;
         // Deal out red chips.
-        for(int i = 0; i < Math.floor(balance / values[1])); i++)
+        for(int i = 0; i < Math.floor(balance / values[1]); i++)
             deckRed++;
         // Deal out blue chips.
-        for(int i = 0; i < Math.floor(balance / values[2])); i++)
+        for(int i = 0; i < Math.floor(balance / values[2]); i++)
             deckBlue++;
         // Deal out green chips.
-        for(int i = 0; i < Math.floor(balance / values[3])); i++)
+        for(int i = 0; i < Math.floor(balance / values[3]); i++)
             deckGreen++;
         // Deal out black chips.
-        for(int i = 0; i < Math.floor(balance / values[4])); i++)
+        for(int i = 0; i < Math.floor(balance / values[4]); i++)
             deckBlack++;
     }
     

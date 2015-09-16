@@ -21,7 +21,7 @@ function Chips() {
 	this.deckBlue = 0;
 	this.deckGreen = 0;
 	this.deckBlack = 0;
-	this.values = [ 1, 5, 10, 25, 100 ];
+	this.amounts = [ 1, 5, 10, 25, 100 ];
 }
 
 /**
@@ -33,19 +33,19 @@ Chips.prototype.getChip = function(color) {
 	var value = 0;
 	switch(color) {
 		case 'WHITE':
-			value = values[0];
+			value = this.amounts[0];
 			break;
 		case 'RED':
-			value = values[1];
+			value = this.amounts[1];
 			break;
 		case 'BLUE':
-			value = values[2];
+			value = this.amounts[2];
 			break;
 		case 'GREEN':
-			value = values[3];
+			value = this.amounts[3];
 			break;
 		case 'BLACK':
-			value = values[4];
+			value = this.amounts[4];
 			break;
 	}
 	return value;
@@ -62,19 +62,19 @@ Chips.prototype.deal = function(balance) {
 	deckGreen = 0;
 	deckBlack = 0;
 	// Deal out white chips.
-	for(var i = 0; i < Math.floor(balance / values[0]); i++)
+	for(var i = 0; i < Math.floor(balance / this.amounts[0]); i++)
 		deckWhite++;
 	// Deal out red chips.
-	for(var i = 0; i < Math.floor(balance / values[1]); i++)
+	for(var i = 0; i < Math.floor(balance / this.amounts[1]); i++)
 		deckRed++;
 	// Deal out blue chips.
-	for(var i = 0; i < Math.floor(balance / values[2]); i++)
+	for(var i = 0; i < Math.floor(balance / this.amounts[2]); i++)
 		deckBlue++;
 	// Deal out green chips.
-	for(var i = 0; i < Math.floor(balance / values[3]); i++)
+	for(var i = 0; i < Math.floor(balance / this.amounts[3]); i++)
 		deckGreen++;
 	// Deal out black chips.
-	for(var i = 0; i < Math.floor(balance / values[4]); i++)
+	for(var i = 0; i < Math.floor(balance / this.amounts[4]); i++)
 		deckBlack++;
 }
 
@@ -87,15 +87,15 @@ Chips.prototype.deal = function(balance) {
 Cards.prototype.draw = function(color, balance) {
 	if(balance > 0) {
 		var bet = 0;
-		if(color == 'WHITE' && balance >= values[0])
+		if(color == 'WHITE' && balance >= this.amounts[0])
 			bet = getChip('WHITE');
-		else if(color == 'RED' && balance >= values[1])
+		else if(color == 'RED' && balance >= this.amounts[1])
 			bet = getChip('RED');
-		else if(color == 'BLUE' && balance >= values[2])
+		else if(color == 'BLUE' && balance >= this.amounts[2])
 			bet = getChip('BLUE');
-		else if(color == 'GREEN' && balance >= values[3])
+		else if(color == 'GREEN' && balance >= this.amounts[3])
 			bet = getChip('GREEN');
-		else if(color == 'BLACK' && balance >= values[4])
+		else if(color == 'BLACK' && balance >= this.amounts[4])
 			bet = getChip('BLACK');
 
 		balance -= bet;
@@ -105,11 +105,11 @@ Cards.prototype.draw = function(color, balance) {
 }
 
 /**
- * Get values for chips.
+ * Get this.amounts for chips.
  * @returns {number[]} Values for each color chip.
 */
 Chips.prototype.getValues = function() {
-	return values;
+	return this.amounts;
 }
 
 /**

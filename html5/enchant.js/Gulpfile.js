@@ -12,7 +12,7 @@ var gulp = require('gulp'),
 
 gulp.task('js', function() {
 	return gulp.src(['graphics.js','sounds.js','debug.js','cards.js',
-	'card.js','screentip.js','score.js','player.js','dealer.js',
+	'card.js','chips.js','screentip.js','score.js','player.js','dealer.js',
 	'ai.js','main.js'])
 	.pipe(concat('blackjack.enchant_js.js'))
 	.pipe(gulp.dest('dist'))
