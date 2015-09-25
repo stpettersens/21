@@ -74,7 +74,10 @@ window.onload = function() {
 		cards = new Cards();
 		game.sfx = enchantSFXSupported();
 		toggle_sound = new Score(DEBUG, 600, 15);
-		placeBet();
+		player = new Player(DEBUG);
+		dealer = new Dealer(DEBUG);
+		dealerPile = new Card(Card.getImage('c'), 10, 10, game);
+		newGame();
 
 		/**
 		 * Is the game running on a touch screen device?
@@ -151,13 +154,11 @@ window.onload = function() {
 			playerCards = new Array(5);
 			dealerCards = new Array(5);
 
-			player = new Player(DEBUG);
-			dealer = new Dealer(DEBUG);
-
 			screentip.clear();
 			instruction.emit('Press P key  or left click to start a new game.');
 			chips.deal(balance);
 			update();
+			draw();
 		}
 
 		/**
@@ -228,7 +229,6 @@ window.onload = function() {
 			playerCards = new Array(5);
 			dealerIndex = 2;
 			dealerCards = new Array(5);
-			dealerPile = new Card(Card.getImage('c'), 10, 10, game);
 			screentip.clear();
 			player = new Player(DEBUG, game);
 			dealer = new Dealer(DEBUG, game);
@@ -284,19 +284,19 @@ window.onload = function() {
 			scene.addChild(screentip.draw()[0]);
 			scene.addChild(screentip.draw()[1]);
 			scene.addChild(instruction.draw());
-			/*scene.addChild(pScore.draw());
+			scene.addChild(pScore.draw());
 			scene.addChild(dScore.draw());
 			scene.addChild(pBalance.draw());
 			scene.addChild(wChips.draw());
 			scene.addChild(rChips.draw());
 			scene.addChild(bChips.draw());
 			scene.addChild(gChips.draw());
-			scene.addChild(blChips.draw());*/
+			scene.addChild(blChips.draw());
 			for(var i = 0; i < playerCards.length; i++) {
-				scene.addChild(playerCards[i].draw());
-			}
-			for(var i = 0; i < dealerCards.length; i++) {
-				scene.addChild(dealerCards[i].draw());
+				if(playerCards[i] != null) {
+					scene.addChild(playerCards[i].draw());
+					scene.addChild(dealerCards[i].draw());
+				}
 			}
 			game.pushScene(scene);
 		}
@@ -310,17 +310,17 @@ window.onload = function() {
 			scene.removeChild(instruction.draw());
 			scene.removeChild(pScore.draw());
 			scene.removeChild(dScore.draw());
-			/*scene.removeChild(pBalance.draw());
+			scene.removeChild(pBalance.draw());
 			scene.removeChild(wChips.draw());
 			scene.removeChild(rChips.draw());
 			scene.removeChild(bChips.draw());
 			scene.removeChild(gChips.draw());
-			scene.removeChild(blChips.draw());*/
+			scene.removeChild(blChips.draw());
 			for(var i = 0; i < playerCards.length; i++) {
-				scene.removeChild(playerCards[i].draw());
-			}
-			for(var i = 0; i < dealerCards.length; i++) {
-				scene.removeChild(dealerCards[i].draw());
+				if(playerCards[i] != null) {
+					scene.removeChild(playerCards[i].draw());
+					scene.removeChild(dealerCards[i].draw());
+				}
 			}
 		}
 
@@ -429,7 +429,7 @@ window.onload = function() {
 				stand();
 
 			else if(!playing && (event.keyCode === 89 || event.keyCode == 80))
-				newGame();
+				newGame(); //placeBet();
 
 			else if(!playing && event.keyCode === 78)
 				exitToGitHub();

@@ -7,6 +7,7 @@
 */
 
 package io.stpettersen.blackjack;
+import io.stpettersen.helper.Debugger;
 import java.awt.Graphics;
 
 public class Score extends UI

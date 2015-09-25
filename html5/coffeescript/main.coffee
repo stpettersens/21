@@ -4,7 +4,7 @@
 #	
 # HTML5/CoffeeScript implementation
 
-debug = false
+debug = true
 use_ai = false
 sound = true
 playing = true

@@ -7,6 +7,7 @@
 */
 
 package io.stpettersen.blackjack;
+import io.stpettersen.helper.Debugger;
 import java.util.List;
 import java.util.ArrayList;
 import javax.swing.JApplet;

@@ -7,6 +7,7 @@
 */
 
 package io.stpettersen.blackjack; 
+import io.stpettersen.helper.Debugger;
 import java.util.List;
 import java.util.ArrayList;
 import javax.swing.JFrame;
@@ -378,7 +379,7 @@ public class Blackjack extends JPanel implements ActionListener
     
     /**
      * Event handler for hit or stand buttons.
-     * @param e ActionEvent
+     * @param e ActionEvent.
     */
     public void actionPerformed(ActionEvent e)
     {

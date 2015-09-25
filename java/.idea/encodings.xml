@@ -7,7 +7,6 @@
     <file url="file://$PROJECT_DIR$/io/stpettersen/blackjack/Card.java" charset="UTF-8" />
     <file url="file://$PROJECT_DIR$/io/stpettersen/blackjack/Cards.java" charset="UTF-8" />
     <file url="file://$PROJECT_DIR$/io/stpettersen/blackjack/Dealer.java" charset="UTF-8" />
-    <file url="file://$PROJECT_DIR$/io/stpettersen/blackjack/Debugger.java" charset="UTF-8" />
     <file url="file://$PROJECT_DIR$/io/stpettersen/blackjack/IActor.java" charset="UTF-8" />
     <file url="file://$PROJECT_DIR$/io/stpettersen/blackjack/IUI.java" charset="UTF-8" />
     <file url="file://$PROJECT_DIR$/io/stpettersen/blackjack/Player.java" charset="UTF-8" />
