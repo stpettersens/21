@@ -34,15 +34,15 @@ class AI:
 	def hasBlackjack(self):
 		blackjack = False
 		if self.calcTotal() == 21:
-			_print('\nPlayer has Blackjack!', 'magenta')
+			_print('\nAI has Blackjack!', 'magenta')
 			blackjack = True
 
-		return True
+		return blackjack
 
 	def isBust(self):
 		bust = False
 		if self.calcTotal() > 21:
-			_print('\nPlayer is bust!', 'magenta')
+			_print('\nAI is bust!', 'magenta')
 			bust = True
 		
 		return bust
@@ -59,12 +59,12 @@ class AI:
 	def _hit(self, cards):
 		card = cards.draw()
 		AI.cards.append(card)
-		_print('Player hits.', 'magenta')
-		_print('Player gets ' + card, 'magenta')
+		_print('AI hits.', 'magenta')
+		_print('AI gets ' + card, 'magenta')
 		AI.values.append(cards.getValue())
 
 	def _stand(self):
-		_print('Player stands.', 'magenta')
+		_print('AI stands.', 'magenta')
 
 	def respond(self, cards):
 		time.sleep(1)
@@ -96,7 +96,7 @@ class AI:
 		for card in AI.cards:
 			cards += card
 
-		_print('\nPlayer has:', 'magenta')
+		_print('\nAI has:', 'magenta')
 		_print('{0} --> {1}'.format(cards, self.calcTotal()), '')
 		return self.calcTotal()
 
