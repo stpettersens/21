@@ -4,6 +4,7 @@
 	Copyright 2015 Sam Saint-Pettersen
 	Released under the MIT/X11 License
 */
+use cards::Cards;
 
 extern crate rand;
 use self::rand::Rng;
@@ -79,19 +80,19 @@ impl Player {
         }
     }
 
-    pub fn hit(&mut self, cards: u16) {
-        let card = cards;//.draw();
+    /*pub fn hit(&mut self, &mut cards: Cards) {
+        let card = cards.draw();
         self.cards.push("foo".to_string());
         println!("Player hits.");
         println!("Player gets {}", card);
-        self.values.push(card); //cards.getValue());
-    }
+        self.values.push(cards.get_value());
+    }*/
 
     pub fn stand(&self) {
         println!("Player stands.");
     }
 
-    pub fn respond(&mut self, cards: u16) {
+    /*pub fn respond(&mut self, cards: Cards) {
         self.show_cards();
         loop {
             let mut total = 0;
@@ -99,7 +100,7 @@ impl Player {
                 total = self.calc_total();
                 if total == 16 {
                     if rand::thread_rng().gen_range(0, 5) >= 3 {
-                        self.hit(cards); // Take risk.
+                        //self.hit(cards); // Take risk.
                     }
                     else {
                         self.stand(); // Play it safe.
@@ -111,11 +112,11 @@ impl Player {
                     break;
                 }
                 else {
-                    self.hit(cards);
+                    //self.hit(cards);
                 }
             }
         }
-    }
+    }*/
 
     pub fn show_cards(&mut self) -> u16 {
         let mut cards = String::new();

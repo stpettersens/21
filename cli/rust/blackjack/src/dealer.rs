@@ -5,6 +5,8 @@
 	Released under the MIT/X11 License
 */
 
+use cards::Cards;
+
 extern crate rand;
 use self::rand::Rng;
 
@@ -79,19 +81,57 @@ impl Dealer {
         }
     }
 
-    fn hit(&mut self, cards: u16) {
-        let card = cards;//.draw();
+    /*fn hit(&mut self, &mut cards: Cards) {
+        let card = cards.draw();
         self.cards.push("foo".to_string());
         println!("Dealer hits.");
         println!("Dealer gets {}", card);
-        self.values.push(card); //cards.getValue());
-    }
+        self.values.push(cards.get_value());
+    }*/
 
     fn stand(&self) {
         println!("Dealer stands.");
     }
 
-    pub fn respond(&mut self, cards: u16) {
+    pub fn shuffle(&mut self, cards: Cards) {
+        if cards.get_played() == 0 || cards.get_played() >= 45 {
+            println!("-----------------------------------------------");
+            println!("Dealer is shuffling cards...");
+            println!("-----------------------------------------------");
+            cards.shuffle();
+        }
+    }
+
+    pub fn deal(&mut self, cards: Cards) -> Vec<String> {
+        let dealt = Vec::new();
+        let i = 0;
+        println!("-----------------------------------------------");
+        println!("Dealer is dealing cards for a new game...");
+        println!("-----------------------------------------------");
+        while i < 2 * 2 {
+            let d = format!("{}:{}", cards.draw(), cards.get_value());
+            dealt.push(d.to_string());
+            i += 1
+        }
+        i = 0;
+        while i < 2 {
+            let cvs = dealt[i].split(":");
+            let cv: Vec<&str> = cvs.collect();
+            let v = cv[1].parse::<u16>().ok();
+            let value = match v {
+                Some(value) => value,
+                None => 0
+            };
+            self.cards.push(cv[0].to_string());
+            self.values.push(value);
+            i += 1
+        }
+        println!("Dealer has:");
+        println!("[**]{}", self.cards[1]);
+        dealt
+    }
+
+    /*pub fn respond(&mut self, cards: Cards) {
         self.show_cards();
         loop {
             let mut total = 0;
@@ -99,7 +139,7 @@ impl Dealer {
                 total = self.calc_total();
                 if total == 16 {
                     if rand::thread_rng().gen_range(0, 5) >= 3 {
-                        self.hit(cards); // Take risk.
+                        //self.hit(cards); // Take risk.
                     }
                     else {
                         self.stand(); // Play it safe.
@@ -111,11 +151,11 @@ impl Dealer {
                     break;
                 }
                 else {
-                    self.hit(cards);
+                    //self.hit(cards);
                 }
             }
         }
-    }
+    }*/
 
     pub fn show_cards(&mut self) -> u16 {
         let mut cards = String::new();
