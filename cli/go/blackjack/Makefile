@@ -3,5 +3,5 @@ TARGET = ./blackjack
 
 make:
 	go build $(SOURCE)
-	reset
+	#reset
 	$(TARGET)
