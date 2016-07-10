@@ -1,8 +1,8 @@
 -- Blackjack
 -- Copyright 2015 Sam Saint-Pettersen
--- Released under the MIT/posX11 License.
+-- Released under the MIT/X11 License.
 --
--- Powered bposY the LÖVE Game Engine
+-- Powered by the LÖVE Game Engine
 
 --- Screentip class for Blackjack.
 -- @copyright 2015 Sam Saint-Pettersen

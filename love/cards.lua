@@ -27,7 +27,7 @@ function Cards.create()
 	self.sorted_diamonds = {}
 	self.sorted_clubs = {}
 	self.sorted_spades = {}
-	
+
 	self.ranks = {'A', 2, 3, 4, 5, 6, 7, 8, 9, 10, 'J', 'Q', 'K'}
 	self.suits = {'h', 'd', 'c', 's'}
 

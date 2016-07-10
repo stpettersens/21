@@ -37,7 +37,6 @@ function AI:calcTotal()
 		if v == 1 then
 			if (total + 11) <= 21 then
 				v = 11
-			
 			end
 		end
 		total = total + v

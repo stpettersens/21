@@ -20,7 +20,7 @@ deck_black = 0
 -- @constructor
 function Chips.create()
 	local self = setmetatable({}, Chips)
-	
+
 	self.colors = { 'white', 'red', 'blue', 'green', 'black' }
 	self.amounts = { 1, 5, 10, 25, 100 }
 

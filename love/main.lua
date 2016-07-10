@@ -52,7 +52,7 @@ function love.load(args)
 	love.window.setTitle(TITLE)
 	love.window.setMode(SCREEN_WIDTH, SCREEN_HEIGHT)
 	love.graphics.setBackgroundColor(0, 153, 0) -- 0, 153, 0
-	
+
 	screentip = Screentip.create(debug, ((SCREEN_WIDTH / 2) - 50), 190)
 	instruction = Score.create(debug, ((SCREEN_WIDTH /2) - 145), 435)
 	p_score = Score.create(debug, 153, 305)
@@ -287,7 +287,7 @@ function love.mousepressed(x, y, button)
 			newGame()
 		end
 		-- Let N or Escape key handle quit.
-	end		
+	end
 end
 
 -- Read touch screen input.

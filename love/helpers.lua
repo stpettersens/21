@@ -5,7 +5,7 @@
 --- Is data in table?
 -- @param [any] data Data to search for.
 -- @param [{any}] table Table to search in.
--- @return [boolean] Is that data in the table? 
+-- @return [boolean] Is that data in the table?
 function Helper_inTable(data, table)
 	-- Adapted from: http://stackoverflow.com/questions/656199/search-for-an-item-in-a-lua-list
  	local valid = {}
@@ -28,7 +28,7 @@ function Helper_bubbleSort(table, descending)
   local hasChanged
   repeat
     hasChanged = false
-    itemCount= itemCount - 1
+    itemCount = itemCount - 1
     if descending then
 	    for i = 1, itemCount do
 	      if table[i] < table[i + 1] then

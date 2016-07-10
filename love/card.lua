@@ -58,7 +58,7 @@ function Card:getXY()
 end
 
 --- Get source for image.
--- @return [string] Image source (path). 
+-- @return [string] Image source (path).
 function Card:getImageSrc()
 	return self.src
 end
