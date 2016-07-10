@@ -2,7 +2,7 @@
  * Blackjack
  * Copyright 2015 Sam Saint-Pettersen
  * Released under the MIT/X11 License.
- * 
+ *
  * Java Swing/AWT implementation.
 */
 
@@ -40,7 +40,7 @@ public class Player extends Actor
         Debugger.emit(debug, String.format("Player has %d", calcTotal()));
         return new Card(cards.getImage(card), pos, 310);
     }
-    
+
     /**
      * Player stands.
     */
@@ -49,7 +49,7 @@ public class Player extends Actor
         Debugger.emit(debug, "Player stands.");
         Debugger.emit(debug, String.format("Player has %d", calcTotal()));
     }
-    
+
     /**
      * Determine if player has Blackjack.
      * @return Does player have Blackjack?
@@ -62,7 +62,7 @@ public class Player extends Actor
         }
         return super.hasBlackjack();
     }
-    
+
     /**
      * Determine if player is bust.
      * @return Is player bust?
@@ -75,7 +75,7 @@ public class Player extends Actor
         }
         return super.isBust();
     }
-    
+
     /**
      * Show player's cards.
      * @return Total value of player's cards.
@@ -85,7 +85,7 @@ public class Player extends Actor
         Debugger.emit(debug, "\nPlayer has:");
         return super.showCards();
     }
-    
+
     /**
      * Receive cards from dealer.
      * @param cards Game cards.
@@ -104,7 +104,7 @@ public class Player extends Actor
         pc = String.format("[%s][%s]", this.cards.get(0), this.cards.get(1));
         Debugger.emit(debug, "\nPlayer receives their cards:");
         Debugger.emit(debug, String.format("%s --> %d", pc, calcTotal()));
-        
+
         //index++;
         Card cardA = new Card(cards.getImage(this.cards.get(index)), pos, 310);
         pos += 90;

@@ -2,7 +2,7 @@
  * Blackjack
  * Copyright 2015 Sam Saint-Pettersen
  * Released under the MIT/X11 License.
- * 
+ *
  * Java Swing/AWT implementation.
 */
 
@@ -63,7 +63,7 @@ public class Cards
             }
         }
     }
-    
+
     /**
      * Get image for card from string pattern.
      * @param card Card string pattern.
@@ -81,7 +81,7 @@ public class Cards
         if(pos != -1) img = images.get(pos);
         return img;
     }
-    
+
     /**
      * Get a rank for a card.
      * @return Card rank.
@@ -91,7 +91,7 @@ public class Cards
        int i = (int)Math.floor(Math.random() * ranks.length);
        return ranks[i];
    }
-   
+
    /**
     * Get a suit for a card.
     * @return Card suit.
@@ -101,7 +101,7 @@ public class Cards
        int i = (int)Math.floor(Math.random() * suits.length);
        return suits[i];
    }
-   
+
    /**
     * Get a card.
     * @return Card as string.
@@ -110,7 +110,7 @@ public class Cards
    {
        return String.format("%s %s", getRank(), getSuit());
    }
-   
+
    /**
     * Shuffle cards.
    */
@@ -129,7 +129,7 @@ public class Cards
            }
        }
    }
-   
+
    /**
     * Draw a card.
    */
@@ -137,13 +137,13 @@ public class Cards
    {
        if(played.size() == deck_num || index == -1)
        {
-           index = 0;           
+           index = 0;
        }
        String card = deck.get(index).replace(" ", "");
        played.add(card);
        return card;
    }
-   
+
    /**
     * Get a card's value.
     * @return Card's value.
@@ -153,7 +153,7 @@ public class Cards
        String[] rs = deck.get(index).split(" ");
        index++;
        int val = 0;
-       if(rs[0].equals("A")) 
+       if(rs[0].equals("A"))
        {
            val = 1;
        }
@@ -161,13 +161,13 @@ public class Cards
        {
            val = 10;
        }
-       else 
+       else
        {
            val = Integer.parseInt(rs[0]);
        }
        return val;
    }
-   
+
    /**
     * Get number of played cards.
     * @return Number of cards played.
@@ -176,7 +176,7 @@ public class Cards
    {
        return played.size();
    }
-   
+
    /**
     * Draw all cards from the deck.
     * @return All cards from deck.

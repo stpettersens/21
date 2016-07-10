@@ -2,7 +2,7 @@
  * Blackjack
  * Copyright 2015 Sam Saint-Pettersen
  * Released under the MIT/X11 License.
- * 
+ *
  * Java Swing/AWT implementation.
 */
 
@@ -18,7 +18,7 @@ public class Screentip extends UI
     private int posY;
     private String title;
     private String msg;
-    
+
     /**
      * Screentip implements a title and message box.
      * @param debug Enable debug messages?
@@ -29,10 +29,10 @@ public class Screentip extends UI
     {
         this.posX = posX;
         this.posY = posY;
-        Debugger.emit(debug, 
+        Debugger.emit(debug,
         String.format("Created screentip at %d,%d", posX, posY));
     }
-    
+
     /**
      * Emit a title and message.
      * @param title Title to emit.
@@ -44,7 +44,7 @@ public class Screentip extends UI
         this.title = title;
         msg = message;
     }
-    
+
     /**
      * Clear the screentip.
     */
@@ -53,14 +53,14 @@ public class Screentip extends UI
         title = "";
         msg = "";
     }
-    
+
     /**
      * Draw the screentip.
      * @param g Graphics object.
     */
     public void draw(Graphics g)
     {
-        if(title == null || msg == null) 
+        if(title == null || msg == null)
         {
             clear();
         }

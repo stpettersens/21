@@ -2,7 +2,7 @@
  * Blackjack
  * Copyright 2015 Sam Saint-Pettersen
  * Released under the MIT/X11 License.
- * 
+ *
  * Java Swing/AWT implementation.
 */
 
@@ -26,7 +26,7 @@ public class Card
         this.posX = posX;
         this.posY = posY;
     }
-    
+
     /**
      * Set X, Y position for card.
      * @param posX X position for card.
@@ -37,7 +37,7 @@ public class Card
         this.posX = posX;
         this.posY = posY;
     }
-    
+
     /**
      * Get X, Y positionof card as int[].
      * @return X, Y co-ordinates of card.
@@ -46,7 +46,7 @@ public class Card
     {
         return new int[] { posX, posY };
     }
-    
+
     /**
      * Draw the card.
     */

@@ -2,7 +2,7 @@
  * Blackjack
  * Copyright 2015 Sam Saint-Pettersen
  * Released under the MIT/X11 License.
- * 
+ *
  * Java Swing/AWT implementation.
 */
 
@@ -47,7 +47,7 @@ public class BlackjackApplet extends JApplet implements ActionListener
     private int bet;
     private JButton hit;
     private JButton stand;
-    
+
     private final String TITLE = "Blackjack";
     private final int SCREEN_WIDTH = 820;
     private final int SCREEN_HEIGHT = 560;
@@ -56,18 +56,18 @@ public class BlackjackApplet extends JApplet implements ActionListener
 
     /**
      * Called by the browser or applet viewer to inform this JApplet that it
-     * has been loaded into the system. It is always called before the first 
+     * has been loaded into the system. It is always called before the first
      * time that the start method is called.
      */
     public void init()
     {
         // this is a workaround for a security conflict with some browsers
-        // including some versions of Netscape & Internet Explorer which do 
-        // not allow access to the AWT system event queue which JApplets do 
-        // on startup to check access. May not be necessary with your browser. 
-        JRootPane rootPane = this.getRootPane();    
+        // including some versions of Netscape & Internet Explorer which do
+        // not allow access to the AWT system event queue which JApplets do
+        // on startup to check access. May not be necessary with your browser.
+        JRootPane rootPane = this.getRootPane();
         rootPane.putClientProperty("defeatSystemEventQueueCheck", Boolean.TRUE);
-    
+
         // provide any initialisation necessary for your JApplet
         ai = false;
         playing = false;
@@ -96,29 +96,29 @@ public class BlackjackApplet extends JApplet implements ActionListener
     }
 
     /**
-     * Called by the browser or applet viewer to inform this JApplet that it 
-     * should start its execution. It is called after the init method and 
-     * each time the JApplet is revisited in a Web page. 
+     * Called by the browser or applet viewer to inform this JApplet that it
+     * should start its execution. It is called after the init method and
+     * each time the JApplet is revisited in a Web page.
      */
     public void start()
     {
-        // provide any code requred to run each time 
+        // provide any code requred to run each time
         // web page is visited
         startFirstGame();
     }
 
-    /** 
+    /**
      * Called by the browser or applet viewer to inform this JApplet that
      * it should stop its execution. It is called when the Web page that
      * contains this JApplet has been replaced by another page, and also
-     * just before the JApplet is to be destroyed. 
+     * just before the JApplet is to be destroyed.
      */
     public void stop()
     {
         // provide any code that needs to be run when page
-        // is replaced by another page or before JApplet is destroyed 
+        // is replaced by another page or before JApplet is destroyed
     }
-    
+
     /**
      * Place a bet.
     */
@@ -144,11 +144,11 @@ public class BlackjackApplet extends JApplet implements ActionListener
             if(bet > 0 && bet <= balance)
             {
                 balance -= bet;
-                Debugger.emit(DEBUG, 
+                Debugger.emit(DEBUG,
                 String.format("Placed bid of $%d", bet));
                 newGame();
             }
-            else 
+            else
             {
                 JOptionPane.showMessageDialog(frame,
                 String.format("Bet must be between $1 and $%d", balance),
@@ -165,7 +165,7 @@ public class BlackjackApplet extends JApplet implements ActionListener
             placeBet();
         }
     }
-    
+
     /**
      * Start the first game.
     */
@@ -176,16 +176,16 @@ public class BlackjackApplet extends JApplet implements ActionListener
         playing = false;
         playerCards = new ArrayList<Card>();
         dealerCards = new ArrayList<Card>();
-        
+
         player = new Player(DEBUG);
         dealer = new Dealer(DEBUG, cards);
-        
+
         screentip.clear();
         instruction.emit("Click Play to start a new game.");
         chips.deal(balance);
         update();
     }
-    
+
     /**
      * Start a new game.
     */
@@ -198,15 +198,15 @@ public class BlackjackApplet extends JApplet implements ActionListener
         playerCards = new ArrayList<Card>();
         dealerIndex = 2;
         dealerCards = new ArrayList<Card>();
-        
+
         player = new Player(DEBUG);
         dealer = new Dealer(DEBUG, cards);
-        
+
         if(cards.getPlayed() == 0 || cards.getPlayed() >= CARD_LIMIT)
         {
             dealer.shuffle();
         }
-        
+
         screentip.clear();
         Card[] pc = player.receiveCards(cards, dealer.deal(cards));
         Card[] dc = dealer.receiveCards(cards);
@@ -222,7 +222,7 @@ public class BlackjackApplet extends JApplet implements ActionListener
         dealerCards.add(new Card(cards.getImage("d"), 585, 10));
         update();
     }
-    
+
     /**
      * Show cards at end of game.
     */
@@ -236,7 +236,7 @@ public class BlackjackApplet extends JApplet implements ActionListener
         int ps = player.showCards();
         boolean betWon = false;
         boolean refundBet = false;
-        
+
         if(ps == 21 && ds != 21 && playerIndex == 2)
         {
             screentip.emit("PLAYER BLACKJACK!", "Player has 21. That's a Blackjack!");
@@ -269,10 +269,10 @@ public class BlackjackApplet extends JApplet implements ActionListener
             screentip.emit("PLAYER WINS", "Player wins. Dealer bust.");
             betWon = true;
         }
-        
+
         dScore.emit(dealer.calcTotal());
         Debugger.emit(DEBUG, String.format("Cards played %d", cards.getPlayed()));
-        
+
         if(cards.getPlayed() >= CARD_LIMIT)
         {
             instruction.emit("Dealer is shuffling cards...");
@@ -281,12 +281,12 @@ public class BlackjackApplet extends JApplet implements ActionListener
         {
             instruction.emit("Play again?");
         }
-        
+
         if(cards.getPlayed() == 52)
         {
             dealerPile = new Card(cards.getImage("d"), 10, 10);
         }
-        
+
         if(betWon)
         {
             balance += (bet * 2); // Player wins bet; receive bet + dealer's.
@@ -298,7 +298,7 @@ public class BlackjackApplet extends JApplet implements ActionListener
         chips.deal(balance);
         repaint();
     }
-    
+
     /**
      * Update logic.
     */
@@ -307,14 +307,14 @@ public class BlackjackApplet extends JApplet implements ActionListener
         // Determine if a Blackjack or bust has occurred?
         if(hasBlackjack() || isBust() || playerIndex == 5)
             showCards();
-        
+
         int score = player.calcTotal();
         if(score > 0) pScore.emit(score);
         pBalance.emit(String.format("Balance: $%d", balance));
-        
+
         int[] chipVals = chips.getValues();
         int[] chipNums = chips.getNums();
-        wChips.emit(String.format("White chips ($%d): %d", 
+        wChips.emit(String.format("White chips ($%d): %d",
         chipVals[0], chipNums[0]));
         rChips.emit(String.format("Red chips ($%d): %d",
         chipVals[1], chipNums[1]));
@@ -324,7 +324,7 @@ public class BlackjackApplet extends JApplet implements ActionListener
         chipVals[3], chipNums[3]));
         blChips.emit(String.format("Black chips ($%d): %d",
         chipVals[4], chipNums[4]));
-        
+
         if(playing)
         {
             dScore.emit("?");
@@ -332,7 +332,7 @@ public class BlackjackApplet extends JApplet implements ActionListener
         }
         repaint();
     }
-    
+
     /**
      * Determine if a Blackjack has occurred.
      * @return Has a Blackjack occurred?
@@ -346,7 +346,7 @@ public class BlackjackApplet extends JApplet implements ActionListener
         }
         return blackjack;
     }
-    
+
     /**
      * Determine if a bust has occurred.
      * @return Has a bust occurred?
@@ -360,7 +360,7 @@ public class BlackjackApplet extends JApplet implements ActionListener
         }
         return bust;
     }
-    
+
     /**
      * Take a hit.
     */
@@ -376,11 +376,11 @@ public class BlackjackApplet extends JApplet implements ActionListener
         }
         else stand();
     }
-   
+
     /**
      * Take a stand.
     */
-    private void stand() 
+    private void stand()
     {
         player.stand();
         List<Card> received = dealer.respond(cards);
@@ -396,7 +396,7 @@ public class BlackjackApplet extends JApplet implements ActionListener
         showCards();
         repaint();
     }
-    
+
     /**
      * Event handler for hit or stand buttons.
      * @param e ActionEvent.
@@ -446,11 +446,11 @@ public class BlackjackApplet extends JApplet implements ActionListener
         stand.setLocation(10, 350);
         stand.setSize(100, 25);
     }
-    
+
     /**
      * Called by the browser or applet viewer to inform this JApplet that it
      * is being reclaimed and that it should destroy any resources that it
-     * has allocated. The stop method will always be called before destroy. 
+     * has allocated. The stop method will always be called before destroy.
      */
     public void destroy()
     {
@@ -458,8 +458,8 @@ public class BlackjackApplet extends JApplet implements ActionListener
     }
 
     /**
-     * Returns information about this applet. 
-     * An applet should override this method to return a String containing 
+     * Returns information about this applet.
+     * An applet should override this method to return a String containing
      * information about the author, version, and copyright of the JApplet.
      *
      * @return A String representation of information about this JApplet
@@ -471,11 +471,11 @@ public class BlackjackApplet extends JApplet implements ActionListener
     }
 
     /**
-     * Returns parameter information about this JApplet. 
+     * Returns parameter information about this JApplet.
      * Returns information about the parameters that are understood by this JApplet.
-     * An applet should override this method to return an array of Strings 
-     * describing these parameters. 
-     * Each element of the array should be a set of three Strings containing 
+     * An applet should override this method to return an array of Strings
+     * describing these parameters.
+     * Each element of the array should be a set of three Strings containing
      * the name, the type, and a description.
      *
      * @return A String[] representation of parameter information about this JApplet

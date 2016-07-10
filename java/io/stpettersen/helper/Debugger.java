@@ -11,7 +11,7 @@ public class Debugger
     {
         if(debug) System.out.println(message);
     }
-    
+
     /**
      * Emit a debug message.
      * @param debug Enable debug?
@@ -21,7 +21,7 @@ public class Debugger
     {
         emit(debug, Integer.toString(integer));
     }
-    
+
     /**
      * Emit a debug message.
      * @param debug Enabele debug?

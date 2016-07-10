@@ -2,7 +2,7 @@
  * Blackjack
  * Copyright 2015 Sam Saint-Pettersen
  * Released under the MIT/X11 License.
- * 
+ *
  * Java Swing/AWT implementation.
 */
 
@@ -16,7 +16,7 @@ public class Chips
     private int deckGreen;
     private int deckBlack;
     private int[] values;
-    
+
     /**
      * Chip represents a collection of betting chips.
     */
@@ -29,7 +29,7 @@ public class Chips
         deckBlack = 0;
         values = new int[] { 1, 5, 10, 25, 100 };
     }
-    
+
     /**
      * Get chip currency value from color.
      * @param color Color of the chip.
@@ -45,7 +45,7 @@ public class Chips
                 break;
             case RED:
                 value = values[1];
-                break;   
+                break;
             case BLUE:
                 value = values[2];
                 break;
@@ -58,7 +58,7 @@ public class Chips
         }
         return value;
     }
-    
+
     /**
      * Deal chips for a given betting balance.
      * @param balance Currency amount available to bet.
@@ -71,7 +71,7 @@ public class Chips
         deckGreen = 0;
         deckBlack = 0;
         // Deal out white chips.
-        for(int i = 0; i < Math.floor(balance / values[0]); i++) 
+        for(int i = 0; i < Math.floor(balance / values[0]); i++)
             deckWhite++;
         // Deal out red chips.
         for(int i = 0; i < Math.floor(balance / values[1]); i++)
@@ -86,7 +86,7 @@ public class Chips
         for(int i = 0; i < Math.floor(balance / values[4]); i++)
             deckBlack++;
     }
-    
+
     /**
      * Draw a chip.
      * @param color Color of chosen chip.
@@ -108,13 +108,13 @@ public class Chips
                 bet = getChip(ChipColor.GREEN);
             else if(color == ChipColor.BLACK && balance >= values[4])
                 bet = getChip(ChipColor.BLACK);
-               
+
             balance -= bet;
             return new int[] { color.ordinal(), balance };
         }
         return new int[] { -1, 0 };
     }
-    
+
     /**
      * Get values for chips.
      * @return Values for each color chip.
@@ -123,7 +123,7 @@ public class Chips
     {
         return values;
     }
-    
+
     /**
      * Get number of available chips.
      * @return Numbers of each color chip.

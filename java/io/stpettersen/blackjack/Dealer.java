@@ -2,7 +2,7 @@
  * Blackjack
  * Copyright 2015 Sam Saint-Pettersen
  * Released under the MIT/X11 License.
- * 
+ *
  * Java Swing/AWT implementation.
 */
 
@@ -41,7 +41,7 @@ public class Dealer extends Actor
         Debugger.emit(debug, String.format("Dealer has %d", calcTotal()));
         return new Card(cards.getImage(card), pos, 10);
     }
-    
+
     /**
      * Dealer stands.
     */
@@ -49,7 +49,7 @@ public class Dealer extends Actor
     {
         Debugger.emit(debug, "Dealer stands.");
     }
-    
+
     /**
      * Dealer shuffles.
     */
@@ -61,7 +61,7 @@ public class Dealer extends Actor
         Debugger.emit(debug, "----------------------------------------------------");
         gameCards.shuffle();
     }
-    
+
     /**
      * Dealer deals.
      * @param cards Game cards.
@@ -92,7 +92,7 @@ public class Dealer extends Actor
         Debugger.emit(debug, String.format("[**][%s]", this.cards.get(1)));
         return new String[] { dealt.get(2), dealt.get(3) };
     }
-    
+
     /**
      * Determine if dealer has Blackjack.
      * @return Does dealer have Blackjack?
@@ -105,7 +105,7 @@ public class Dealer extends Actor
         }
         return super.hasBlackjack();
     }
-    
+
     /**
      * Determine if dealer is bust.
      * @return Is dealer bust?
@@ -118,7 +118,7 @@ public class Dealer extends Actor
         }
         return super.isBust();
     }
-    
+
     /**
      * Dealer responds to player action (e.g. a hit or stand).
      * @param cards Game cards.
@@ -160,7 +160,7 @@ public class Dealer extends Actor
         }
         return response_cards;
     }
-    
+
     /**
      * Show dealer's cards.
      * @return Total value of dealer's cards.
@@ -170,7 +170,7 @@ public class Dealer extends Actor
         Debugger.emit(debug, "\nDealer has:");
         return super.showCards();
     }
-    
+
     /**
      * Dealer receives cards.
      * @param cards Game cards.
@@ -184,7 +184,7 @@ public class Dealer extends Actor
         index += 2;
         return new Card[] { cardA, cardB };
     }
-    
+
     /**
      * Dealer reveals first card.
      * @param cards Game cards.

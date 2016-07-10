@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!-- Apache Ant buildfile to build Blackjack. -->
 <project name="Blackjack" default="build" basedir=".">
-    
+
     <description>Blackjack buildfile for Ant</description>
 
     <!-- Targets. -->
@@ -53,11 +53,11 @@
     </target>
 
     <!-- Compile classes. -->
-    <target name="compile" description="Compile source code to classes" depends="init" 
+    <target name="compile" description="Compile source code to classes" depends="init"
         unless="build.uptodate">
         <echo message="Compiling Blackjack..."/>
         <mkdir dir="${build.dir}"/>
-        <javac includeantruntime="false" classpath="${toString:project.cp}" 
+        <javac includeantruntime="false" classpath="${toString:project.cp}"
             srcdir="${src.dir}" destdir="${build.dir}"/>
     </target>
 

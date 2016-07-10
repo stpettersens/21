@@ -2,7 +2,7 @@
  * Blackjack
  * Copyright 2015 Sam Saint-Pettersen
  * Released under the MIT/X11 License.
- * 
+ *
  * Java Swing/AWT implementation.
 */
 
@@ -21,7 +21,7 @@ public abstract class Actor implements IActor
     protected List<String> cards;
     protected List<Integer> values;
     protected Cards gameCards;
-    
+
     /**
      * Actor implements the common player/dealer for Blackjack.
      * @param debug Enable debug messages?
@@ -36,7 +36,7 @@ public abstract class Actor implements IActor
         values = new ArrayList<Integer>();
         this.gameCards = gameCards;
     }
-    
+
     /**
      * Actor implements the common player/dealer for Blackjack.
      * @param debug Enable debug messages?
@@ -45,7 +45,7 @@ public abstract class Actor implements IActor
     {
         this(debug, null);
     }
-    
+
     /**
      * Calculate the total value of actor's held cards.
      * @return Total value of actor's cards.
@@ -63,16 +63,16 @@ public abstract class Actor implements IActor
                 if((total + 11) <= 21) v = 11;
                 else if((total + 11) > 21) v = 1;
             }
-            total += v;    
+            total += v;
         }
         return total;
     }
-    
+
     /**
      * Actor stands.
     */
     protected abstract void stand();
-    
+
     /**
      * Determine if actor has Blackjack.
      * @return Does actor have Blackjack?
@@ -86,7 +86,7 @@ public abstract class Actor implements IActor
         }
         return blackjack;
     }
-    
+
     /**
      * Determine if actor is bust.
      * @return Is actor bust?
@@ -100,7 +100,7 @@ public abstract class Actor implements IActor
         }
         return bust;
     }
-    
+
     /**
      * Show actor's cards.
      * @return Total value of actor's cards.
@@ -114,7 +114,7 @@ public abstract class Actor implements IActor
         {
             cards += String.format("[%s]", this.cards.get(i));
         }
-        Debugger.emit(debug, String.format("%s --> %d", cards, calcTotal())); 
+        Debugger.emit(debug, String.format("%s --> %d", cards, calcTotal()));
         return calcTotal();
     }
 }

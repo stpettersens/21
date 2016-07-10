@@ -2,7 +2,7 @@
  * Blackjack
  * Copyright 2015 Sam Saint-Pettersen
  * Released under the MIT/X11 License.
- * 
+ *
  * Java Swing/AWT implementation.
 */
 
@@ -15,7 +15,7 @@ public class Score extends UI
     private String score;
     private int posX;
     private int posY;
-    
+
     /**
      * Score implements a score or information box.
      * @param debug Enable debug messages?
@@ -27,20 +27,20 @@ public class Score extends UI
         this.posX = posX;
         this.posY = posY;
         score = "";
-        Debugger.emit(debug, 
+        Debugger.emit(debug,
         String.format("Created score counter at %d,%d", posX, posY));
     }
-    
+
     /**
      * Emit a score or similar message.
      * @param message Score or similar message to emit.
     */
-    public void emit(String message) 
+    public void emit(String message)
     {
         clear();
         score = message;
     }
-    
+
     /**
      * Emit a score or other integer value.
      * @param score Score to emit.
@@ -49,7 +49,7 @@ public class Score extends UI
     {
         emit(Integer.toString(score));
     }
-    
+
     /**
      * Clear the score box.
     */
@@ -57,7 +57,7 @@ public class Score extends UI
     {
         score = "";
     }
-    
+
     /**
      * Draw the score box.
      * @param g Graphics object.

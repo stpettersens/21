@@ -2,7 +2,7 @@
  * Blackjack
  * Copyright 2015 Sam Saint-Pettersen
  * Released under the MIT/X11 License.
- * 
+ *
  * Java Swing/AWT implementation.
 */
 
@@ -18,13 +18,13 @@ public class SoundEffects
     private static List<String> strEffects;
     private static List<OggClip> effects;
     private static boolean soundOn;
-    
+
     /**
      * SoundEffects implements playing game sound effects.
     */
     public static void init()
     {
-        String s = "sounds/";
+        String s = "sounds";
         String[] names = { "deal", "shuffle", "hit", "reveal" };
         strEffects = Arrays.asList(names);
         try
@@ -41,7 +41,7 @@ public class SoundEffects
             e.printStackTrace();
         }
     }
-    
+
     /**
      * Toggle sound effects on/off.
      * @return Are sound effects on?
@@ -52,7 +52,7 @@ public class SoundEffects
         else soundOn = true;
         return soundOn;
     }
-    
+
     /**
      * Play a sound effect.
      * @param effect Name of sound effect to play.

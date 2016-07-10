@@ -5,5 +5,4 @@ dist/lib/
 dist/graphics/
 dist/sounds/
 *.class
-*.jar
 *.exe
