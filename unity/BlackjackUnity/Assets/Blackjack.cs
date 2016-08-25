@@ -240,11 +240,11 @@ public class Blackjack : MonoBehaviour {
     /// </summary>
     void Hit() {
         if (player_index < 6) {
-            soundEffects.Play("hit");
-            player_cards[player_index] = player.Hit(cards);
-            int[] xy = player_cards[player_index].GetXY();
-            Debugger.Emit(DEBUG, String.Format("Placed card at {0},{1}", xy[0], xy[1]));
-            player_index++;
+        	//soundEffects.Play("hit");
+        	player_cards[player_index] = player.Hit(cards);
+        	int[] xy = player_cards[player_index].GetXY();
+        	Debugger.Emit(DEBUG, String.Format("Placed card at {0},{1}", xy[0], xy[1]));
+        	player_index++;
         }
     }
 
